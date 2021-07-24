@@ -25,5 +25,9 @@
 
 [spring boot 使用 k8s 的 configMap 作为外部配置](./springboot使用k8s的configMap作为外部配置.md)
 
-[在线阅读书籍汇总](./在线阅读书籍汇总.md)
+[在线阅读书籍汇总](./收集的学习资料/在线阅读书籍汇总.md)
+
+[使用 maven 自定义插件实现 devops](./使用maven自定义插件实现devops.md)
+
+[maven 基础知识汇总](./maven基础知识汇总.md)
 
