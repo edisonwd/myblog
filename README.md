@@ -31,3 +31,7 @@
 
 [maven 基础知识汇总](./maven基础知识汇总.md)
 
+[在 k8s 中安装并使用 nexus](./在k8s中安装并使用nexus.md)
+
+[在 k8s 中安装并使用 jenkins](./在k8s中安装并使用jenkins.md)
+
