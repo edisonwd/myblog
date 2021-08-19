@@ -1,4 +1,4 @@
-# 在 k8s 中安装并使用 jenkins
+# 在 k8s 中安装 jenkins 并配置实现 CI/CD
 
 > 我们把世界看错，反说它欺骗了我们。—— 泰戈尔《飞鸟集》
 
@@ -267,14 +267,14 @@ b06be4420bcd4a02ab4968ab02838986
 使用下面的命令添加安装 jenkins 的仓库
 
 ```sh
-# helm repo add jenkins https://charts.jenkins.io
+$  helm repo add jenkins https://charts.jenkins.io
 "jenkins" has been added to your repositories
 ```
 
 使用下面的命令查看已经添加的helm仓库：
 
 ```sh
-# helm repo list
+$  helm repo list
 NAME            URL
 kong            https://charts.konghq.com
 aliyun          https://kubernetes.oss-cn-hangzhou.aliyuncs.com/charts
@@ -289,10 +289,75 @@ jenkins         https://charts.jenkins.io
 使用下面的命令更新 helm 仓库：
 
 ```sh
-helm repo update
+$  helm repo update
+```
+
+使用下面的命令可以搜索仓库中的 jenkins：
+
+```sh
+$  helm search repo jenkins
+
+aliyun/jenkins  0.13.5          2.73            Open source continuous integration server. It s...
+bitnami/jenkins 8.0.8           2.289.3         The leading open source automation server
+jenkins/jenkins 3.5.9           2.289.3         Jenkins - Build great things at any scale! The ...
+stable/jenkins  2.5.4           lts             DEPRECATED - Open source continuous integration...
+```
+
+使用下面的命令查看可以配置的内容：
+
+```sh
+$  helm show values jenkins/jenkins
+```
+
+使用下面的命令下载 helm 的 chart 包到本地：
+
+```sh
+$  helm pull jenkins/jenkins
+```
+
+下载下来的是一个压缩包，可以通过 `tar -zxvf` 命令解压：
+
+```sh
+$  tar -zxvf jenkins-3.5.9.tgz
+
+-rw-r--r-- 1  1049089 45006 Jul 28 23:36 CHANGELOG.md
+-rw-r--r-- 1  1049089  1287 Jul 28 23:36 Chart.yaml
+-rw-r--r-- 1  1049089 30809 Jul 28 23:36 README.md
+-rw-r--r-- 1  1049089 37647 Jul 28 23:36 VALUES_SUMMARY.md
+drwxr-xr-x 1  1049089     0 Aug  5 17:59 templates
+-rw-r--r-- 1  1049089 36203 Jul 28 23:36 values.yaml
+```
+
+根据需要修改 `values.yaml` 文件进行自定义配置，这里为了快速体验，不做其他配置，直接使用下面的命令进行安装：
+
+```sh
+$  helm install jenkins ./jenkins
 ```
 
 
+
+使用下面的命令查看登录的用户名和密码：
+
+```sh
+# 查看登录的用户名
+$  kubectl exec jenkins-0 -- cat /run/secrets/chart-admin-username
+# 查看登录的密码
+$  kubectl exec jenkins-0 -- cat /run/secrets/chart-admin-password
+```
+
+使用下面的命令临时暴露服务：
+
+```sh
+kubectl --namespace default port-forward svc/jenkins 8080:8080
+```
+
+> 生产环境建议使用 ingress 通过域名暴露服务
+
+
+
+暴露服务端口后，可以访问：http://localhost:8080，如下图所示：
+
+![image-20210805193558764](在k8s中安装并使用jenkins.assets/image-20210805193558764.png)
 
 # 四. 配置 jenkins 实现 devops
 
@@ -342,7 +407,7 @@ helm repo update
 
 ![image-20210804194625102](在k8s中安装并使用jenkins.assets/image-20210804194625102.png)
 
-在 pod 模板中添加第二个容器：`docker`，用于构建已经推送镜像，如下图所示：
+在 pod 模板中添加第二个容器：`docker`，用于构建以及推送镜像，如下图所示：
 
 ![image-20210804194659822](在k8s中安装并使用jenkins.assets/image-20210804194659822.png)
 
@@ -383,7 +448,7 @@ docker login -u <username> -p <password> registry.cn-hangzhou.aliyuncs.com
 在**jenkins**命名空间下使用生成的config.json文件创建名为 my-secret 的Secret：
 
 ```sh
-kubectl create secret generic jenki -n default --from-file=/root/.docker/config.json
+kubectl create secret generic jenkins-docker-cfg -n default --from-file=/root/.docker/config.json
 ```
 
 在Jenkins系统的Pod Template中配置挂载卷及环境变量：
@@ -396,13 +461,13 @@ kubectl create secret generic jenki -n default --from-file=/root/.docker/config.
 
 - [Manage Credentials] -> [jenkins] -> [全局凭据] -> [添加凭据]
 
-![image.png](在k8s中安装并使用jenkins.assets/01b6e266d2524f598402c019a36c4447tplv-k3u1fbpfcp-zoom-1.image)
+![image-20210806175423918](在k8s中安装并使用jenkins.assets/image-20210806175423918.png)
 
 ## 7. 设置拉取私有仓库镜像的用户名和密码
 
 - [Manage Credentials] -> [jenkins] -> [全局凭据] -> [添加凭据]
 
-![image.png](在k8s中安装并使用jenkins.assets/2ec6ae2842eb4efbbc99559570c0bfaetplv-k3u1fbpfcp-zoom-1.image)
+![image-20210806180358353](在k8s中安装并使用jenkins.assets/image-20210806180358353.png)
 
 ## 8. 测试 devops 构建流程
 

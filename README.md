@@ -35,3 +35,9 @@
 
 [在 k8s 中安装并使用 jenkins](./在k8s中安装并使用jenkins.md)
 
+[python使用正则表达式提取json字符串的值](python使用正则表达式提取json字符串的值.md)
+
+[【爬虫】python+selenium+firefox使用与部署详解](./【爬虫】python+selenium+firefox使用与部署详解.md)
+
+[【爬虫】docker部署python+selenium+firefox-headless](./【爬虫】docker部署python+selenium+firefox-headless.md)
+
