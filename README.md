@@ -41,3 +41,13 @@
 
 [【爬虫】docker部署python+selenium+firefox-headless](./【爬虫】docker部署python+selenium+firefox-headless.md)
 
+[使用python问题总结](./使用python问题总结.md)
+
+[java中如何实现线程间通信](./java中如何实现线程间通信.md)
+
+[Java中获取ThreadDumps的8种方式汇总](./Java中获取ThreadDumps的8种方式汇总.md)
+
+[是什么让Java应用程序的CPU使用率飙升](./是什么让Java应用程序的CPU使用率飙升.md)
+
+[gunicorn超时报错](./gunicorn超时报错.md)
+
