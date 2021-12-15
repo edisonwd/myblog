@@ -11,7 +11,7 @@
 # 二. 原因分析
 从报错信息可以看出，gunicorn 的 worker 进程超时导致进程退出重启。
 查阅 gunicorn 官方文档，有下图所示的描述：
-![在这里插入图片描述](gunicorn超时报错.assets/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5oOc6bif,size_20,color_FFFFFF,t_70,g_se,x_16)
+![image-20210918145853619](gunicorn超时报错.assets/image-20210918145853619.png)
 
 **翻译如下：**
 

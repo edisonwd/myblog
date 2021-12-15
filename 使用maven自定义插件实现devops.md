@@ -1,3 +1,8 @@
+---
+typora-copy-images-to: upload
+typora-root-url: ./
+---
+
 # 使用 maven 自定义插件实现 devops
 
 # 概述
@@ -32,7 +37,7 @@ maven 插件是由一个或多个 `mojo` 组成的，每个 `mojo` 是 maven 中
 
 通过将插件的 `mojo` 绑定到 `maven` 生命周期阶段来完成特定的功能，比如执行 `mvn package` 各个生命周期阶段绑定的插件目标如下图：
 
-![image-20210727164349983](使用maven自定义插件实现devops.assets/image-20210727164349983.png)
+![image-20210727164349983](https://gitee.com/peterwd/pic-oss/raw/master/image/202111051047059.png)
 
 # 自定义实现 `devops` 插件
 
