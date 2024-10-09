@@ -12,7 +12,7 @@
 
 访问上面的地址，选择一个对应浏览器镜像，这里选择 `selenium/standalone-firefox`，如下图所示：
 
-![image-20210815155348587](【爬虫】docker部署python+selenium+firefox-headless.assets/image-20210815155348587.png)
+![image-20210815155348587](image/【爬虫】docker部署python+selenium+firefox-headless.assets/image-20210815155348587.png)
 
 ## 快速开始
 
@@ -26,11 +26,11 @@
 
 2. 访问 http://localhost:4444 测试 `webDriver`，如下图所示：
 
-   ![image-20210815160433771](【爬虫】docker部署python+selenium+firefox-headless.assets/image-20210815160433771.png)
+   ![image-20210815160433771](image/【爬虫】docker部署python+selenium+firefox-headless.assets/image-20210815160433771.png)
 
 3. 访问 http://localhost:4444/wd/hub/static/resource/hub.html 跳转到 selenium 控制台，如下图所示：
 
-   ![image-20210815160711982](【爬虫】docker部署python+selenium+firefox-headless.assets/image-20210815160711982.png)
+   ![image-20210815160711982](image/【爬虫】docker部署python+selenium+firefox-headless.assets/image-20210815160711982.png)
 
    > 注意：
    >
@@ -111,7 +111,7 @@ if __name__ == '__main__':
 
 当使用 `driver.close()` 关闭当前窗口的时候，可以看到 selenium 控制台会产生一个会话，并且没有自动关闭会话，如下图所示：
 
-![image-20210815170730892](【爬虫】docker部署python+selenium+firefox-headless.assets/image-20210815170730892.png)
+![image-20210815170730892](image/【爬虫】docker部署python+selenium+firefox-headless.assets/image-20210815170730892.png)
 
 这里运行了三次产生了三个会话，如果使用 `driver.quit()` 会自动关闭关联的所有会话，不会保留会话 id 在控制台。
 
