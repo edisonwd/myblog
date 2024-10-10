@@ -8,7 +8,7 @@
 
  `emoji` 是一种文本类型的象形符号， 它和图片、表情包不同，**它能够在任何文本输入的地方使用**，**因为它本身就是一种文字** ；最新的 `emoji 13.1`版本包含**1816**个独立的表情符号（该统计不包含由多符号组成和其他肤色的表情符号），`emoji` 能够在各个不同的操作平台上显示，但显示效果会有一些不同，如下图显示了不同操作平台上的表情符号：
 
-![image-20210712095125698](在markdown中使用表情符号.assets/image-20210712095125698.png)
+![image-20210712095125698](image/在markdown中使用表情符号.assets/image-20210712095125698.png)
 
 
 
@@ -28,25 +28,25 @@
 
 - [完整的表情符号汇总  v13.1](https://www.unicode.org/emoji/charts/full-emoji-list.html)
 
-![image-20210712100312241](在markdown中使用表情符号.assets/image-20210712100312241.png)
+![image-20210712100312241](image/在markdown中使用表情符号.assets/image-20210712100312241.png)
 
 可以在这里查看表情符号的 Code 以及不同平台的显示效果。
 
 - [表情符号 Unicode 列表](https://apps.timwhitlock.info/emoji/tables/unicode#)
 
-![image-20210712100524998](在markdown中使用表情符号.assets/image-20210712100524998.png)
+![image-20210712100524998](image/在markdown中使用表情符号.assets/image-20210712100524998.png)
 
 
 
 - [表情符号备忘清单](https://www.webfx.com/tools/emoji-cheat-sheet/)
 
-![image-20210712100647370](在markdown中使用表情符号.assets/image-20210712100647370.png)
+![image-20210712100647370](image/在markdown中使用表情符号.assets/image-20210712100647370.png)
 
 在 markdown 以及部分平台可以使用这种方式的表情符号，格式为 `:smile:`，在后面将列出哪些常用的平台支持使用这种表情符号。
 
 - [表情符号中文网](https://www.emojiall.com/zh-hans)
 
-![image-20210712101111923](在markdown中使用表情符号.assets/image-20210712101111923.png)
+![image-20210712101111923](image/在markdown中使用表情符号.assets/image-20210712101111923.png)
 
 表情符号中文网站有最全最详细的 `emoji` 图标，同时支持分类、检索、专栏推荐、`emoji` 小游戏等功能。可以直接在网站中搜索需要的表情符号，复制粘贴即可使用，非常方便。
 

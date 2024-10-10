@@ -427,7 +427,7 @@ public interface Callable<V> {
 
 
 
-![image-20210905183800030](java中如何实现线程间通信.assets/image-20210905183800030.png)
+![image-20210905183800030](image/java中如何实现线程间通信.assets/image-20210905183800030.png)
 
 比如我们想让子线程计算1到100的总和，并将结果返回给主线程，代码如下：
 

@@ -97,7 +97,7 @@
 
 > 在线线程分析工具fastThread 地址：https://fastthread.io/
 
-![image-20210907145636073](是什么让Java应用程序的CPU使用率飙升.assets/image-20210907145636073.png)
+![image-20210907145636073](image/是什么让Java应用程序的CPU使用率飙升.assets/image-20210907145636073.png)
 
 下一篇文章介绍如何使用在线线程分析工具 **fastThread** 分析线程堆栈信息。
 

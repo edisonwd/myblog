@@ -54,11 +54,11 @@ pip install selenium
 
 > firefox 下载地址：http://www.firefox.com.cn/download/
 
-![image-20210815101511993](【爬虫】python+selenium+firefox使用与部署详解.assets/image-20210815101511993.png)
+![image-20210815101511993](image/【爬虫】python+selenium+firefox使用与部署详解.assets/image-20210815101511993.png)
 
 根据需要下载对应环境的安装包，因为这里是在 windows 中配置，所以下载 windows 的。下载完成后，双击 `.exe`文件，点击 下一步完成安装。
 
-![image-20210815101856842](【爬虫】python+selenium+firefox使用与部署详解.assets/image-20210815101856842.png)
+![image-20210815101856842](image/【爬虫】python+selenium+firefox使用与部署详解.assets/image-20210815101856842.png)
 
 
 
@@ -99,7 +99,7 @@ selenium.common.exceptions.WebDriverException: Message: 'geckodriver' executable
 
 **1. 请根据系统版本选择下载，如下图所示**：
 
-![image-20210815102659371](【爬虫】python+selenium+firefox使用与部署详解.assets/image-20210815102659371.png)
+![image-20210815102659371](image/【爬虫】python+selenium+firefox使用与部署详解.assets/image-20210815102659371.png)
 
 **2. 下载解压后将 `getckodriver.exe` 添加到 Path 环境变量中。**
 

@@ -219,7 +219,7 @@ kubectl port-forward service/jenkins 8080:8080 -n default
 
 暴露服务端口后，可以访问：http://localhost:8080
 
-![image-20210804113719169](在k8s中安装并使用jenkins.assets/image-20210804113719169.png)
+![image-20210804113719169](image/在k8s中安装并使用jenkins.assets/image-20210804113719169.png)
 
 使用下面的命令查看管理员密码：
 
@@ -234,19 +234,19 @@ b06be4420bcd4a02ab4968ab02838986
 
 登录成功后，需要安装插件：
 
-![image-20210804114339850](在k8s中安装并使用jenkins.assets/image-20210804114339850.png)
+![image-20210804114339850](image/在k8s中安装并使用jenkins.assets/image-20210804114339850.png)
 
-![image-20210804114650970](在k8s中安装并使用jenkins.assets/image-20210804114650970.png)
+![image-20210804114650970](image/在k8s中安装并使用jenkins.assets/image-20210804114650970.png)
 
 这里不安装推荐的插件的原因是，很多插件我们是不需要的，还有就是默认下载插件会从国外下载，比较慢，后面会介绍配置国内下载地址。
 
 点击安装后，创建第一个管理员用户：
 
-![image-20210804115005129](在k8s中安装并使用jenkins.assets/image-20210804115005129.png)
+![image-20210804115005129](image/在k8s中安装并使用jenkins.assets/image-20210804115005129.png)
 
 根据实际情况配置，这里选择使用admin 账号继续。
 
-![image-20210804115233111](在k8s中安装并使用jenkins.assets/image-20210804115233111.png)
+![image-20210804115233111](image/在k8s中安装并使用jenkins.assets/image-20210804115233111.png)
 
 
 
@@ -260,7 +260,7 @@ b06be4420bcd4a02ab4968ab02838986
 
 在 Artifact hub 中搜索 jenkins，如下图所示：
 
-![image-20210804141544184](在k8s中安装并使用jenkins.assets/image-20210804141544184.png)
+![image-20210804141544184](image/在k8s中安装并使用jenkins.assets/image-20210804141544184.png)
 
 根据 jenkins 的说明进行安装，下面详细介绍一下安装步骤：
 
@@ -357,7 +357,7 @@ kubectl --namespace default port-forward svc/jenkins 8080:8080
 
 暴露服务端口后，可以访问：http://localhost:8080，如下图所示：
 
-![image-20210805193558764](在k8s中安装并使用jenkins.assets/image-20210805193558764.png)
+![image-20210805193558764](image/在k8s中安装并使用jenkins.assets/image-20210805193558764.png)
 
 # 四. 配置 jenkins 实现 devops
 
@@ -371,53 +371,53 @@ kubectl --namespace default port-forward svc/jenkins 8080:8080
 
 如下图所示：
 
-![image-20210804143447318](在k8s中安装并使用jenkins.assets/image-20210804143447318.png)
+![image-20210804143447318](image/在k8s中安装并使用jenkins.assets/image-20210804143447318.png)
 
 ## 2. 下载常用插件
 
 下载常用插件如下图所示：
 
-![image-20210804144427284](在k8s中安装并使用jenkins.assets/image-20210804144427284.png)
+![image-20210804144427284](image/在k8s中安装并使用jenkins.assets/image-20210804144427284.png)
 
 ## 3. 配置 kubernetes 集群
 
 点击 【系统管理】—> 【节点管理】—> 【Configure Clouds】
 
-![image-20210804160525105](在k8s中安装并使用jenkins.assets/image-20210804160525105.png)
+![image-20210804160525105](image/在k8s中安装并使用jenkins.assets/image-20210804160525105.png)
 
-![image-20210804160807930](在k8s中安装并使用jenkins.assets/image-20210804160807930.png)
+![image-20210804160807930](image/在k8s中安装并使用jenkins.assets/image-20210804160807930.png)
 
 这里不做任何配置，直接点击【连接测试】就可以发现连接 k8s 成功，如下图所示：
 
-![image-20210804161226915](在k8s中安装并使用jenkins.assets/image-20210804161226915.png)
+![image-20210804161226915](image/在k8s中安装并使用jenkins.assets/image-20210804161226915.png)
 
 配置 k8s 集群相关，如下图：
 
-![image-20210804192743089](在k8s中安装并使用jenkins.assets/image-20210804192743089.png)
+![image-20210804192743089](image/在k8s中安装并使用jenkins.assets/image-20210804192743089.png)
 
 
 
 配置 pod 模板，如下图：
 
-![image-20210804165346794](在k8s中安装并使用jenkins.assets/image-20210804165346794.png)
+![image-20210804165346794](image/在k8s中安装并使用jenkins.assets/image-20210804165346794.png)
 
 
 
 在 pod 模板中添加第一个容器：`jenkins/inbound-agent`，作为 jenkins 的 slave 节点，如下图所示：
 
-![image-20210804194625102](在k8s中安装并使用jenkins.assets/image-20210804194625102.png)
+![image-20210804194625102](image/在k8s中安装并使用jenkins.assets/image-20210804194625102.png)
 
 在 pod 模板中添加第二个容器：`docker`，用于构建以及推送镜像，如下图所示：
 
-![image-20210804194659822](在k8s中安装并使用jenkins.assets/image-20210804194659822.png)
+![image-20210804194659822](image/在k8s中安装并使用jenkins.assets/image-20210804194659822.png)
 
 在 pod 模板中添加第三个容器：`maven:3.8.1-openjdk-11`，如下图所示：
 
-![image-20210804194813162](在k8s中安装并使用jenkins.assets/image-20210804194813162.png)
+![image-20210804194813162](image/在k8s中安装并使用jenkins.assets/image-20210804194813162.png)
 
 根据需要添加更多容器，比如需要构建前端项目，可以添加一个 `node:16.6.1-slim` 容器，如下图所示：
 
-![image-20210804195917454](在k8s中安装并使用jenkins.assets/image-20210804195917454.png)
+![image-20210804195917454](image/在k8s中安装并使用jenkins.assets/image-20210804195917454.png)
 
 ## 4. 为 maven 容器配置缓存和挂载 settings.xml
 
@@ -431,7 +431,7 @@ kubectl -n default create configmap maven-config --from-file=settings.xml
 
 在**卷**下单击**添加卷**，选择**Config Map Volume**类型卷，另一个是 maven 的配置，为了持久化依赖，提高构建速度，配置如下图所示：
 
-![image-20210805153542451](在k8s中安装并使用jenkins.assets/image-20210805153542451.png)
+![image-20210805153542451](image/在k8s中安装并使用jenkins.assets/image-20210805153542451.png)
 
 
 
@@ -453,7 +453,7 @@ kubectl create secret generic jenkins-docker-cfg -n default --from-file=/root/.d
 
 在Jenkins系统的Pod Template中配置挂载卷及环境变量：
 
-![image-20210805153117834](在k8s中安装并使用jenkins.assets/image-20210805153117834.png)
+![image-20210805153117834](image/在k8s中安装并使用jenkins.assets/image-20210805153117834.png)
 
 ## 6. 配置访问k8s的kubeconfig
 
@@ -461,19 +461,19 @@ kubectl create secret generic jenkins-docker-cfg -n default --from-file=/root/.d
 
 - [Manage Credentials] -> [jenkins] -> [全局凭据] -> [添加凭据]
 
-![image-20210806175423918](在k8s中安装并使用jenkins.assets/image-20210806175423918.png)
+![image-20210806175423918](image/在k8s中安装并使用jenkins.assets/image-20210806175423918.png)
 
 ## 7. 设置拉取私有仓库镜像的用户名和密码
 
 - [Manage Credentials] -> [jenkins] -> [全局凭据] -> [添加凭据]
 
-![image-20210806180358353](在k8s中安装并使用jenkins.assets/image-20210806180358353.png)
+![image-20210806180358353](image/在k8s中安装并使用jenkins.assets/image-20210806180358353.png)
 
 ## 8. 测试 devops 构建流程
 
 创建一个 pipeline 项目，如下图所示：
 
-![image-20210804201525734](在k8s中安装并使用jenkins.assets/image-20210804201525734.png)
+![image-20210804201525734](image/在k8s中安装并使用jenkins.assets/image-20210804201525734.png)
 
 在流水线脚本中输入如下内容：
 
@@ -532,9 +532,9 @@ pipeline {
 
 如下图所示：
 
-![image-20210804201855270](在k8s中安装并使用jenkins.assets/image-20210804201855270.png)
+![image-20210804201855270](image/在k8s中安装并使用jenkins.assets/image-20210804201855270.png)
 
 点击保存，并构建，显示如下：
 
-![image-20210805102208271](在k8s中安装并使用jenkins.assets/image-20210805102208271.png)
+![image-20210805102208271](image/在k8s中安装并使用jenkins.assets/image-20210805102208271.png)
 

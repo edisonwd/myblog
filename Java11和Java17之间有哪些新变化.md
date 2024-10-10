@@ -24,7 +24,7 @@ Java 11 和 Java 17 之间发生了什么变化？可以在[OpenJDK](https://ope
 
 这里是在 windows 中安装 jdk 17，所以选择 Windows ，然后选择下载 zip 包，如下图所示：
 
-![image-20211028145059186](Java11和Java17之间有哪些新变化.assets/image-20211028145059186.png)
+![image-20211028145059186](image/Java11和Java17之间有哪些新变化.assets/image-20211028145059186.png)
 
 下载完成后解压到一个指定的目录，我这里选择放在 `D:\environment\jdk-17` 目录，然后需要配置环境变量，配置环境变量非常简单，这里不再赘述。如果使用 idea 开发，则可以不用配置环境变量，通过在 idea 指定 jdk 的安装目录即可，下面详细说明如何配置。
 
@@ -32,7 +32,7 @@ Java 11 和 Java 17 之间发生了什么变化？可以在[OpenJDK](https://ope
 
 点击 `file --> settings`，打开 `settings` 确定 `Java  compiler` 的 `Project bytecode version` 是否选中项目需要的jdk版本，我这里的 idea 版本没有 17，所以选择 16 就可以了，如下图所示：
 
-![image-20211028184224105](Java11和Java17之间有哪些新变化.assets/image-20211028184224105.png)
+![image-20211028184224105](image/Java11和Java17之间有哪些新变化.assets/image-20211028184224105.png)
 
 
 
@@ -40,15 +40,15 @@ Java 11 和 Java 17 之间发生了什么变化？可以在[OpenJDK](https://ope
 
 
 
-![image-20211028190125990](Java11和Java17之间有哪些新变化.assets/image-20211028190125990.png)
+![image-20211028190125990](image/Java11和Java17之间有哪些新变化.assets/image-20211028190125990.png)
 
 配置好 `Project SDK` 后，`Project language level` 选择 `SDK default` 即可，如下图所示：
 
-![image-20211028190704472](Java11和Java17之间有哪些新变化.assets/image-20211028190704472.png)
+![image-20211028190704472](image/Java11和Java17之间有哪些新变化.assets/image-20211028190704472.png)
 
 配置 `Modules` 的 `Language level`，不同的 `Module` 可以配置不同的 `Language level` ，但是不能比项目的 jdk 版本高，这里配置项目默认的即可，如下图所示：
 
-![image-20211028191444882](Java11和Java17之间有哪些新变化.assets/image-20211028191444882.png)
+![image-20211028191444882](image/Java11和Java17之间有哪些新变化.assets/image-20211028191444882.png)
 
 
 

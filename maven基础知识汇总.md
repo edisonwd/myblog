@@ -44,12 +44,12 @@ mvn help:describe -Dplugin=install -Dfull
 
 在上面的表格中标出了常用的生命周期，对应 idea 中 maven 的生命周期如下图：
 
-![image.png](maven基础知识汇总.assets/bcb3adeaa1294e5fa15822838c8dcbd2~tplv-k3u1fbpfcp-watermark.image)
+![image.png](image/maven基础知识汇总.assets/bcb3adeaa1294e5fa15822838c8dcbd2~tplv-k3u1fbpfcp-watermark.image)
 
 ## 2. 执行 mvn package 发生了什么
 
 
-![image.png](maven基础知识汇总.assets/3bfa8124a8614bcdb909a97aff3ef4dd~tplv-k3u1fbpfcp-watermark.image)
+![image.png](image/maven基础知识汇总.assets/3bfa8124a8614bcdb909a97aff3ef4dd~tplv-k3u1fbpfcp-watermark.image)
 
 
 我们可以将插件的目标绑定到 maven 的生命周期阶段上，执行 `mvn package` 命令，在 Maven 沿着生命周期一步步向前的过程中，它将运行绑定在每个阶段上的所有目标。
@@ -212,7 +212,7 @@ ${project.build.finalName}:项目打包输出文件的名称，默认为${projec
 比如在 [dubbo](https://github.com/apache/dubbo) 项目中也是这样使用的，它定义了一个叫做 `dubbo-dependencies-bom` 的子模块，模块中只有一个 `pom.xml` 文件，如下图:
 
 
-![image.png](maven基础知识汇总.assets/1e6fbeed0048405f99765fcc89a59dd6~tplv-k3u1fbpfcp-watermark.image)
+![image.png](image/maven基础知识汇总.assets/1e6fbeed0048405f99765fcc89a59dd6~tplv-k3u1fbpfcp-watermark.image)
 
 
 在 `dubbo-dependencies-bom` 的父 `pom.xml` 中通过如下方式引入使用：
@@ -267,7 +267,7 @@ ${project.build.finalName}:项目打包输出文件的名称，默认为${projec
 
 下面通过一个例子来说明上面的功能，定义一个 `hello.txt` 文件，文件中通过 `${变量名}` 方式定义一些变量，用来验证变量替换的功能，定义了 `test.txt` 用来验证文件排除功能，定义了一个 `my.properties` 文件指定变量的值，如下图所示:
 
-![image.png](maven基础知识汇总.assets/2e28904d849e4adeaa8d6a824842ca60~tplv-k3u1fbpfcp-watermark.image)
+![image.png](image/maven基础知识汇总.assets/2e28904d849e4adeaa8d6a824842ca60~tplv-k3u1fbpfcp-watermark.image)
 
  使用如下命令编译打包：
  ```sh
@@ -275,7 +275,7 @@ ${project.build.finalName}:项目打包输出文件的名称，默认为${projec
  ```
  输出结果如下图：
 
-![image.png](maven基础知识汇总.assets/fdccdee087ce430da145ca1b4121452f~tplv-k3u1fbpfcp-watermark.image)
+![image.png](image/maven基础知识汇总.assets/fdccdee087ce430da145ca1b4121452f~tplv-k3u1fbpfcp-watermark.image)
 
 从结果中我们可以看出，`test.txt` 文件被排除了，自定义变量的值也被正确替换了。
 

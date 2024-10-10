@@ -16,7 +16,7 @@ Java Exception 是为了处理应用程序的异常行为而创建的类。在�
 
 基本结构如下图：
 
-![image-20210915104636608](Java异常.assets/image-20210915104636608.png)
+![image-20210915104636608](image/Java异常.assets/image-20210915104636608.png)
 
 `Throwable` 是所有异常的父类，它有两个子类：`Error` 和 `Exception`。
 
@@ -30,7 +30,7 @@ Java Exception 是为了处理应用程序的异常行为而创建的类。在�
 
 **非检查异常：** Java 语言将派生于 `RuntimeException` 类或 `Error` 类的所有异常称为非检查性异常。
 
-![image-20210915104205230](Java异常.assets/image-20210915104205230.png)
+![image-20210915104205230](image/Java异常.assets/image-20210915104205230.png)
 
 ## Java 中的异常处理
 
@@ -42,7 +42,7 @@ Java Exception 是为了处理应用程序的异常行为而创建的类。在�
 
    
 
-![异常处理和重新抛出代码。](Java异常.assets/15154158-1631225978492.png)
+![异常处理和重新抛出代码。](image/Java异常.assets/15154158-1631225978492.png)
 
 
 
@@ -65,7 +65,7 @@ Java Exception 是为了处理应用程序的异常行为而创建的类。在�
 
 ### 常见 Error 异常
 
-![image-20210915153410425](Java异常.assets/image-20210915153410425.png)
+![image-20210915153410425](image/Java异常.assets/image-20210915153410425.png)
 
 <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse;width:653pt;" width="870">
  <tbody>
@@ -131,7 +131,7 @@ Java Exception 是为了处理应用程序的异常行为而创建的类。在�
 
 ### 常见 Runtime 异常
 
-![image-20210915154320891](Java异常.assets/image-20210915154320891.png)
+![image-20210915154320891](image/Java异常.assets/image-20210915154320891.png)
 
 <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse;width:611pt;" width="813">
  <tbody>
@@ -222,7 +222,7 @@ Checked 和 Error 异常错误不会导致任何代码更改，但是在大多�
 
 ### 常见 Checked 异常
 
-![image-20210915155008329](Java异常.assets/image-20210915155008329.png)
+![image-20210915155008329](image/Java异常.assets/image-20210915155008329.png)
 
 <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse;width:649pt;" width="865">
  <tbody>

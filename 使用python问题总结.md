@@ -24,7 +24,7 @@ print(s1) # abcd
 print(s2) # a,b,c,d
 ```
 
-![image-20210825200325510](使用python问题总结.assets/image-20210825200325510.png)
+![image-20210825200325510](image/使用python问题总结.assets/image-20210825200325510.png)
 
 
 
