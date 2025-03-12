@@ -1,0 +1,50 @@
+site_name: My Docs
+nav:
+- 首页: index.md
+- devops:
+  - devops\apisix在k8s中的实践.md
+  - devops\devops工具zadig实践.md
+  - devops\k8s中的nginx-ingress如何配置路径重定向.md
+  - devops\在k8s中安装并使用jenkins.md
+  - devops\在k8s中安装并使用nexus.md
+  - devops\如何提高docker容器的安全性.md
+- go:
+  - go\go语言grpc框架从入门到实践.md
+  - go\【golang】使用chan收集多协程执行的结果.md
+  - go\【golang学习记录】环境搭建.md
+- java:
+  - java\Java 编程思想.md
+  - java\Java11和Java17之间有哪些新变化.md
+  - java\java中如何实现线程间通信.md
+  - java\Java中获取ThreadDumps的8种方式汇总.md
+  - java\Java和go语言实现LRU算法.md
+  - java\Java异常.md
+  - java\maven基础知识汇总.md
+  - java\springboot使用k8s的configMap作为外部配置.md
+  - java\使用maven自定义插件实现devops.md
+  - java\如何监控 Java 垃圾回收.md
+  - java\如何调优 Java 垃圾收集.md
+  - java\是什么让Java应用程序的CPU使用率飙升.md
+  - java\简单理解 Java 垃圾收集器.md
+  - java\阅读阿里Java开发手册记录.md
+- other:
+  - other\优秀博客汇总.md
+  - other\使用Awescnb构建酷炫的博客园皮肤.md
+  - other\在markdown中使用表情符号.md
+  - other\学习笔记.md
+- python:
+  - python\gunicorn超时报错.md
+  - python\python使用正则表达式提取json字符串的值.md
+  - python\python实现掘金定时签到抽奖.md
+  - python\使用python问题总结.md
+- 大模型:
+  - 大模型\langchain使用token切分chunk.md
+- 工具:
+  - 工具\使用过的开源工具.md
+- 爬虫:
+  - 爬虫\BeautifulSoup的使用.md
+  - 爬虫\selenium如何拖动滚动条.md
+  - 爬虫\【爬虫】docker部署python+selenium+firefox-headless.md
+  - 爬虫\【爬虫】python+selenium+firefox使用与部署详解.md
+- 算法:
+  - 算法\归并排序图文讲解.md
