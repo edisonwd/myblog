@@ -12,6 +12,10 @@ def generate_nav_structure_recursive(path: Path, indent_level: int=0):
         if file_path.name in ignore_path:
             continue
         if file_path.is_dir():
+            # 判断文件夹是否为空
+            if not any(file_path.iterdir()):
+                print(f"跳过空文件夹: {file_path.name}")
+                continue
             nav_structure += f"{indent}- {file_path.name}:\n"
             nav_structure += generate_nav_structure_recursive(file_path, indent_level + 1)
         elif file_path.is_file():
@@ -75,12 +79,12 @@ def move_with_order(lst, target_order):
 
 
 # 示例目录
-directory = ".\\docs"
+directory = "./docs"
 nav_structure = generate_nav_structure(directory)
 
 nav_list = yaml_to_dict(nav_structure)
 # 首页放在列表开头
 nav_list = move_with_order(nav_list, ['首页'])
 # 更新导航
-update_yaml_file('.\\mkdocs.yml', 'nav', nav_list)
+update_yaml_file('./mkdocs.yml', 'nav', nav_list)
 print('更新导航成功')
