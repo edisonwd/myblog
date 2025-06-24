@@ -65,9 +65,9 @@ PageHelper 是一个非常流行的 MyBatis 分页插件，但它也有一些潜
 
 步骤6：在Controller中接收分页参数，调用Service方法
 
-# 分页查询具体代码实现
+## 分页查询具体代码实现
 
-## 1. 分页请求参数类（PageRequest）：
+### 1. 分页请求参数类（PageRequest）：
 
 ```java
 
@@ -232,7 +232,7 @@ public class PageRequest {
 
 ```
 
-## 2. 分页结果类（PageResult）：
+### 2. 分页结果类（PageResult）：
 
 ```java
 
@@ -476,7 +476,7 @@ public class PageResult<T> {
 
 ```
 
-## 3. 创建分页查询工具（PaginationUtils）
+### 3. 创建分页查询工具（PaginationUtils）
 
 ```java
 
@@ -577,7 +577,7 @@ public interface RuleCustomMapper extends CommonCountMapper {
 ```
 
 
-## 4. MyBatis Dynamic SQL处理复杂JOIN和子查询：
+### 4. MyBatis Dynamic SQL处理复杂JOIN和子查询：
 **告别繁琐的 XML 和 OGNL**:
 
 - **痛点**： 传统的 MyBatis XML Mapper 文件虽然功能强大，但编写和阅读动态 SQL（使用 `<if>`, `<choose>`, `<when>`, `<otherwise>`, `<foreach>` 等标签）在复杂场景下会变得冗长、嵌套深、可读性下降，且需要掌握 OGNL 表达式。在 Java 和 XML 之间切换也影响开发效率。
@@ -836,7 +836,7 @@ public interface RuleMapper {
 
 
 
-## 5. Service层：
+### 5. Service层：
 
 ```java
 
@@ -900,7 +900,7 @@ public class RuleServiceImpl implements RuleService {
 
 ```
 
-6. Controller层：
+### 6. Controller层：
 
 ```java
 
@@ -948,6 +948,6 @@ public class RuleController {
 ```
 
 
-# 总结
+## 总结
 
 自己封装分页查询虽然代码量稍多，但可控性强，避免了PageHelper的线程安全问题，适合对分页有定制需求或高并发场景。
