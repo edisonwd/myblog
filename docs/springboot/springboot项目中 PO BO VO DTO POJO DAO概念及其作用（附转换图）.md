@@ -106,27 +106,27 @@ graph TD
 
 请求：
 
-前端 -> Controller (接收DTO, 如UserCreateRequest) -> Service (将DTO转换为BO) -> domain (处理BO)
+前端 -> web (接收DTO, 如UserCreateRequest) -> application (将DTO转换为BO) -> domain (处理BO)
 
 -> Infrastructure (将BO转换为PO, 然后通过DAO操作数据库)
 
 响应：
 
-Infrastructure (从数据库获取PO) -> 将PO转换为BO -> domain (返回BO) -> Service (将BO转换为DTO)
+Infrastructure (从数据库获取PO) -> 将PO转换为BO -> domain (返回BO) -> application (将BO转换为DTO)
 
--> Controller (返回DTO/VO给前端)
+-> web (返回DTO/VO给前端)
 
 ```
 
 ### 具体转换步骤
 
-1. **Controller层**：
+1. **web层**：
 
 - 接收前端请求：使用`DTO`（如`UserCreateRequest`）接收参数。
 
-- 调用Service层：将`DTO`转换为`BO`（业务对象）传递给Service。
+- 调用application层：将`DTO`转换为`BO`（业务对象）传递给application。
 
-2. **Service层（应用服务层）**：
+2. **application层（应用服务层）**：
 
 - 处理业务逻辑：使用`BO`进行业务操作。
 
@@ -148,19 +148,19 @@ Infrastructure (从数据库获取PO) -> 将PO转换为BO -> domain (返回BO) -
 
 5. **返回流程**：
 
-- domain层返回`BO`给Service层。
+- domain层返回`BO`给application层。
 
-- Service层将`BO`转换为`DTO`（如`UserResponse`）返回给Controller。
+- application层将`BO`转换为`DTO`（如`UserResponse`）返回给web。
 
-- Controller将`DTO`返回给前端（此时作为VO使用）。
+- web将`DTO`返回给前端（此时作为VO使用）。
 
 
 ### 转换流程
-1. **Controller 层**  
+1. **web 层**  
    `VO/RequestDTO` ➔ `BO`  
    (e.g., `UserCreateRequest` ➔ `User`)
    
-2. **Service 层**  
+2. **application 层**  
    `BO` ➔ `PO`  
    (e.g., `User` ➔ `UserEntity`)
 
@@ -175,9 +175,9 @@ Infrastructure (从数据库获取PO) -> 将PO转换为BO -> domain (返回BO) -
 ```mermaid
 graph LR
     A[前端请求] -->|1. 提交| B(VO/RequestDTO)
-    B --> C[Controller]
+    B --> C[web]
     C -->|2. 转换| D(BO)
-    D --> E[Service]
+    D --> E[application]
     E -->|3. 业务处理| F(BO)
     F --> G[Repository]
     G -->|4. 转换| H(PO)
@@ -199,18 +199,18 @@ graph LR
 
 sequenceDiagram
     participant Frontend as 前端
-    participant Controller as Controller层
-    participant Service as Service层
+    participant web as web层
+    participant application as application层
     participant domain as domain领域层
     participant Infrastructure as Infrastructure层
     participant Database as 数据库
 
     rect rgb(191, 223, 255, 0.3)
     note over Frontend,Database: 请求流程
-    Frontend->>Controller: 发送请求(DTO)<br/>e.g. UserCreateRequest
-    Controller->>Service: 传递DTO
-    Service->>Service: DTO → BO转换<br/>e.g. UserCreateRequest → User
-    Service->>domain: 传递BO
+    Frontend->>web: 发送请求(DTO)<br/>e.g. UserCreateRequest
+    web->>application: 传递DTO
+    application->>application: DTO → BO转换<br/>e.g. UserCreateRequest → User
+    application->>domain: 传递BO
     domain->>Infrastructure: 调用仓储方法<br/>传递BO
     Infrastructure->>Infrastructure: BO → PO转换<br/>e.g. User → UserEntity
     Infrastructure->>Database: 执行DAO操作<br/>保存PO
@@ -221,17 +221,17 @@ sequenceDiagram
     Database->>Infrastructure: 返回PO<br/>e.g. UserEntity
     Infrastructure->>Infrastructure: PO → BO转换<br/>e.g. UserEntity → User
     Infrastructure->>domain: 返回BO
-    domain->>Service: 返回BO
-    Service->>Service: BO → DTO转换<br/>e.g. User → UserResponse
-    Service->>Controller: 返回DTO
-    Controller->>Frontend: 返回DTO/VO
+    domain->>application: 返回BO
+    application->>application: BO → DTO转换<br/>e.g. User → UserResponse
+    application->>web: 返回DTO
+    web->>Frontend: 返回DTO/VO
     end
 ```
 
 
 ### 各层对象转换示例代码
 
-1. **Controller（接收DTO，返回DTO）**：
+1. **web（接收DTO，返回DTO）**：
 
 ```java
 
@@ -240,7 +240,7 @@ public UserResponse createUser(@RequestBody UserCreateRequest request) {
 
     User user = userConverter.toDomain(request); // DTO转BO
 
-    User createdUser = userService.createUser(user);
+    User createdUser = userapplication.createUser(user);
 
     return userConverter.toResponse(createdUser); // BO转DTO
 
@@ -248,14 +248,14 @@ public UserResponse createUser(@RequestBody UserCreateRequest request) {
 
 ```
 
-2. **Service（使用BO）**：
+2. **application（使用BO）**：
 
 ```java
 
 public User createUser(User user) {
 
     // 业务逻辑处理
-    user = userDomainService.create(user); // 调用领域服务
+    user = userDomainapplication.create(user); // 调用领域服务
     return user;
 }
 
@@ -392,16 +392,16 @@ public class UserConverter {
 
 2. **层间隔离**：
    - Controller 不应直接操作 PO
-   - Service 不应返回 VO/DTO
+   - application 不应返回 VO/DTO
    - Repository 不应接收 BO
 
 3. **转换时机**：
    ```mermaid
    sequenceDiagram
-       Controller->>Service: DTO->BO
-       Service->>Repository: BO->PO
-       Repository->>Service: PO->BO
-       Service->>Controller: BO->VO
+       Controller->>application: DTO->BO
+       application->>Repository: BO->PO
+       Repository->>application: PO->BO
+       application->>Controller: BO->VO
    ```
 
 4. **性能优化**：
