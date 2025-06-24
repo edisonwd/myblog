@@ -1,5 +1,5 @@
 
-# 概述
+# Spring Boot项目自己封装一个分页查询工具
 在Spring Boot项目中使用MyBatis进行分页查询，通常有两种主流方式：
 
 1. 使用MyBatis内置的RowBounds进行内存分页（不推荐，数据量大时性能差）
