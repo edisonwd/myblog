@@ -1,5 +1,5 @@
-# springboot项目中 PO BO VO DTO POJO DAO概念及其作用（附转换图）
 
+# springboot项目中 PO BO VO DTO POJO DAO概念及其作用（附转换图）
 下面详细解释Spring Boot项目中常见的对象类型：PO、BO、VO、DTO、POJO、DAO，并说明它们在分层架构中的位置。
 ## Spring Boot 项目中常见对象类型详解
 
@@ -39,7 +39,7 @@
   - 聚合多个 PO 或值对象
   - 包含业务方法和领域规则
 - **作用**：封装核心业务逻辑和状态
-- **位置**：位于`core`层（核心业务领域层）。
+- **位置**：位于`domain`层（核心业务领域层）。
   (e.g., `User.java`)
 
 ### 5. VO (View Object) 视图对象
@@ -94,7 +94,7 @@ graph TD
 | PO       | infrastructure        | 与数据库表对应的实体                 |`UserEntity.java`        |
 | DAO      | infrastructure        | 数据访问接口（如Mapper）            | `UserMapper.java`|
 | DTO      | common-dto, web, facade | 数据传输对象，按使用场景分模块存放   | `PageRequest.java`       |
-| BO       | core                  | 业务对象（领域模型）                | `User.java`              |
+| BO       | domain                  | 业务对象（领域模型）                | `User.java`              |
 | VO       | web                   | 视图对象（可视为Web层的响应DTO）    | `UserResponse.java`      |
 | POJO     | 所有模块              | 泛指简单的Java对象，无特定位置      | 简单值对象               |
 
@@ -106,13 +106,13 @@ graph TD
 
 请求：
 
-前端 -> Controller (接收DTO, 如UserCreateRequest) -> Service (将DTO转换为BO) -> Core (处理BO)
+前端 -> Controller (接收DTO, 如UserCreateRequest) -> Service (将DTO转换为BO) -> domain (处理BO)
 
 -> Infrastructure (将BO转换为PO, 然后通过DAO操作数据库)
 
 响应：
 
-Infrastructure (从数据库获取PO) -> 将PO转换为BO -> Core (返回BO) -> Service (将BO转换为DTO)
+Infrastructure (从数据库获取PO) -> 将PO转换为BO -> domain (返回BO) -> Service (将BO转换为DTO)
 
 -> Controller (返回DTO/VO给前端)
 
@@ -130,13 +130,13 @@ Infrastructure (从数据库获取PO) -> 将PO转换为BO -> Core (返回BO) -> 
 
 - 处理业务逻辑：使用`BO`进行业务操作。
 
-- 调用Core层（领域服务）：传递`BO`。
+- 调用domain层（领域服务）：传递`BO`。
 
-3. **Core层**：
+3. **domain层**：
 
 - 执行核心业务逻辑：使用`BO`（领域对象）。
 
-- 调用Repository接口：传递`BO`（注意：这里Core层只依赖接口）。
+- 调用Repository接口：传递`BO`（注意：这里domain层只依赖接口）。
 
 4. **Infrastructure层**：
 
@@ -144,11 +144,11 @@ Infrastructure (从数据库获取PO) -> 将PO转换为BO -> Core (返回BO) -> 
 
 - 使用DAO（如MyBatis Mapper）操作数据库：操作的是`PO`。
 
-- 从数据库获取数据：将`PO`转换为`BO`返回给Core层。
+- 从数据库获取数据：将`PO`转换为`BO`返回给domain层。
 
 5. **返回流程**：
 
-- Core层返回`BO`给Service层。
+- domain层返回`BO`给Service层。
 
 - Service层将`BO`转换为`DTO`（如`UserResponse`）返回给Controller。
 
@@ -201,7 +201,7 @@ sequenceDiagram
     participant Frontend as 前端
     participant Controller as Controller层
     participant Service as Service层
-    participant Core as Core领域层
+    participant domain as domain领域层
     participant Infrastructure as Infrastructure层
     participant Database as 数据库
 
@@ -210,8 +210,8 @@ sequenceDiagram
     Frontend->>Controller: 发送请求(DTO)<br/>e.g. UserCreateRequest
     Controller->>Service: 传递DTO
     Service->>Service: DTO → BO转换<br/>e.g. UserCreateRequest → User
-    Service->>Core: 传递BO
-    Core->>Infrastructure: 调用仓储方法<br/>传递BO
+    Service->>domain: 传递BO
+    domain->>Infrastructure: 调用仓储方法<br/>传递BO
     Infrastructure->>Infrastructure: BO → PO转换<br/>e.g. User → UserEntity
     Infrastructure->>Database: 执行DAO操作<br/>保存PO
     end
@@ -220,8 +220,8 @@ sequenceDiagram
     note over Database,Frontend: 响应流程
     Database->>Infrastructure: 返回PO<br/>e.g. UserEntity
     Infrastructure->>Infrastructure: PO → BO转换<br/>e.g. UserEntity → User
-    Infrastructure->>Core: 返回BO
-    Core->>Service: 返回BO
+    Infrastructure->>domain: 返回BO
+    domain->>Service: 返回BO
     Service->>Service: BO → DTO转换<br/>e.g. User → UserResponse
     Service->>Controller: 返回DTO
     Controller->>Frontend: 返回DTO/VO
@@ -296,7 +296,7 @@ public class UserRepositoryImpl implements UserRepository {
 
 - 严格的分层和对象转换虽然增加了代码量，但提高了系统的可维护性和可扩展性。
 
-- 核心是保持`core`层的纯净（只使用BO），避免技术细节污染业务逻辑。
+- 核心是保持`domain`层的纯净（只使用BO），避免技术细节污染业务逻辑。
 
 - 通过转换器（Converter）实现各层对象之间的转换，确保各层职责明确。
 
@@ -319,7 +319,7 @@ public class UserEntity {
 
 #### 2. BO 定义 (核心层)
 ```java
-// core 模块
+// domain 模块
 public class User {
     private Long id;
     private String username;
