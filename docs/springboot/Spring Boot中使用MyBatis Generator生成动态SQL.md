@@ -1,4 +1,4 @@
-
+# Spring Boot中使用MyBatis Generator生成动态SQL
 我们将在Spring Boot项目中集成MyBatis Generator，并配置其生成MyBatis Dynamic SQL风格的代码。
 MyBatis Dynamic SQL是MyBatis 3的一个特性，它允许使用Java API构建动态SQL查询，避免编写XML或使用Example类。
 
