@@ -513,7 +513,7 @@ public class PaginationUtils {
 
 ```
 
-## 4. Mapper接口示例（使用MyBatis Dynamic SQL）：
+### 4. Mapper接口示例（使用MyBatis Dynamic SQL）：
 
 当进行JOIN或复杂子查询时，查询结果通常涉及多个实体，因此需要自定义结果映射。MyBatis Dynamic SQL本身不处理结果映射，你需要：
 
@@ -577,7 +577,7 @@ public interface RuleCustomMapper extends CommonCountMapper {
 ```
 
 
-### 4. MyBatis Dynamic SQL处理复杂JOIN和子查询：
+### 5. MyBatis Dynamic SQL处理复杂JOIN和子查询：
 **告别繁琐的 XML 和 OGNL**:
 
 - **痛点**： 传统的 MyBatis XML Mapper 文件虽然功能强大，但编写和阅读动态 SQL（使用 `<if>`, `<choose>`, `<when>`, `<otherwise>`, `<foreach>` 等标签）在复杂场景下会变得冗长、嵌套深、可读性下降，且需要掌握 OGNL 表达式。在 Java 和 XML 之间切换也影响开发效率。
@@ -836,7 +836,7 @@ public interface RuleMapper {
 
 
 
-### 5. Service层：
+### 6. Service层：
 
 ```java
 
@@ -900,7 +900,7 @@ public class RuleServiceImpl implements RuleService {
 
 ```
 
-### 6. Controller层：
+### 7. Controller层：
 
 ```java
 
