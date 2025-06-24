@@ -22,7 +22,6 @@ MyBatis Dynamic SQL是MyBatis 3的一个特性，它允许使用Java API构建�
 
 5.  在Spring Boot中配置MyBatis，使用生成的Mapper。
 
-# 详细步骤
 
 ## 一、创建Spring Boot项目并添加依赖
 
