@@ -174,17 +174,17 @@ Infrastructure (从数据库获取PO) -> 将PO转换为BO -> domain (返回BO) -
 
 ```mermaid
 graph LR
-    A[前端请求] -->|1. 提交| B(VO/RequestDTO)
+    A[前端请求] -->|1.提交| B(VO/RequestDTO)
     B --> C[web]
-    C -->|2. 转换| D(BO)
+    C -->|2.转换| D(BO)
     D --> E[application]
-    E -->|3. 业务处理| F(BO)
+    E -->|3.业务处理| F(BO)
     F --> G[Repository]
-    G -->|4. 转换| H(PO)
+    G -->|4.转换| H(PO)
     H --> I[(数据库)]
-    I -->|5. 返回| H
-    H -->|6. 转换| F
-    F -->|7. 转换| J(VO/ResponseDTO)
+    I -->|5.返回| H
+    H -->|6.转换| F
+    F -->|7.转换| J(VO/ResponseDTO)
     J --> K[前端响应]
     
     style B fill:#cfe2f3,stroke:#333
