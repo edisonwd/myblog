@@ -4,11 +4,6 @@ theme:
   features:
     - content.code.copy
     - content.code.select
-plugins:
-  - search
-  - mermaid2
-extra_javascript:
-  - https://unpkg.com/mermaid@9.4.3/dist/mermaid.min.js
 markdown_extensions:
   - pymdownx.superfences:
       custom_fences:
