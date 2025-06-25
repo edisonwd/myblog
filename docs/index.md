@@ -370,7 +370,7 @@ jobs:
         with:
           python-version: 3.x
       - run: echo "cache_id=$(date --utc '+%V')" >> $GITHUB_ENV
-      - run: pip install pyyaml
+      - run: pip install ruamel.yaml mkdocs-material
       - run: python gen_mkdocs_nav.py
       - uses: actions/cache@v4
         with:
@@ -378,7 +378,6 @@ jobs:
           path: .cache 
           restore-keys: |
             mkdocs-material-
-      - run: pip install mkdocs-material 
       - run: mkdocs gh-deploy --force
 
 ```
