@@ -479,7 +479,7 @@ MyBatis Generator (MBG) 是一个强大的代码生成工具，可以自动创�
         </commentGenerator>
         <!-- 数据库连接信息 -->
         <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
-                        connectionURL="jdbc:mysql://localhost:3306/mydatabase?useSSL=false&amp;serverTimezone=UTC"
+                        connectionURL="jdbc:mysql://localhost:3306/mydatabase"
                         userId="root"
                         password="mysecretpassword">
         </jdbcConnection>
