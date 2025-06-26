@@ -101,6 +101,153 @@ example-project (父POM)
 
 > 注意：在Spring Boot项目中，bootstrap模块是唯一包含启动类的模块，并且会打包成可执行的jar。
 
+
+### 分层架构各层职责详解  
+
+#### 1. **example-project-common (通用模块)**  
+**核心职责**：提供全系统共享的**基础设施无关**的公共组件  
+- **通用DTO**  
+  - `PageRequest`：统一分页请求参数  
+  - `PageResponse`：标准化分页响应结构  
+  - `BaseResponse`：全局响应封装（成功/失败）  
+- **常量定义**  
+  - 系统级常量（如缓存Key前缀）  
+  - 错误码枚举（`ErrorCode`）  
+- **工具类**  
+  - 加解密工具（`AESUtil`）  
+  - 日期处理（`DateUtils`）  
+  - 验证工具（`ValidationUtils`）  
+- **全局异常**  
+  - `BusinessException`：业务异常基类  
+  - `GlobalExceptionHandler`：统一异常处理器  
+
+> 📌 **设计原则**：零业务逻辑 + 无技术框架依赖，可被任意模块引用  
+
+
+#### 2. **example-project-domain (核心领域层)**  
+**核心职责**：实现系统的**核心业务逻辑**，保持领域模型纯净  
+- **领域模型**  
+  - 实体（`User`, `Product`）  
+  - 值对象（`Money`, `Address`）  
+  - 聚合根（`Order`）  
+- **领域服务**  
+  - 业务规则封装（`UserRegistrationService`）  
+  - 跨实体操作（`OrderPaymentService`）  
+- **仓储接口**  
+  - 定义数据访问契约（`UserRepository`, `OrderRepository`）  
+- **领域事件**  
+  - `UserRegisteredEvent` 等事件定义  
+
+> 🔒 **关键约束**：  
+> 1. 禁止依赖其他模块（包括Spring框架）  
+> 2. 通过接口与基础设施层解耦  
+> 3. 不包含任何传输对象（DTO）或持久化注解  
+
+
+#### 3. **example-project-infrastructure (基础设施层)**  
+**核心职责**：实现**技术细节**，为领域层提供技术支持  
+- **持久化实现**  
+  - MyBatis Mapper（`UserMapper`）  
+  - JPA Repository（`OrderJpaRepository`）  
+  - 仓储接口实现（`UserRepositoryImpl`）  
+- **PO对象**  
+  - 数据库表映射实体（`UserPO`, `OrderPO`）  
+- **三方集成**  
+  - Redis客户端（`RedisTemplate`包装）  
+  - RPC调用适配器（`PaymentServiceAdapter`）  
+  - 消息队列生产者（`KafkaProducer`）  
+- **对象转换器**  
+  - `UserConverter`：PO ⇄ 领域对象转换  
+
+> ⚙️ **技术重点**：  
+> - 实现领域层定义的接口  
+> - 处理所有与技术栈相关的代码  
+
+
+#### 4. **example-project-application (应用层)**  
+**核心职责**：**协调领域对象**完成具体应用场景  
+- **应用服务**  
+  - 用例实现（`UserAppService.register()`）  
+  - 事务控制（`@Transactional`）  
+- **DTO转换**  
+  - 将领域对象转换为传输对象（BO → DTO）  
+- **跨领域协调**  
+  - 调用多个领域服务完成业务流  
+  - 例如订单创建：  
+    ```java
+    public void createOrder(OrderRequest request) {
+        // 1. 验证用户
+        User user = userService.validateUser(request.userId());
+        // 2. 创建订单领域对象
+        Order order = OrderFactory.create(user, request.items());
+        // 3. 支付处理
+        paymentService.process(order);
+        // 4. 保存订单
+        orderRepository.save(order);
+    }
+    ```
+
+> 🧩 **核心价值**：隔离领域逻辑与技术实现，保持用例可读性  
+
+
+#### 5. **example-project-facade (外观层)**  
+**核心职责**：作为系统对外的**服务契约**  
+- **API接口定义**  
+  - RPC服务接口（`UserFacade`, `OrderFacade`）  
+- **接口专用DTO**  
+  - 请求/响应对象（`UserCreateDTO`, `OrderResponse`）  
+- **接口版本管理**  
+  - 支持多版本API（`@ApiVersion("v1")`）  
+
+> 🌐 **关键特性**：  
+> 1. 独立打包发布（如Dubbo服务jar包）  
+> 2. 不包含任何实现逻辑  
+> 3. 定义明确的接口规范文档  
+
+
+#### 6. **example-project-web (Web层)**  
+**核心职责**：处理**HTTP请求**和**前端交互**  
+- **控制器**  
+  - RESTful API（`UserController`, `ProductController`）  
+- **Web专用DTO**  
+  - 前端定制化对象（`UserDetailVO`）  
+- **参数校验**  
+  - 请求验证（`@Valid` + `BindingResult`）  
+- **安全控制**  
+  - 权限注解（`@PreAuthorize`）  
+- **Swagger支持**  
+  - API文档生成配置  
+
+> 🖥️ **前端对接要点**：  
+> - 使用VO对象屏蔽领域模型细节  
+> - 处理跨域等Web层关注点  
+
+
+#### 7. **example-project-bootstrap (启动层)**  
+**核心职责**：**整合所有模块**并启动应用  
+- **启动类**  
+  - `Application.java`：Spring Boot入口  
+- **全局配置**  
+  - 数据源配置（`DataSourceConfig`）  
+  - MVC配置（`WebMvcConfig`）  
+  - 安全配置（`SecurityConfig`）  
+- **组件扫描**  
+  - 包扫描路径配置  
+  ```java
+  @SpringBootApplication(scanBasePackages = {
+      "com.example.domain",
+      "com.example.infrastructure",
+      "com.example.application",
+      "com.example.web"
+  })
+  ```
+- **Profile管理**  
+  - 多环境配置（application-{dev|prod}.yml）  
+
+> 🚀 **启动关键**：仅此模块包含`spring-boot-maven-plugin`插件  
+
+
+
 ### 分层架构依赖关系图  
 以下是基于 Spring Boot 的分层架构依赖关系图，清晰展示了各层之间的编译时依赖（单向箭头）和运行时调用关系（虚线箭头）：  
 
@@ -133,6 +280,7 @@ graph TD
     style E fill:#d4f7d4,stroke:#333,stroke-width:2px
 
 ```
+
 
 ### 关键依赖说明  
 1. **编译时依赖（实线箭头）**  
@@ -379,25 +527,6 @@ example-project (父POM)
 
 ```
 
-依赖关系：
-
-- facade模块依赖common模块
-
-- web模块依赖common模块
-
-- application模块如果需要也可以依赖common模块（但通常不需要，因为application层应该使用领域对象，除非有特殊情况需要直接使用DTO）
-
-- bootstrap模块因为依赖web模块，所以间接可以访问common模块
-
-```mermaid
-graph TD  
-    common -->|被依赖| web  
-    common -->|被依赖| facade  
-    common -->|被依赖| infrastructure  
-    domain -->|不依赖| common  
-```
-
-> 注意：common模块应该尽量保持精简，避免引入不必要的依赖，以免传递依赖到其他模块。
 
 示例代码：
 
@@ -406,53 +535,409 @@ graph TD
 ```java
 
 // PageRequest.java
+package com.example.demo.common.model.page;
 
-package com.example.common.dto;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Pattern;
+
+import java.util.List;
+import java.util.Set;
+
+/**
+ * 分页请求参数封装类
+ */
+
 
 public class PageRequest {
 
-    private int pageNo = 1;
+    /**
+     * 默认第一页
+     */
+    public static final int DEFAULT_PAGE_NUM = 1;
 
-    private int pageSize = 10;
+    /**
+     * 默认每页10条
+     */
+    public static final int DEFAULT_PAGE_SIZE = 10;
 
-    private String sortBy;
+    /**
+     * 默认排序方向 - 升序
+     */
+    public static final String DEFAULT_ORDER = "desc";
 
-    private String sortDirection = "ASC";
+    /**
+     * 最大允许的每页记录数
+     */
+    public static final int MAX_PAGE_SIZE = 1000;
 
-    // getters and setters
+    /**
+     * 当前页码（从1开始）
+     */
+    @Min(value = 1, message = "页码不能小于1")
+    private int pageNum = DEFAULT_PAGE_NUM;
 
-    // 也可以提供一些验证方法
+    /**
+     * 每页记录数
+     */
+    @Min(value = 1, message = "每页数量不能小于1")
+    @Max(value = MAX_PAGE_SIZE, message = "每页数量不能超过" + MAX_PAGE_SIZE)
+    private int pageSize = DEFAULT_PAGE_SIZE;
 
+    /**
+     * 排序字段
+     */
+    private String sort;
+
+    /**
+     * 排序方向
+     * asc: 升序
+     * desc: 降序
+     */
+    @Pattern(regexp = "asc|desc", message = "排序方向必须是asc或desc")
+    private String order = DEFAULT_ORDER;
+
+    // 无参构造器
+    public PageRequest() {
+    }
+
+    /**
+     * 带页码和每页数量的构造器
+     *
+     * @param pageNum  当前页码
+     * @param pageSize 每页数量
+     */
+    public PageRequest(int pageNum, int pageSize) {
+        this.pageNum = pageNum;
+        this.pageSize = pageSize;
+    }
+
+    /**
+     * 带所有参数的构造器
+     *
+     * @param pageNum  当前页码
+     * @param pageSize 每页数量
+     * @param sort     排序字段
+     * @param order    排序方向
+     */
+    public PageRequest(int pageNum, int pageSize, String sort, String order) {
+        this.pageNum = pageNum;
+        this.pageSize = pageSize;
+        this.sort = sort;
+        this.order = order;
+    }
+
+    /**
+     * 计算偏移量（用于数据库分页查询）
+     *
+     * @return 当前页的起始位置
+     */
+    public int getOffset() {
+        return (pageNum - 1) * pageSize;
+    }
+
+    /**
+     * 验证排序字段是否在允许的列表中
+     *
+     * @param allowedFields 允许的排序字段集合
+     * @return 如果排序字段有效返回true，否则返回false
+     */
+    public boolean isSortValid(Set<String> allowedFields) {
+        if (sort == null || sort.isEmpty()) {
+            return true;
+        }
+        return allowedFields.contains(sort);
+    }
+
+    /**
+     * 验证排序字段是否在允许的列表中，无效时抛出异常
+     *
+     * @param allowedFields 允许的排序字段集合
+     * @param errorMessage  错误信息
+     * @throws IllegalArgumentException 如果排序字段无效
+     */
+    public void validateSort(List<String> allowedFields, String errorMessage) {
+        if (sort != null && !sort.isEmpty() && !allowedFields.contains(sort)) {
+            throw new IllegalArgumentException(errorMessage);
+        }
+    }
+
+    public int getPageNum() {
+        return pageNum;
+    }
+
+    public void setPageNum(int pageNum) {
+        this.pageNum = pageNum;
+    }
+
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
+
+    public String getSort() {
+        return sort;
+    }
+
+    public void setSort(String sort) {
+        this.sort = sort;
+    }
+
+    public String getOrder() {
+        return order;
+    }
+
+    public void setOrder(String order) {
+        this.order = order;
+    }
 }
 
 ```
 
 ```java
 
-// PageResponse.java
+// PageResult.java
 
-package com.example.common.dto;
+package com.example.demo.common.model.page;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.function.BiFunction;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
-public class PageResponse<T> {
 
-    private List<T> data;
+public class PageResult<T> {
 
-    private int total;
+    private final int pageNum;        // 当前页码
+    private final int pageSize;        // 每页数量
+    private final long total;      // 总记录数
+    private final int totalPage;       // 总页数
+    private final List<T> data;    // 当前页数据
+    private final String sort;     // 排序字段
+    private final String order;    // 排序方向
 
-    private int pageNo;
-
-    private int pageSize;
-
-    public int getTotalPages() {
-
-        return (int) Math.ceil((double) total / pageSize);
-
+    /**
+     * 构造函数
+     *
+     * @param pageRequest 分页请求
+     * @param total       总记录数
+     * @param data        当前页数据
+     */
+    public PageResult(PageRequest pageRequest, long total, List<T> data) {
+        this.pageNum = pageRequest.getPageNum();
+        this.pageSize = pageRequest.getPageSize();
+        this.sort = pageRequest.getSort();
+        this.order = pageRequest.getOrder();
+        this.total = total;
+        this.totalPage = calculateTotalPage(total, pageRequest.getPageSize());
+        this.data = data;
     }
 
-// getters and setters
+    /**
+     * 构造函数
+     *
+     * @param pageNum  当前页码
+     * @param pageSize  每页数量
+     * @param total 总记录数
+     * @param data  当前页数据
+     * @param sort  排序字段
+     * @param order 排序方向
+     */
+    public PageResult(int pageNum, int pageSize, long total, List<T> data, String sort, String order) {
+        this.pageNum = pageNum;
+        this.pageSize = pageSize;
+        this.total = total;
+        this.data = data != null ? data : Collections.emptyList();
+        this.sort = sort;
+        this.order = order;
 
+        // 计算总页数
+        this.totalPage = calculateTotalPage(total, pageSize);
+    }
+
+    /**
+     * 计算总页数
+     *
+     * @param total 总记录数
+     * @param size  每页数量
+     * @return 总页数
+     */
+    private int calculateTotalPage(long total, int size) {
+        if (size <= 0) return 0;
+        return (int) Math.ceil((double) total / size);
+    }
+
+
+    // ================ 实用静态方法 ================ //
+
+    /**
+     * 创建空的分页结果
+     *
+     * @param <T> 数据类型
+     * @return 空的分页结果
+     */
+    public static <T> PageResult<T> empty() {
+        return new PageResult<>(1, 0, 0, Collections.emptyList(), null, null);
+    }
+
+    /**
+     * 基于 PageRequest 创建空的分页结果
+     *
+     * @param pageRequest 分页请求
+     * @param <T>         数据类型
+     * @return 空的分页结果
+     */
+    public static <T> PageResult<T> empty(PageRequest pageRequest) {
+        return new PageResult<>(
+                pageRequest.getPageNum(),
+                pageRequest.getPageSize(),
+                0,
+                Collections.emptyList(),
+                pageRequest.getSort(),
+                pageRequest.getOrder()
+        );
+    }
+
+    /**
+     * 创建单页结果（适用于数据量小的情况）
+     *
+     * @param data 所有数据
+     * @param <T>  数据类型
+     * @return 单页结果
+     */
+    public static <T> PageResult<T> singlePage(List<T> data) {
+        long total = data != null ? data.size() : 0;
+        return new PageResult<>(1, (int) total, total, data, null, null);
+    }
+
+    /**
+     * 创建分页结果（基于 PageRequest）
+     *
+     * @param pageRequest 分页请求
+     * @param total       总记录数
+     * @param data        当前页数据
+     * @param <T>         数据类型
+     * @return 分页结果
+     */
+    public static <T> PageResult<T> of(PageRequest pageRequest, long total, List<T> data) {
+        return new PageResult<>(
+                pageRequest.getPageNum(),
+                pageRequest.getPageSize(),
+                total,
+                data,
+                pageRequest.getSort(),
+                pageRequest.getOrder()
+        );
+    }
+
+    /**
+     * 转换分页结果的数据类型
+     *
+     * @param source 源分页结果
+     * @param mapper 数据转换函数
+     * @param <T>    源数据类型
+     * @param <R>    目标数据类型
+     * @return 转换后的分页结果
+     */
+    public static <T, R> PageResult<R> map(PageResult<T> source, Function<T, R> mapper) {
+        if (source == null || mapper == null) {
+            throw new IllegalArgumentException("Source and mapper must not be null");
+        }
+
+        List<R> mappedData = source.getData().stream()
+                .map(mapper)
+                .collect(Collectors.toList());
+
+        return new PageResult<>(
+                source.getPageNum(),
+                source.getPageSize(),
+                source.getTotal(),
+                mappedData,
+                source.getSort(),
+                source.getOrder()
+        );
+    }
+
+    /**
+     * 合并两个分页结果（适用于并行查询场景）
+     *
+     * @param result1  第一个分页结果
+     * @param result2  第二个分页结果
+     * @param combiner 数据合并函数
+     * @param <T>      第一个结果的数据类型
+     * @param <U>      第二个结果的数据类型
+     * @param <R>      合并后的数据类型
+     * @return 合并后的分页结果
+     */
+    public static <T, U, R> PageResult<R> combine(
+            PageResult<T> result1,
+            PageResult<U> result2,
+            BiFunction<T, U, R> combiner) {
+
+        // 验证分页信息是否一致
+        if (result1.getPageNum() != result2.getPageNum() ||
+                result1.getPageSize() != result2.getPageSize() ||
+                result1.getTotal() != result2.getTotal()) {
+            throw new IllegalArgumentException("Page results are not compatible for combination");
+        }
+
+        // 验证数据数量是否一致
+        if (result1.getData().size() != result2.getData().size()) {
+            throw new IllegalArgumentException("Data lists have different sizes");
+        }
+
+        // 合并数据
+        List<R> combinedData = new ArrayList<>();
+        for (int i = 0; i < result1.getData().size(); i++) {
+            R combined = combiner.apply(
+                    result1.getData().get(i),
+                    result2.getData().get(i)
+            );
+            combinedData.add(combined);
+        }
+
+        return new PageResult<>(
+                result1.getPageNum(),
+                result1.getPageSize(),
+                result1.getTotal(),
+                combinedData,
+                result1.getSort(),
+                result1.getOrder()
+        );
+    }
+
+    public int getPageNum() {
+        return pageNum;
+    }
+
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public long getTotal() {
+        return total;
+    }
+
+    public int getTotalPage() {
+        return totalPage;
+    }
+
+    public List<T> getData() {
+        return data;
+    }
+
+    public String getSort() {
+        return sort;
+    }
+
+    public String getOrder() {
+        return order;
+    }
 }
 
 ```
@@ -467,15 +952,15 @@ public class PageResponse<T> {
 @RequestMapping("/users")
 public class UserController {
 
-@Autowired
-private Userapplication userapplication;
+    @Autowired
+    private UserService userService;
 
     @GetMapping
     public PageResponse<UserDTO> listUsers(PageRequest pageRequest) {
 
         // 调用application层，返回PageResponse
 
-        return userapplication.listUsers(pageRequest);
+        return userService.listUsers(pageRequest);
 
     }
 
@@ -501,9 +986,660 @@ public interface UserFacade {
 
 
 
+## 为什么禁止Web层直接调用Domain层？
+
+根据分层架构的依赖关系，web层（展现层）通常不直接调用domain层（核心领域层）。正确的依赖关系应该是：
+
+web层 → 应用层（application） → 核心领域层（domain）
+
+理由：
+
+1. 分层隔离：web层负责处理HTTP请求和响应，不应该包含业务逻辑。业务逻辑应由应用层或领域层处理。
+
+2. 单一职责：web层只负责参数校验、数据转换（DTO/VO转换）和路由，业务逻辑协调交给应用层。
+
+3. 依赖倒置：核心领域层应该保持纯净，不依赖上层（如web层）。如果web层直接调用domain层，会导致domain层被上层污染，并且破坏了分层依赖规则。
+
+正确的调用流程：
+
+1. web层（Controller）接收到请求，将请求参数转换为DTO。
+
+2. web层调用应用层（Application Service）的方法，传入DTO。
+
+3. 应用层负责协调多个领域服务（Domain Service）或聚合根，执行具体的业务用例。
+
+4. 应用层内部将DTO转换为领域对象（BO），然后调用领域层的方法。
+
+5. 领域层执行核心业务逻辑，并调用基础设施层（如仓储接口）进行持久化操作。
+
+因此，web层不应该直接调用domain层，而应该通过应用层来访问领域逻辑。
+
+但是，在简单的CRUD项目中，有时会省略应用层，此时web层可以直接调用领域服务（但领域服务仍然在domain层，而web层依赖domain层）。但这种做法在严格的分层架构中是不推荐的，因为这样会导致领域层被上层直接依赖，使得领域层无法独立于交付机制（如Web）存在。
+
+根据前面的架构设计，我们的分层依赖是：
+
+web层 → 应用层 → 领域层
+
+基础设施层 → 领域层
+
+所以，在设计的项目中，web层不能直接调用domain层，而是通过应用层间接调用。
+
+如果web层直接调用domain层，会导致：
+
+- 领域层需要暴露给web层，增加了领域层的耦合。
+
+- 业务逻辑可能会泄露到web层，导致重复代码。
+
+- 破坏分层架构，使得领域层无法独立复用（比如领域层除了被web调用，还可能被消息监听器等调用）。
+
+结论：web层不能直接调用domain层，必须通过应用层（application层）来协调。
+
+## 使用 MapStruct 实现 VO 到 DTO 的转换
+
+下面是一个完整的指南，展示如何使用 MapStruct 高效地将 View Object (VO) 转换为 Data Transfer Object (DTO)。
+
+### 1. 添加 MapStruct 依赖
+
+```xml
+<!-- pom.xml -->
+<properties>
+    <org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
+</properties>
+
+<dependencies>
+    <dependency>
+        <groupId>org.mapstruct</groupId>
+        <artifactId>mapstruct</artifactId>
+        <version>${org.mapstruct.version}</version>
+    </dependency>
+</dependencies>
+
+<build>
+    <plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.11.0</version>
+            <configuration>
+                <annotationProcessorPaths>
+                    <path>
+                        <groupId>org.mapstruct</groupId>
+                        <artifactId>mapstruct-processor</artifactId>
+                        <version>${org.mapstruct.version}</version>
+                    </path>
+                </annotationProcessorPaths>
+            </configuration>
+        </plugin>
+    </plugins>
+</build>
+```
+
+### 2. 创建 VO 和 DTO 类
+
+#### VO (View Object) - Web层
+```java
+// web 模块
+public class UserVO {
+    private Long id;
+    private String username;
+    private String displayName;
+    private String avatarUrl;
+    private LocalDateTime lastLoginTime;
+    
+    // 省略 getter/setter
+}
+```
+
+#### DTO (Data Transfer Object) - 公共DTO
+```java
+// common-dto 模块
+public class UserDTO {
+    private Long userId;
+    private String loginName;
+    private String fullName;
+    private String profileImage;
+    private LocalDateTime lastLogin;
+    
+    // 省略 getter/setter
+}
+```
+
+### 3. 创建 MapStruct Mapper 接口
+
+```java
+// web 模块 (或 converter 模块)
+@Mapper(componentModel = "spring")
+public interface UserMapper {
+
+    UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
+
+    @Mapping(source = "id", target = "userId")
+    @Mapping(source = "username", target = "loginName")
+    @Mapping(source = "displayName", target = "fullName")
+    @Mapping(source = "avatarUrl", target = "profileImage")
+    @Mapping(source = "lastLoginTime", target = "lastLogin")
+    UserDTO voToDto(UserVO vo);
+
+    @Mapping(source = "userId", target = "id")
+    @Mapping(source = "loginName", target = "username")
+    @Mapping(source = "fullName", target = "displayName")
+    @Mapping(source = "profileImage", target = "avatarUrl")
+    @Mapping(source = "lastLogin", target = "lastLoginTime")
+    UserVO dtoToVo(UserDTO dto);
+}
+```
+
+### 4. 使用 MapStruct 进行转换
+
+#### 在 Controller 中使用
+```java
+// web 模块
+@RestController
+@RequestMapping("/users")
+public class UserController {
+
+    private final UserMapper userMapper;
+    private final UserAppService userAppService;
+
+    @GetMapping("/{id}")
+    public ResponseEntity<BaseResponse<UserDTO>> getUserById(@PathVariable Long id) {
+        UserVO userVO = userAppService.getUserById(id);
+        
+        // 使用 MapStruct 进行转换
+        UserDTO userDTO = userMapper.voToDto(userVO);
+        
+        return ResponseEntity.ok(BaseResponse.success(userDTO));
+    }
+}
+```
+
+#### 在 Service 中使用
+```java
+// application 模块
+@Service
+public class UserAppServiceImpl implements UserAppService {
+
+    private final UserDomainService userDomainService;
+    private final UserMapper userMapper;
+
+    public UserDTO getUserById(Long id) {
+        User user = userDomainService.findUserById(id);
+        
+        // 领域对象转VO
+        UserVO userVO = convertToVO(user);
+        
+        // VO转DTO
+        return userMapper.voToDto(userVO);
+    }
+    
+    private UserVO convertToVO(User user) {
+        // 领域对象转VO的逻辑
+    }
+}
+```
+
+### 5. 高级映射技巧
+
+#### 自定义映射方法
+```java
+@Mapper(componentModel = "spring")
+public interface UserMapper {
+
+    // ... 其他映射
+    
+    @Mapping(target = "status", ignore = true) // 忽略字段
+    @Mapping(target = "fullName", expression = "java(vo.getFirstName() + ' ' + vo.getLastName())")
+    UserDTO voToDto(UserVO vo);
+    
+    // 自定义类型转换
+    @Named("stringToLocalDate")
+    default LocalDate stringToLocalDate(String date) {
+        return date != null ? LocalDate.parse(date) : null;
+    }
+    
+    @Mapping(source = "birthDateStr", target = "birthDate", qualifiedByName = "stringToLocalDate")
+    UserDTO voToDtoWithBirthDate(UserVO vo);
+}
+```
+
+#### 多个源对象映射
+```java
+@Mapper(componentModel = "spring")
+public interface UserMapper {
+
+    @Mapping(source = "vo.id", target = "userId")
+    @Mapping(source = "meta.createTime", target = "registrationDate")
+    UserDTO voAndMetaToDto(UserVO vo, UserMeta meta);
+}
+```
+
+#### 集合映射
+```java
+@Mapper(componentModel = "spring")
+public interface UserMapper {
+
+    List<UserDTO> vosToDtos(List<UserVO> vos);
+    
+    Set<UserDTO> vosToDtos(Set<UserVO> vos);
+    
+    @Mapping(source = "id", target = "key")
+    Map<Long, UserDTO> vosToDtoMap(List<UserVO> vos);
+}
+```
+
+### 6. 性能优化建议
+
+#### 1. 使用单例模式
+```java
+@Mapper(componentModel = "spring")
+public interface UserMapper {
+    UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
+}
+```
+
+#### 2. 批量转换避免循环
+```java
+// 高效方式
+List<UserDTO> dtos = userMapper.vosToDtos(vos);
+
+// 避免这样使用（低效）
+List<UserDTO> dtos = new ArrayList<>();
+for (UserVO vo : vos) {
+    dtos.add(userMapper.voToDto(vo));
+}
+```
+
+#### 3. 使用 MapStruct SPI 进行高级配置
+创建 `META-INF/services/org.mapstruct.ap.spi.AccessorNamingStrategy` 文件：
+```java
+public class CustomAccessorNamingStrategy extends DefaultAccessorNamingStrategy {
+    @Override
+    public boolean isGetterMethod(ExecutableElement method) {
+        // 自定义getter识别逻辑
+    }
+}
+```
+
+### 7. 与分层架构集成
+
+```mermaid
+graph TD
+    A[Web层] -->|UserVO| B[MapStruct Mapper]
+    B -->|UserDTO| C[Controller]
+    C -->|UserDTO| D[前端]
+    
+    E[应用层] -->|UserVO| F[MapStruct Mapper]
+    F -->|UserDTO| G[Facade/RPC]
+    
+    style B fill:#fff2cc,stroke:#333
+```
+
+#### 各层对象转换关系：
+1. **Web层**：
+   - 接收前端请求 → `@RequestBody UserVO`
+   - 返回响应 → `UserDTO`
+
+2. **应用层**：
+   - 接收Web层输入 → `UserVO`
+   - 调用领域层 → `User` (领域对象)
+   - 返回Web层 → `UserDTO`
+
+3. **Facade层**：
+   - 接收RPC请求 → `UserDTO`
+   - 返回RPC响应 → `UserDTO`
+
+### 8. 最佳实践总结
+
+1. **模块化放置**：
+   - 通用转换器：放在 `common-converter` 模块
+   - 层特定转换器：放在各层模块中（如 `web-converter`）
+
+2. **命名规范**：
+   ```java
+   // 推荐
+   UserMapper
+   ProductConverter
+   
+   // 方法名
+   voToDto()
+   entityToResponse()
+   ```
+
+3. **性能关键点**：
+   - 对于高频转换，使用 `@MappingTarget` 更新现有对象
+   ```java
+   @Mapping(target = "lastLogin", source = "loginTime")
+   void updateDtoFromVo(UserVO vo, @MappingTarget UserDTO dto);
+   ```
+
+4. **组合映射**：
+   ```java
+   @Mapper(uses = {DateMapper.class, AddressMapper.class})
+   public interface UserMapper {
+       // 会自动使用 DateMapper 和 AddressMapper
+   }
+   
+   @Mapper
+   public interface DateMapper {
+       default String localDateTimeToString(LocalDateTime date) {
+           return date != null ? date.toString() : null;
+       }
+   }
+   ```
+
+通过这种结构化的 MapStruct 实现，可以确保：
+- 转换逻辑集中管理，易于维护
+- 编译时生成代码，无运行时反射开销
+- 类型安全，减少转换错误
+- 与分层架构完美契合，保持各层职责清晰
+
+
+
+## 典型请求流  
+```mermaid
+sequenceDiagram
+    participant W as Web层
+    participant A as 应用层
+    participant D as 领域层
+    participant I as 基础设施层
+    
+    W->>A: 传入DTO
+    A->>D: 转换为领域对象
+    D->>I: 调用仓储接口
+    I->>数据库: 执行SQL
+    数据库-->>I: 返回数据
+    I-->>D: 返回领域对象
+    D-->>A: 处理业务逻辑
+    A-->>W: 返回DTO
+```
+
+## 架构核心优势  
+1. **领域层绝对稳定**  
+   - 修改数据库不影响业务规则  
+   - 替换Web框架不波及核心逻辑  
+
+2. **技术细节隔离**  
+   - 基础设施变更（如Redis→Memcached）只需修改基础设施层  
+
+3. **多端接口统一**  
+   ```mermaid
+   graph LR
+       Web前端 --> web层
+       移动端 --> facade层
+       第三方系统 --> facade层
+       web层 & facade层 --> application层
+   ```
+
+4. **可测试性增强**  
+   - 领域层可脱离Spring独立测试  
+   - 应用层通过Mock领域服务测试用例  
+
+> 通过这种分层，系统获得业务核心与技术实现的彻底解耦，支持长期演化和多端扩展。
+
+## springboot 项目目录结构示例
+
+### demo 目录结构
+```
+demo
+├── HELP.md
+├── README.md
+├── app
+│   ├── application
+│   │   ├── pom.xml
+│   │   └── src
+│   │       ├── main
+│   │       │   ├── java
+│   │       │   │   └── com
+│   │       │   │       └── example
+│   │       │   │           └── demo
+│   │       │   │               └── application
+│   │       │   │                   ├── converter
+│   │       │   │                   │   └── RuleDTO2BOConverter.java
+│   │       │   │                   ├── dto
+│   │       │   │                   │   └── RuleQueryDTO.java
+│   │       │   │                   └── service
+│   │       │   │                       ├── RuleService.java
+│   │       │   │                       └── impl
+│   │       │   │                           └── RuleServiceImpl.java
+│   │       │   └── resources
+│   │       │       └── spring
+│   │       │           └── example.xml
+│   │       └── test
+│   │           └── java
+│   │               └── com
+│   │                   └── example
+│   │                       └── demo
+│   │                           └── application
+│   ├── bootstrap
+│   │   ├── pom.xml
+│   │   └── src
+│   │       ├── main
+│   │       │   ├── java
+│   │       │   │   └── com
+│   │       │   │       └── example
+│   │       │   │           └── demo
+│   │       │   │               └── DemoApplication.java
+│   │       │   └── resources
+│   │       │       ├── config
+│   │       │       │   ├── application-default.properties
+│   │       │       │   ├── application-dev.properties
+│   │       │       │   ├── application-prod.properties
+│   │       │       │   ├── application-sim.properties
+│   │       │       │   ├── application-test.properties
+│   │       │       │   └── application.properties
+│   │       │       ├── log4j2-spring.xml
+│   │       │       ├── spring
+│   │       │       │   └── example.xml
+│   │       │       └── static
+│   │       │           └── index.html
+│   │       └── test
+│   │           └── java
+│   │               └── com
+│   │                   └── example
+│   │                       └── demo
+│   │                           └── AbstractTestBase.java
+│   ├── common
+│   │   ├── pom.xml
+│   │   └── src
+│   │       ├── main
+│   │       │   ├── java
+│   │       │   │   └── com
+│   │       │   │       └── example
+│   │       │   │           └── demo
+│   │       │   │               └── common
+│   │       │   │                   ├── annotation
+│   │       │   │                   ├── constant
+│   │       │   │                   ├── enums
+│   │       │   │                   │   ├── AppErrorCode.java
+│   │       │   │                   │   └── ErrorCode.java
+│   │       │   │                   ├── model
+│   │       │   │                   │   ├── page
+│   │       │   │                   │   │   ├── PageRequest.java
+│   │       │   │                   │   │   ├── PageResult.java
+│   │       │   │                   │   │   └── PaginationUtils.java
+│   │       │   │                   │   └── response
+│   │       │   │                   │       └── Result.java
+│   │       │   │                   └── util
+│   │       │   └── resources
+│   │       └── test
+│   │           └── java
+│   ├── domain
+│   │   ├── pom.xml
+│   │   └── src
+│   │       ├── main
+│   │       │   ├── java
+│   │       │   │   └── com
+│   │       │   │       └── example
+│   │       │   │           └── demo
+│   │       │   │               └── domain
+│   │       │   │                   ├── converter
+│   │       │   │                   ├── model
+│   │       │   │                   │   └── bo
+│   │       │   │                   │       ├── RuleQueryBO.java
+│   │       │   │                   │       └── RuleWithLatestVersionDTO.java
+│   │       │   │                   └── repository
+│   │       │   └── resources
+│   │       │       └── spring
+│   │       │           └── example.xml
+│   │       └── test
+│   │           └── java
+│   │               └── com
+│   │                   └── example
+│   │                       └── demo
+│   │                           └── domain
+│   ├── facade
+│   │   ├── pom.xml
+│   │   └── src
+│   │       ├── main
+│   │       │   ├── java
+│   │       │   │   └── com
+│   │       │   │       └── example
+│   │       │   │           └── demo
+│   │       │   │               └── facade
+│   │       │   └── resources
+│   │       │       └── spring
+│   │       │           └── example.xml
+│   │       └── test
+│   │           └── java
+│   │               └── com
+│   │                   └── example
+│   │                       └── demo
+│   │                           └── facade
+│   ├── infrastructure
+│   │   ├── pom.xml
+│   │   └── src
+│   │       ├── main
+│   │       │   ├── java
+│   │       │   │   └── com
+│   │       │   │       └── example
+│   │       │   │           └── demo
+│   │       │   │               └── infrastructure
+│   │       │   │                   ├── mybatis
+│   │       │   │                   │   ├── MybatisConfiguration.java
+│   │       │   │                   │   ├── mapper
+│   │       │   │                   │   │   ├── custom
+│   │       │   │                   │   │   │   ├── RuleCustomMapper.java
+│   │       │   │                   │   │   │   └── builder
+│   │       │   │                   │   │   │       └── RuleQueryBuilder.java
+│   │       │   │                   │   │   └── generated
+│   │       │   │                   │   │       ├── RuleEntityDynamicSqlSupport.java
+│   │       │   │                   │   │       ├── RuleMapper.java
+│   │       │   │                   │   │       ├── RuleVersionEntityDynamicSqlSupport.java
+│   │       │   │                   │   │       └── RuleVersionMapper.java
+│   │       │   │                   │   └── model
+│   │       │   │                   │       └── entity
+│   │       │   │                   │           ├── RuleEntity.java
+│   │       │   │                   │           └── RuleVersionEntity.java
+│   │       │   │                   └── repositoryimpl
+│   │       │   └── resources
+│   │       │       ├── generatorConfig.xml
+│   │       │       └── spring
+│   │       │           └── example.xml
+│   │       └── test
+│   │           └── java
+│   │               └── com
+│   │                   └── example
+│   │                       └── demo
+│   │                           └── infrastructure
+│   └── web
+│       ├── pom.xml
+│       └── src
+│           ├── main
+│           │   ├── java
+│           │   │   └── com
+│           │   │       └── example
+│           │   │           └── demo
+│           │   │               └── web
+│           │   │                   ├── controller
+│           │   │                   │   └── RuleController.java
+│           │   │                   ├── converter
+│           │   │                   │   └── RuleConverter.java
+│           │   │                   ├── exception
+│           │   │                   │   └── ControllerExceptionHandler.java
+│           │   │                   └── vo
+│           │   │                       ├── request
+│           │   │                       │   └── RuleQueryPageRequest.java
+│           │   │                       └── response
+│           │   └── resources
+│           └── test
+│               └── java
+└── pom.xml
+
+
+```
+
+### 依赖关系
+
+```mermaid
+graph LR
+
+
+subgraph   'demo_parent_'[" Demo project"]
+  click 'demo_parent_' call navigate("/Users/xiniao/Downloads/demo 2/pom.xml")
+
+  direction  LR
+  'app_bootstrap'
+  click 'app_bootstrap' call navigate("")
+
+  'app_application'
+  click 'app_application' call navigate("")
+
+  'app_domain'
+  click 'app_domain' call navigate("")
+
+  'app_infrastructure'
+  click 'app_infrastructure' call navigate("")
+
+  'app_facade'
+  click 'app_facade' call navigate("")
+
+  'app_common'
+  click 'app_common' call navigate("")
+
+  'app_web'
+  click 'app_web' call navigate("")
+
+end
+  'demo_application'("demo-application")
+  click 'demo_application' call navigate("")
+
+  'demo_domain'("demo-domain")
+  click 'demo_domain' call navigate("")
+
+  'demo_common'("demo-common")
+  click 'demo_common' call navigate("")
+
+  'demo_infrastructure'("demo-infrastructure")
+  click 'demo_infrastructure' call navigate("")
+
+  'demo_bootstrap'("demo-bootstrap")
+  click 'demo_bootstrap' call navigate("")
+
+  'demo_facade'("demo-facade")
+  click 'demo_facade' call navigate("")
+
+  'demo_web'("demo-web")
+  click 'demo_web' call navigate("")
+
+
+'demo_application' -->|依赖| 'demo_domain'
+'demo_application' -->|依赖| 'demo_facade'
+'demo_application' -->|依赖| 'demo_infrastructure'
+'demo_application' -->|依赖| 'demo_common'
+'demo_infrastructure' -->|依赖| 'demo_domain'
+'demo_bootstrap' -->|依赖| 'demo_application'
+'demo_bootstrap' -->|依赖| 'demo_web'
+'demo_web' -->|依赖| 'demo_application'
+'demo_web' -->|依赖| 'demo_common'
+```
+
+> 注意：common模块应该尽量保持精简，避免引入不必要的依赖，以免传递依赖到其他模块。
+
+
 ## 总结  
 - **核心思想**：**领域驱动设计（DDD）** 分层，确保业务逻辑与技术实现分离。  
 - **最大优势**：`domain` 层完全独立，业务逻辑不污染技术细节，适应需求变化与技术演进。  
 - **适用场景**：中大型复杂业务系统，需长期维护、高频迭代的项目。
 
 这种分层架构使得核心业务逻辑（domain层）独立于技术实现（infrastructure层），提高了系统的可维护性和可扩展性。此分层结构完美符合 **整洁架构** 和 **六边形架构** 思想，核心业务逻辑（domain 层）始终处于最内层且不受技术细节污染。
+
