@@ -533,47 +533,37 @@ return userDTO;
 
 ### 关键注解解析
 
-- **`@Mapper`**：
+- **`@Mapper`**：标记一个接口为映射器接口。主要属性：
 
-标记一个接口为映射器接口。主要属性：
+    - `componentModel`：指定生成的 Mapper 实现类的组件模型。常用值有：
+    
+    - `default`：不生成组件，需手动实例化。
+    
+    - `spring`：生成的实现类带有 `@Component` 注解，可被 Spring 容器管理。
+    
+    - `cdi`：使用 CDI（Contexts and Dependency Injection）。
+    
+    - `jsr330`：使用 JSR-330 规范（如 `@Named`）。
 
-- `componentModel`：指定生成的 Mapper 实现类的组件模型。常用值有：
+- **`@Mapping`**：用于方法或方法参数上，指定字段映射规则。主要属性：
 
-- `default`：不生成组件，需手动实例化。
+    - `source`：源对象的字段名。
+    
+    - `target`：目标对象的字段名。
+    
+    - `ignore`：是否忽略该字段（默认 `false`）。
+    
+    - `expression`：使用表达式进行赋值（如 `java(...)`）。
+    
+    - `qualifiedByName`：指定自定义方法（通过 `@Named` 标记）进行转换。
+    
+    - `dateFormat`：日期格式转换（字符串与日期之间）。
 
-- `spring`：生成的实现类带有 `@Component` 注解，可被 Spring 容器管理。
+- **`@Mappings`**：当需要多个 `@Mapping` 时，可用 `@Mappings` 包裹（Java 8+ 可使用重复注解）。
 
-- `cdi`：使用 CDI（Contexts and Dependency Injection）。
+- **`@Named`**： 标记一个自定义方法，然后通过 `qualifiedByName` 引用。
 
-- `jsr330`：使用 JSR-330 规范（如 `@Named`）。
-
-- **`@Mapping`**：
-
-用于方法或方法参数上，指定字段映射规则。主要属性：
-
-- `source`：源对象的字段名。
-
-- `target`：目标对象的字段名。
-
-- `ignore`：是否忽略该字段（默认 `false`）。
-
-- `expression`：使用表达式进行赋值（如 `java(...)`）。
-
-- `qualifiedByName`：指定自定义方法（通过 `@Named` 标记）进行转换。
-
-- `dateFormat`：日期格式转换（字符串与日期之间）。
-
-- **`@Mappings`**：
-
-当需要多个 `@Mapping` 时，可用 `@Mappings` 包裹（Java 8+ 可使用重复注解）。
-
-- **`@Named`**：
-
-标记一个自定义方法，然后通过 `qualifiedByName` 引用。
-
-- **`@AfterMapping` 和 `@BeforeMapping`**：
-
-在映射前后执行自定义方法。
+- **`@AfterMapping` 和 `@BeforeMapping`**：在映射前后执行自定义方法。
 
 ### 映射规则
 
