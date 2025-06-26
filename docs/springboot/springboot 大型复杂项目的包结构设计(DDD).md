@@ -1,4 +1,4 @@
-# springboot 大型复杂项目的包结构设计
+# springboot 大型复杂项目的包结构设计（DDD）
 
 ## Spring Boot 项目按分层架构划分的优势  
 
