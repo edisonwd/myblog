@@ -151,9 +151,9 @@ flowchart TD
 
 
 ### 一、MTEB 是什么？
-> github : https://github.com/embeddings-benchmark/mteb
-> huggingface : https://huggingface.co/spaces/mteb/leaderboard
-> paper : https://paperswithcode.com/paper/mteb-massive-text-embedding-benchmark
+> - github : https://github.com/embeddings-benchmark/mteb
+> - huggingface : https://huggingface.co/spaces/mteb/leaderboard
+> - paper : https://paperswithcode.com/paper/mteb-massive-text-embedding-benchmark
 
 **[MTEB（Massive Text Embeddings Benchmark）](https://huggingface.co/spaces/mteb/leaderboard)** 是由 Hugging Face 团队推出的 **嵌入模型评估标准**，旨在解决传统评估中存在的三大问题：
 1. **碎片化**：此前模型在不同论文中使用私有数据集评估，结果不可比
