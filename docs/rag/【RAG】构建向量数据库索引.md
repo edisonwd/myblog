@@ -46,7 +46,7 @@ graph TD
 ```
 
 ### 详细步骤说明图
-我们可以将上述流程图更详细地展开：
+我们可以将上述流程图合并：
 ```mermaid
 graph TD
     A[开始] --> B[文档加载]
@@ -82,17 +82,22 @@ graph TD
 
 ## 回顾历史文章
 前面几篇文章对应RAG索引构建步骤如下：
+
 - **文档加载器**：支持多种格式（PDF、TXT、HTML等）
   - docling结合OCR实现pdf转markdown
+
 - **文档分割器**：按固定长度分块，可重叠
   - chunk分块实践
   
 - **嵌入模型**：如text-embedding-ada-002, all-MiniLM-L6-v2
   - todo
+
 - **向量数据库**：如FAISS, Chroma, Pinecone
   - todo
+
 - **检索器**：执行相似性搜索（如余弦相似度）
   - todo
+
 - **大语言模型**：如GPT-4, LLaMA等
   - todo
 
