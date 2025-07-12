@@ -222,6 +222,7 @@ RAG是一种强大的范式，通过将动态信息检索与LLM的生成能力�
 
 
 **参考文档**
+
 1. [https://python.langchain.com/docs/concepts/rag/](https://python.langchain.com/docs/concepts/rag/)
 2. [ChatGPT应用：如何征服市场眼中的“万能RAG”](https://zhuanlan.zhihu.com/p/665383403)
 3. [大模型微调与RAG检索增强有何区别？一文全面详解-从基础原理到案例分析](https://zhuanlan.zhihu.com/p/29224423956)
