@@ -316,6 +316,307 @@ void getUserEmailUpperCase_SpyExample() {
 }
 ```
 注意：使用Spy时，如果模拟的方法有参数，需要确保传递的参数匹配，否则会调用真实方法。
+
+
+## 高级用法
+
+
+
+### 使用 Mockito 模拟静态方法详解
+
+我们使用Mockito 3.4.0及以上版本可以模拟静态方法，因为从该版本开始Mockito支持内联模拟（inline mock maker），从而可以模拟静态方法。
+ 注意：在之前的版本中，模拟静态方法需要使用PowerMock等扩展工具。
+ 以下是使用Mockito模拟静态方法的步骤和示例：
+ 步骤：
+ 1. 添加依赖 mockito-inline（确保mockito-core版本至少为3.4.0）
+ 2. 在测试类上使用@ExtendWith(MockitoExtension.class)（JUnit5）或使用MockitoRule（JUnit4）
+ 3. 使用MockedStatic<T>来模拟静态方法，并通过try-with-resources或显式关闭来管理其作用域
+
+
+#### 前置条件
+1. 使用 Mockito 3.4.0+
+2. 添加依赖：
+```xml
+<dependency>
+    <groupId>org.mockito</groupId>
+    <artifactId>mockito-inline</artifactId>
+    <version>5.11.0</version> <!-- 使用最新版本 -->
+    <scope>test</scope>
+</dependency>
+```
+
+
+#### 基础用法示例
+```java
+import org.junit.jupiter.api.Test;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
+class StaticUtils {
+    public static String getAppName() {
+        return "RealApp";
+    }
+    
+    public static int generateId() {
+        return (int) (Math.random() * 1000);
+    }
+}
+
+class StaticMethodTest {
+
+    @Test
+    void mockStaticMethod() {
+        // 1. 创建静态方法模拟作用域
+        try (MockedStatic<StaticUtils> mockedStatic = mockStatic(StaticUtils.class)) {
+            
+            // 2. 设置静态方法行为
+            mockedStatic.when(StaticUtils::getAppName).thenReturn("MockedApp");
+            mockedStatic.when(StaticUtils::generateId).thenReturn(42);
+            
+            // 3. 执行测试
+            assertEquals("MockedApp", StaticUtils.getAppName());
+            assertEquals(42, StaticUtils.generateId());
+            
+            // 4. 验证调用
+            mockedStatic.verify(StaticUtils::getAppName);
+            mockedStatic.verify(times(1), StaticUtils::generateId);
+        }
+        
+        // 5. 作用域外恢复原始行为
+        assertEquals("RealApp", StaticUtils.getAppName());
+    }
+}
+```
+
+
+#### 高级功能示例
+
+##### 1. 模拟带参数的静态方法
+```java
+class FileUtils {
+    public static boolean exists(String path) {
+        // 实际文件检查
+        return new File(path).exists();
+    }
+}
+
+@Test
+void mockStaticMethodWithArgs() {
+    try (MockedStatic<FileUtils> mocked = mockStatic(FileUtils.class)) {
+        // 设置参数匹配行为
+        mocked.when(() -> FileUtils.exists("/valid/path")).thenReturn(true);
+        mocked.when(() -> FileUtils.exists(anyString())).thenReturn(false);
+        
+        assertTrue(FileUtils.exists("/valid/path"));
+        assertFalse(FileUtils.exists("/invalid/path"));
+    }
+}
+```
+
+##### 2. 模拟 void 静态方法
+```java
+class Logger {
+    public static void logError(String message) {
+        // 实际日志记录
+        System.err.println("ERROR: " + message);
+    }
+}
+
+@Test
+void mockVoidStaticMethod() {
+    try (MockedStatic<Logger> mocked = mockStatic(Logger.class)) {
+        // 捕获参数
+        ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
+        
+        // 设置void方法行为
+        mocked.when(() -> Logger.logError(anyString())).thenAnswer(invocation -> {
+            System.out.println("Mocked: " + invocation.getArgument(0));
+            return null;
+        });
+        
+        // 调用方法
+        Logger.logError("Test Error");
+        
+        // 验证
+        mocked.verify(() -> Logger.logError(captor.capture()));
+        assertEquals("Test Error", captor.getValue());
+    }
+}
+```
+
+##### 3. 多次调用返回不同值
+```java
+@Test
+void mockConsecutiveCalls() {
+    try (MockedStatic<StaticUtils> mocked = mockStatic(StaticUtils.class)) {
+        mocked.when(StaticUtils::generateId)
+             .thenReturn(100)
+             .thenReturn(200)
+             .thenThrow(new RuntimeException("DB Error"));
+        
+        assertEquals(100, StaticUtils.generateId());
+        assertEquals(200, StaticUtils.generateId());
+        assertThrows(RuntimeException.class, StaticUtils::generateId);
+    }
+}
+```
+
+##### 4. 部分模拟静态类
+```java
+@Test
+void partialMockStaticClass() {
+    try (MockedStatic<StaticUtils> mocked = mockStatic(StaticUtils.class)) {
+        // 模拟特定方法
+        mocked.when(StaticUtils::generateId).thenReturn(999);
+        
+        // 其他方法保持原始行为
+        mocked.when(StaticUtils::getAppName).thenCallRealMethod();
+        
+        assertEquals(999, StaticUtils.generateId());
+        assertEquals("RealApp", StaticUtils.getAppName()); // 调用真实方法
+    }
+}
+```
+
+#### 最佳实践
+
+1. **使用 try-with-resources 确保资源释放**
+   ```java
+   // 正确做法
+   try (MockedStatic<MyClass> mocked = mockStatic(MyClass.class)) {
+       // 测试代码
+   }
+   
+   // 避免（可能忘记关闭）
+   MockedStatic<MyClass> mocked = mockStatic(MyClass.class);
+   // 测试代码
+   mocked.close(); // 容易忘记
+   ```
+
+2. **作用域最小化原则**
+   ```java
+   @Test
+   void testMethod() {
+       // 只在需要的方法内创建模拟作用域
+       try (MockedStatic<A> mockA = mockStatic(A.class)) {
+           // 测试A
+       }
+       
+       try (MockedStatic<B> mockB = mockStatic(B.class)) {
+           // 测试B
+       }
+   }
+   ```
+
+3. **结合 JUnit 5 扩展**
+   ```java
+   @ExtendWith(MockitoExtension.class)
+   class AdvancedTest {
+       @Test
+       void testWithStaticMock() {
+           try (MockedStatic<StaticUtils> mocked = mockStatic(StaticUtils.class)) {
+               // 测试代码
+           }
+       }
+   }
+   ```
+
+
+#### 常见问题解决
+
+**问题1：`MockitoException: Mockito cannot mock static methods in this environment`**  
+➔ 确保：
+1. 使用 `mockito-inline` 依赖
+2. Java 版本 >= 8
+3. 未与其他模拟框架冲突
+
+**问题2：静态模拟未生效**  
+➔ 检查是否：
+1. 在 `try` 作用域外调用了方法
+2. 忘记调用 `when()` 设置行为
+3. 存在多个 `MockedStatic` 实例冲突
+
+**问题3：验证失败**  
+➔ 正确使用验证语法：
+```java
+try (MockedStatic<Service> mocked = mockStatic(Service.class)) {
+    Service.doSomething();
+    
+    // 正确
+    mocked.verify(Service::doSomething);
+    
+    // 错误（传统方式不适用）
+    verify(Service).doSomething(); // 编译错误
+}
+```
+
+---
+
+#### 替代方案（旧版本兼容）
+
+对于 Mockito < 3.4.0，使用 PowerMock：
+
+```java
+@RunWith(PowerMockRunner.class)
+@PrepareForTest(StaticUtils.class)
+public class LegacyTest {
+    
+    @Test
+    public void testStaticMock() {
+        // 1. 准备静态类
+        PowerMockito.mockStatic(StaticUtils.class);
+        
+        // 2. 设置行为
+        when(StaticUtils.getAppName()).thenReturn("PowerMockApp");
+        
+        // 3. 测试
+        assertEquals("PowerMockApp", StaticUtils.getAppName());
+    }
+}
+```
+
+> 官方建议：优先升级到 Mockito 3.4+ 使用内置静态模拟，避免引入额外的 PowerMock 依赖
+
+---
+
+### 重要注意事项
+
+1. **线程安全**：静态模拟**不是线程安全**的，确保在单线程中使用
+2. **性能影响**：静态模拟会修改类加载器，可能略微增加测试时间
+3. **设计警告**：需大量静态模拟可能意味着代码需要重构（考虑依赖注入替代）
+4. **作用域**：每个 `MockedStatic` 实例只影响其作用域内的调用
+
+静态方法模拟应作为**最后手段**，优先考虑重构代码：
+```java
+// 重构前
+class OrderService {
+    public void process(Order order) {
+        if (ValidationUtils.isValid(order)) { // 静态调用
+            // ...
+        }
+    }
+}
+
+// 重构后（可测试性更好）
+class OrderService {
+    private final Validator validator; // 依赖注入
+    
+    public void process(Order order) {
+        if (validator.isValid(order)) { 
+            // ...
+        }
+    }
+}
+```
+
+官方文档参考：[Mockito Static Methods](https://javadoc.io/static/org.mockito/mockito-core/5.11.0/org/mockito/Mockito.html#static_mocks)
+
+
+
+
 ## 总结
 通过以上示例，我们展示了Mockito的核心功能：
 - 创建模拟对象（`@Mock`）
@@ -325,7 +626,7 @@ void getUserEmailUpperCase_SpyExample() {
 - 部分模拟（`spy`）
 这些技术可以帮助我们编写隔离的、快速的单元测试，专注于被测试类的行为，而不受依赖项的制约。
 
-以上是 Mockito 的基本使用介绍。Mockito 还有更多高级功能，如模拟静态方法、模拟构造函数等（需要 `mockito-inline` 依赖），具体可以参考 [Mockito 官方文档](https://site.mockito.org/)。
+以上是 Mockito 的基本使用介绍。Mockito 还有更多高级功能，具体可以参考 [Mockito 官方文档](https://site.mockito.org/)。
 
 
 ### 资源推荐
@@ -333,4 +634,4 @@ void getUserEmailUpperCase_SpyExample() {
 - [Mockito GitHub](https://github.com/mockito/mockito)
 - 《Effective Unit Testing》by Lasse Koskela
 
-> Mockito 能显著提升测试的隔离性和执行速度，是编写高质量单元测试的利器。掌握其核心用法后，可结合 PowerMock 处理静态方法/私有方法等复杂场景。
+> Mockito 能显著提升测试的隔离性和执行速度，是编写高质量单元测试的利器。
