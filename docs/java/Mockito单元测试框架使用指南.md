@@ -1,4 +1,3 @@
-# Mockito单元测试框架使用指南
 
 Mockito 是一个流行的 Java 单元测试模拟框架，用于创建和配置模拟对象（mock objects）。它能够帮助你在测试中隔离外部依赖，使得测试更加专注于被测试类的行为。以下是一个关于 Mockito 使用的基本介绍：
 ## Mockito 使用指南
@@ -130,6 +129,7 @@ given(mockedList.get(0)).willReturn("first");
    - 不要模拟值对象或工具类
 
 3. **组合JUnit使用**：
+
 ```java
 @ExtendWith(MockitoExtension.class) // JUnit 5
 class ServiceTest {
@@ -148,11 +148,11 @@ class ServiceTest {
 }
 ```
 
----
 
 #### 常见错误解决
-- **`UnnecessaryStubbingException`**：移除未使用的存根
-- **`ArgumentNotMatcherException`**：混合匹配器与具体值时，所有参数必须用匹配器：
+- **UnnecessaryStubbingException**：移除未使用的存根
+- **ArgumentNotMatcherException**：混合匹配器与具体值时，所有参数必须用匹配器：
+
   ```java
   // 错误示例
   when(mock.method(anyInt(), "value"))...
@@ -199,6 +199,7 @@ public class UserService {
 确保项目中已经添加了Mockito依赖（如之前所述）。
 #### 2. 编写测试类
 使用JUnit 5和Mockito扩展。
+
 ```java
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -207,12 +208,16 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
+
 @ExtendWith(MockitoExtension.class)
 class UserServiceTest {
+    // 使用@Mock创建模拟对象
     @Mock
     private UserRepository mockUserRepository;
+    // 使用@InjectMocks创建被测试对象
     @InjectMocks
     private UserService userService;
+
     @Test
     void getUserEmail_UserExists_ReturnsEmail() {
         // Arrange: 设置模拟行为
@@ -230,6 +235,7 @@ class UserServiceTest {
         // 验证findUserByUsername被调用了一次，且参数是username
         verify(mockUserRepository, times(1)).findUserByUsername(username);
     }
+
     @Test
     void getUserEmail_UserNotExists_ReturnsNull() {
         // Arrange
@@ -242,6 +248,7 @@ class UserServiceTest {
         // 验证调用
         verify(mockUserRepository, times(1)).findUserByUsername(username);
     }
+
     @Test
     void getUserEmail_ExceptionHandling() {
         // Arrange: 模拟抛出异常
@@ -258,19 +265,25 @@ class UserServiceTest {
 - `@ExtendWith(MockitoExtension.class)`：启用Mockito对JUnit 5的支持。
 - `@Mock`：创建一个模拟的UserRepository实例。
 - `@InjectMocks`：创建UserService实例，并将模拟的UserRepository注入进去。
+
 #### 测试方法1：`getUserEmail_UserExists_ReturnsEmail`
 1. **Arrange**：设置模拟行为，当调用`mockUserRepository.findUserByUsername("john_doe")`时，返回一个预设的User对象。
 2. **Act**：调用`userService.getUserEmail("john_doe")`。
 3. **Assert**：
    - 验证返回的邮箱是否正确。
    - 使用`verify`检查`findUserByUsername`方法被调用了一次，并且参数是"john_doe"。
+
 #### 测试方法2：`getUserEmail_UserNotExists_ReturnsNull`
 1. **Arrange**：设置模拟行为，当调用`findUserByUsername`时返回null（模拟用户不存在）。
 2. **Act**：调用被测试方法。
 3. **Assert**：验证返回结果为null，并验证方法调用。
+
 #### 测试方法3：`getUserEmail_ExceptionHandling`
 1. **Arrange**：设置模拟行为，当调用`findUserByUsername`时抛出异常（模拟数据库错误）。
 2. **Act & Assert**：使用`assertThrows`验证调用被测试方法时抛出了异常。
+
+## 高级用法
+
 ### 高级使用示例：参数捕获
 假设我们想要捕获传递给`findUserByUsername`方法的参数，可以这样做：
 ```java
@@ -316,10 +329,6 @@ void getUserEmailUpperCase_SpyExample() {
 }
 ```
 注意：使用Spy时，如果模拟的方法有参数，需要确保传递的参数匹配，否则会调用真实方法。
-
-
-## 高级用法
-
 
 
 ### 使用 Mockito 模拟静态方法详解
@@ -553,7 +562,6 @@ try (MockedStatic<Service> mocked = mockStatic(Service.class)) {
 }
 ```
 
----
 
 #### 替代方案（旧版本兼容）
 
@@ -580,7 +588,6 @@ public class LegacyTest {
 
 > 官方建议：优先升级到 Mockito 3.4+ 使用内置静态模拟，避免引入额外的 PowerMock 依赖
 
----
 
 ### 重要注意事项
 
@@ -632,6 +639,6 @@ class OrderService {
 ### 资源推荐
 - [官方文档](https://javadoc.io/doc/org.mockito/mockito-core/latest/org/mockito/Mockito.html)
 - [Mockito GitHub](https://github.com/mockito/mockito)
-- 《Effective Unit Testing》by Lasse Koskela
+- [《Effective Unit Testing》by Lasse Koskela](https://github.com/GunterMueller/Books-3/blob/master/Effective%20Unit%20Testing.pdf)
 
 > Mockito 能显著提升测试的隔离性和执行速度，是编写高质量单元测试的利器。
