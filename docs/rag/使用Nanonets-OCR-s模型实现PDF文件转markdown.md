@@ -50,6 +50,26 @@
 6. **复杂表格提取**  
    - 表格转Markdown/HTML格式（保留结构）
 
+在使用该模型时，是通过如下prompt控制上述功能的：
+```python
+messages=[
+            {
+                "role": "user",
+                "content": [
+                    {
+                        "type": "image_url",
+                        "image_url": {"url": f"data:image/png;base64,{img_base64}"},
+                    },
+                    {
+                        "type": "text",
+                        "text": "Extract the text from the above document as if you were reading it naturally. Return the tables in html format. Return the equations in LaTeX representation. If there is an image in the document and image caption is not present, add a small description of the image inside the <img></img> tag; otherwise, add the image caption inside <img></img>. Watermarks should be wrapped in brackets. Ex: <watermark>OFFICIAL COPY</watermark>. Page numbers should be wrapped in brackets. Ex: <page_number>14</page_number> or <page_number>9/22</page_number>. Prefer using ☐ and ☑ for check boxes.",
+                    },
+                ],
+            }
+        ]
+```
+
+
 ### 技术细节
 - **训练数据**：25万+页文档（研究论文/财务/法律/医疗/税务表单等）
 - **数据组成**：合成数据预训练 + 人工标注数据微调
