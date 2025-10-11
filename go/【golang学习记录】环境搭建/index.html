@@ -1,0 +1,2475 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../%E3%80%90golang%E3%80%91%E4%BD%BF%E7%94%A8chan%E6%94%B6%E9%9B%86%E5%A4%9A%E5%8D%8F%E7%A8%8B%E6%89%A7%E8%A1%8C%E7%9A%84%E7%BB%93%E6%9E%9C/">
+      
+      
+        <link rel="next" href="../../image/%E6%94%B6%E9%9B%86%E7%9A%84%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/%E5%9C%A8%E7%BA%BF%E9%98%85%E8%AF%BB%E4%B9%A6%E7%B1%8D%E6%B1%87%E6%80%BB/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.21">
+    
+    
+      
+        <title>【golang学习记录】环境搭建 - My Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.2a3383ac.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#golang" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="My Docs" class="md-header__button md-logo" aria-label="My Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            My Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              【golang学习记录】环境搭建
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="My Docs" class="md-nav__button md-logo" aria-label="My Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    My Docs
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    首页
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Devops
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Devops
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../devops/apisix%E5%9C%A8k8s%E4%B8%AD%E7%9A%84%E5%AE%9E%E8%B7%B5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    apisix在k8s中的实践
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../devops/devops%E5%B7%A5%E5%85%B7zadig%E5%AE%9E%E8%B7%B5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    devops工具zadig实践
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../devops/k8s%E4%B8%AD%E7%9A%84nginx-ingress%E5%A6%82%E4%BD%95%E9%85%8D%E7%BD%AE%E8%B7%AF%E5%BE%84%E9%87%8D%E5%AE%9A%E5%90%91/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    k8s中的nginx-ingress如何配置路径重定向
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../devops/%E5%9C%A8k8s%E4%B8%AD%E5%AE%89%E8%A3%85%E5%B9%B6%E4%BD%BF%E7%94%A8jenkins/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    在k8s中安装并使用jenkins
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../devops/%E5%9C%A8k8s%E4%B8%AD%E5%AE%89%E8%A3%85%E5%B9%B6%E4%BD%BF%E7%94%A8nexus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    在k8s中安装并使用nexus
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../devops/%E5%A6%82%E4%BD%95%E6%8F%90%E9%AB%98docker%E5%AE%B9%E5%99%A8%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    如何提高docker容器的安全性
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Go
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Go
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../go%E8%AF%AD%E8%A8%80grpc%E6%A1%86%E6%9E%B6%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E5%AE%9E%E8%B7%B5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    go语言grpc框架从入门到实践
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E3%80%90golang%E3%80%91%E4%BD%BF%E7%94%A8chan%E6%94%B6%E9%9B%86%E5%A4%9A%E5%8D%8F%E7%A8%8B%E6%89%A7%E8%A1%8C%E7%9A%84%E7%BB%93%E6%9E%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    【golang】使用chan收集多协程执行的结果
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    【golang学习记录】环境搭建
+    
+  </span>
+  
+
+      </a>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Image
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Image
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_1" id="__nav_4_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    收集的学习资料
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            收集的学习资料
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../image/%E6%94%B6%E9%9B%86%E7%9A%84%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/%E5%9C%A8%E7%BA%BF%E9%98%85%E8%AF%BB%E4%B9%A6%E7%B1%8D%E6%B1%87%E6%80%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    在线阅读书籍汇总
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Java
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Java
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../java/Java%20%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Java 编程思想
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../java/Java11%E5%92%8CJava17%E4%B9%8B%E9%97%B4%E6%9C%89%E5%93%AA%E4%BA%9B%E6%96%B0%E5%8F%98%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Java11和Java17之间有哪些新变化
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../java/java%E4%B8%AD%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E7%BA%BF%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    java中如何实现线程间通信
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../java/Java%E4%B8%AD%E8%8E%B7%E5%8F%96ThreadDumps%E7%9A%848%E7%A7%8D%E6%96%B9%E5%BC%8F%E6%B1%87%E6%80%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Java中获取ThreadDumps的8种方式汇总
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../java/Java%E5%92%8Cgo%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0LRU%E7%AE%97%E6%B3%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Java和go语言实现LRU算法
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../java/Java%E5%BC%82%E5%B8%B8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Java异常
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../java/Java%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E8%AE%BE%E8%AE%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Java异常处理设计
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../java/maven%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E6%B1%87%E6%80%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    maven基础知识汇总
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../java/Mockito%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Mockito单元测试框架使用指南
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../java/Mockito%E7%9A%84%E5%B8%B8%E8%A7%81%E6%A0%B8%E5%BF%83%E5%8A%9F%E8%83%BD%E5%8F%8A%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Mockito的常见核心功能及最佳实践
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../java/springboot%E4%BD%BF%E7%94%A8k8s%E7%9A%84configMap%E4%BD%9C%E4%B8%BA%E5%A4%96%E9%83%A8%E9%85%8D%E7%BD%AE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    springboot使用k8s的configMap作为外部配置
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../java/%E4%BD%BF%E7%94%A8maven%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8F%92%E4%BB%B6%E5%AE%9E%E7%8E%B0devops/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    使用maven自定义插件实现devops
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../java/%E5%A6%82%E4%BD%95%E7%9B%91%E6%8E%A7%20Java%20%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    如何监控 Java 垃圾回收
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../java/%E5%A6%82%E4%BD%95%E8%B0%83%E4%BC%98%20Java%20%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    如何调优 Java 垃圾收集
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../java/%E6%98%AF%E4%BB%80%E4%B9%88%E8%AE%A9Java%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E7%9A%84CPU%E4%BD%BF%E7%94%A8%E7%8E%87%E9%A3%99%E5%8D%87/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    是什么让Java应用程序的CPU使用率飙升
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../java/%E7%AE%80%E5%8D%95%E7%90%86%E8%A7%A3%20Java%20%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    简单理解 Java 垃圾收集器
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../java/%E9%98%85%E8%AF%BB%E9%98%BF%E9%87%8CJava%E5%BC%80%E5%8F%91%E6%89%8B%E5%86%8C%E8%AE%B0%E5%BD%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    阅读阿里Java开发手册记录
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Other
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Other
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../other/Python%E8%84%9A%E6%9C%AC%E5%A4%84%E7%90%86Markdown%E5%9B%BE%E7%89%87%E6%9C%AC%E5%9C%B0%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Python脚本处理Markdown图片本地化
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../other/%E4%BC%98%E7%A7%80%E5%8D%9A%E5%AE%A2%E6%B1%87%E6%80%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    优秀博客汇总
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../other/%E4%BD%BF%E7%94%A8Awescnb%E6%9E%84%E5%BB%BA%E9%85%B7%E7%82%AB%E7%9A%84%E5%8D%9A%E5%AE%A2%E5%9B%AD%E7%9A%AE%E8%82%A4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    使用Awescnb构建酷炫的博客园皮肤
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../other/%E5%9C%A8markdown%E4%B8%AD%E4%BD%BF%E7%94%A8%E8%A1%A8%E6%83%85%E7%AC%A6%E5%8F%B7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    在markdown中使用表情符号
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../other/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    学习笔记
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Python
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Python
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python/gunicorn%E8%B6%85%E6%97%B6%E6%8A%A5%E9%94%99/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    gunicorn超时报错
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python/python%E4%B8%ADThreadPoolExecutor%E8%BF%90%E8%A1%8C%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    python中ThreadPoolExecutor运行原理解析
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python/python%E4%BD%BF%E7%94%A8%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%8F%90%E5%8F%96json%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E5%80%BC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    python使用正则表达式提取json字符串的值
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python/python%E5%AE%9E%E7%8E%B0%E6%8E%98%E9%87%91%E5%AE%9A%E6%97%B6%E7%AD%BE%E5%88%B0%E6%8A%BD%E5%A5%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    python实现掘金定时签到抽奖
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python/%E4%BD%BF%E7%94%A8python%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    使用python问题总结
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Rag
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            Rag
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rag/PDF%E9%A1%B5%E7%9C%89%E9%A1%B5%E8%84%9A%E8%AF%86%E5%88%AB%E4%B8%8E%E5%8E%BB%E9%99%A4%E6%96%B9%E6%A1%88/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    PDF页眉页脚识别与去除方案
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rag/RAG%E6%8A%80%E6%9C%AF%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8%E6%8C%91%E6%88%98%E5%88%86%E6%9E%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    RAG技术及其应用挑战分析
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rag/%E3%80%90RAG%E3%80%91chunk%E5%88%86%E5%9D%97%E5%AE%9E%E8%B7%B5%E7%AF%87/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    【RAG】chunk分块实践篇
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rag/%E3%80%90RAG%E3%80%91chunk%E5%88%86%E5%9D%97%E7%90%86%E8%AE%BA%E7%AF%87/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    【RAG】chunk分块理论篇
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rag/%E3%80%90RAG%E3%80%91docling%E7%BB%93%E5%90%88OCR%E5%AE%9E%E7%8E%B0pdf%E8%BD%ACmarkdown/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    【RAG】docling结合OCR实现pdf转markdown
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rag/%E3%80%90RAG%E3%80%91%E4%BD%BF%E7%94%A8PyMuPDF4LLM%E8%A7%A3%E6%9E%90PDF%E7%9A%84%E5%9B%BE%E7%89%87%E5%92%8C%E8%A1%A8%E6%A0%BC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    【RAG】使用PyMuPDF4LLM解析PDF的图片和表格
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rag/%E3%80%90RAG%E3%80%91%E6%9E%84%E5%BB%BA%E5%90%91%E9%87%8F%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    【RAG】构建向量数据库索引
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rag/%E3%80%90RAG%E4%BC%98%E5%8C%96%E3%80%91%E5%B0%86pdf%E5%92%8Cdocx%E8%BD%AC%E6%8D%A2%E4%B8%BAmarkdown%E6%A0%BC%E5%BC%8F/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    【RAG优化】将pdf和docx转换为markdown格式
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rag/%E4%BD%BF%E7%94%A8Nanonets-OCR-s%E6%A8%A1%E5%9E%8B%E5%AE%9E%E7%8E%B0PDF%E6%96%87%E4%BB%B6%E8%BD%ACmarkdown/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    使用Nanonets-OCR-s模型实现PDF文件转markdown
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Springboot
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            Springboot
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../springboot/Spring%20Boot%20%E4%B8%AD%E4%BD%BF%E7%94%A8%20Validation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Spring Boot 中使用 Validation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../springboot/Spring%20Boot%E4%B8%AD%E4%BD%BF%E7%94%A8MyBatis%20Generator%E7%94%9F%E6%88%90%E5%8A%A8%E6%80%81SQL/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Spring Boot中使用MyBatis Generator生成动态SQL
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../springboot/Spring%20Boot%E9%A1%B9%E7%9B%AE%E8%87%AA%E5%B7%B1%E5%B0%81%E8%A3%85%E4%B8%80%E4%B8%AA%E5%88%86%E9%A1%B5%E6%9F%A5%E8%AF%A2%E5%B7%A5%E5%85%B7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Spring Boot项目自己封装一个分页查询工具
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../springboot/springboot%20%E5%A4%A7%E5%9E%8B%E5%A4%8D%E6%9D%82%E9%A1%B9%E7%9B%AE%E7%9A%84%E5%8C%85%E7%BB%93%E6%9E%84%E8%AE%BE%E8%AE%A1%28DDD%29/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    springboot 大型复杂项目的包结构设计(DDD)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../springboot/springboot%E4%B8%AD%E4%BD%BF%E7%94%A8MapStruct%E6%95%99%E7%A8%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    springboot中使用MapStruct教程
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../springboot/springboot%E9%A1%B9%E7%9B%AE%E4%B8%AD%20PO%20BO%20VO%20DTO%20POJO%20DAO%E6%A6%82%E5%BF%B5%E5%8F%8A%E5%85%B6%E4%BD%9C%E7%94%A8%EF%BC%88%E9%99%84%E8%BD%AC%E6%8D%A2%E5%9B%BE%EF%BC%89/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    springboot项目中 PO BO VO DTO POJO DAO概念及其作用（附转换图）
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../springboot/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E5%8D%81%E5%88%86%E9%92%9F%E5%AE%9E%E7%8E%B0springboot%20%2B%20MyBatis%20Dynamic%20SQL/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    从零开始十分钟实现springboot + MyBatis Dynamic SQL
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    大模型
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            大模型
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E6%A8%A1%E5%9E%8B/langchain%E4%BD%BF%E7%94%A8token%E5%88%87%E5%88%86chunk/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    langchain使用token切分chunk
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E6%A8%A1%E5%9E%8B/LLM%E7%BB%9F%E4%B8%80%E7%BD%91%E5%85%B3%EF%BC%9ALiteLLM%20%E8%AF%A6%E7%BB%86%E4%BB%8B%E7%BB%8D/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    LLM统一网关：LiteLLM 详细介绍
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E6%A8%A1%E5%9E%8B/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%B7%A5%E5%85%B7%E8%B0%83%E7%94%A8%E5%8E%9F%E7%90%86%E5%92%8C%E5%AE%9E%E8%B7%B5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    大模型工具调用原理和实践
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E6%A8%A1%E5%9E%8B/%E5%A6%82%E4%BD%95%E8%AE%A9%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%BE%93%E5%87%BA%E7%BB%93%E6%9E%84%E5%8C%96%E6%95%B0%E6%8D%AE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    如何让大模型输出结构化数据
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    工具
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11">
+            <span class="md-nav__icon md-icon"></span>
+            工具
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%B7%A5%E5%85%B7/%E4%BD%BF%E7%94%A8%E8%BF%87%E7%9A%84%E5%BC%80%E6%BA%90%E5%B7%A5%E5%85%B7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    使用过的开源工具
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12" >
+        
+          
+          <label class="md-nav__link" for="__nav_12" id="__nav_12_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    爬虫
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_12">
+            <span class="md-nav__icon md-icon"></span>
+            爬虫
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%88%AC%E8%99%AB/BeautifulSoup%E7%9A%84%E4%BD%BF%E7%94%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    BeautifulSoup的使用
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%88%AC%E8%99%AB/selenium%E5%A6%82%E4%BD%95%E6%8B%96%E5%8A%A8%E6%BB%9A%E5%8A%A8%E6%9D%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    selenium如何拖动滚动条
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%88%AC%E8%99%AB/%E3%80%90%E7%88%AC%E8%99%AB%E3%80%91docker%E9%83%A8%E7%BD%B2python%2Bselenium%2Bfirefox-headless/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    【爬虫】docker部署python+selenium+firefox-headless
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%88%AC%E8%99%AB/%E3%80%90%E7%88%AC%E8%99%AB%E3%80%91python%2Bselenium%2Bfirefox%E4%BD%BF%E7%94%A8%E4%B8%8E%E9%83%A8%E7%BD%B2%E8%AF%A6%E8%A7%A3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    【爬虫】python+selenium+firefox使用与部署详解
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_13" >
+        
+          
+          <label class="md-nav__link" for="__nav_13" id="__nav_13_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    算法
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_13_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_13">
+            <span class="md-nav__icon md-icon"></span>
+            算法
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%AE%97%E6%B3%95/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F%E5%9B%BE%E6%96%87%E8%AE%B2%E8%A7%A3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    归并排序图文讲解
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="golang">【golang】环境搭建</h1>
+<h1 id="_1">一. 概述</h1>
+<p>本文是【golang学习记录】系列文章的第一篇，<strong>安装Go语言及搭建Go语言开发环境</strong>，接下来将详细记录自己学习 go 语言的过程，一方面是为了巩固自己学到的内容，另一方面希望对有同样需求的小伙伴提供一些帮助。</p>
+<h1 id="go">二. 下载并安装 Go</h1>
+<p>Go官网下载地址（在国内无法访问）：https://golang.org/dl/</p>
+<p><strong>Go官方镜像站（推荐）</strong>：https://golang.google.cn/dl/</p>
+<blockquote>
+<p>在Windows中通过可执行文件来安装会自动配置 <code>GOROOT</code> 环境变量，省去了手动配置环境变量的麻烦，个人觉得通过下载 zip 包，配置环境变量安装能够更好理解安装流程。</p>
+</blockquote>
+<p>我这里是在 windows 中安装 Go ，所以直接选择 windows 的安装方式即可，如下图所示：</p>
+<p><img alt="image-20211116143523053" src="https://gitee.com/peterwd/pic-oss/raw/master/image/202111161435799.png" /></p>
+<p>下载完成后，双击下载好的文件，然后按照下图所示步骤安装：</p>
+<p><img alt="image-20211116144036899" src="https://gitee.com/peterwd/pic-oss/raw/master/image/202111161440141.png" /></p>
+<p>如果你本地已经安装了低版本的 Go，那么点击 Next 后会提示你卸载旧版的 Go，根据提示卸载即可。</p>
+<p><img alt="image-20211116144438047" src="https://gitee.com/peterwd/pic-oss/raw/master/image/202111161444292.png" /></p>
+<p><img alt="image-20211116144547285" src="https://gitee.com/peterwd/pic-oss/raw/master/image/202111161445469.png" /></p>
+<p>等待安装完成，出现下图，即表示安装成功：</p>
+<p><img alt="image-20211116145004279" src="https://gitee.com/peterwd/pic-oss/raw/master/image/202111161450447.png" /></p>
+<p>因为通过可执行文件安装过程中已经自动配置好了环境变量，所以直接在 <code>CMD</code> 控制台输入 <code>go version</code> 命令验证 Go 是否安装成功：</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>&gt;<span class="w"> </span>go<span class="w"> </span>version
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>go<span class="w"> </span>version<span class="w"> </span>go1.17.3<span class="w"> </span>windows/amd64
+</span></code></pre></div>
+<h1 id="go_1">三. Go 环境变量配置和说明</h1>
+<p>在 <code>CMD</code> 控制台输入 <code>go env</code> 命令查看配置的环境变量：</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>C:<span class="se">\U</span>sers<span class="se">\a</span>dmin&gt;go<span class="w"> </span>env
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="nb">set</span><span class="w"> </span><span class="nv">GO111MODULE</span><span class="o">=</span>on
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="nb">set</span><span class="w"> </span><span class="nv">GOARCH</span><span class="o">=</span>amd64
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="nb">set</span><span class="w"> </span><span class="nv">GOBIN</span><span class="o">=</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="nb">set</span><span class="w"> </span><span class="nv">GOCACHE</span><span class="o">=</span>C:<span class="se">\U</span>sers<span class="se">\a</span>dmin<span class="se">\A</span>ppData<span class="se">\L</span>ocal<span class="se">\g</span>o-build
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="nb">set</span><span class="w"> </span><span class="nv">GOENV</span><span class="o">=</span>C:<span class="se">\U</span>sers<span class="se">\a</span>dmin<span class="se">\A</span>ppData<span class="se">\R</span>oaming<span class="se">\g</span>o<span class="se">\e</span>nv
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="nb">set</span><span class="w"> </span><span class="nv">GOEXE</span><span class="o">=</span>.exe
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="nb">set</span><span class="w"> </span><span class="nv">GOEXPERIMENT</span><span class="o">=</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="nb">set</span><span class="w"> </span><span class="nv">GOFLAGS</span><span class="o">=</span><span class="w"> </span>-mod<span class="o">=</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="nb">set</span><span class="w"> </span><span class="nv">GOHOSTARCH</span><span class="o">=</span>amd64
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="nb">set</span><span class="w"> </span><span class="nv">GOHOSTOS</span><span class="o">=</span>windows
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="nb">set</span><span class="w"> </span><span class="nv">GOINSECURE</span><span class="o">=</span>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="nb">set</span><span class="w"> </span><span class="nv">GOMODCACHE</span><span class="o">=</span>C:<span class="se">\U</span>sers<span class="se">\a</span>dmin<span class="se">\g</span>o<span class="se">\p</span>kg<span class="se">\m</span>od
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="nb">set</span><span class="w"> </span><span class="nv">GONOPROXY</span><span class="o">=</span>
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="nb">set</span><span class="w"> </span><span class="nv">GONOSUMDB</span><span class="o">=</span>
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="nb">set</span><span class="w"> </span><span class="nv">GOOS</span><span class="o">=</span>windows
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="nb">set</span><span class="w"> </span><span class="nv">GOPATH</span><span class="o">=</span>C:<span class="se">\U</span>sers<span class="se">\a</span>dmin<span class="se">\g</span>o
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="nb">set</span><span class="w"> </span><span class="nv">GOPRIVATE</span><span class="o">=</span>
+</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="nb">set</span><span class="w"> </span><span class="nv">GOPROXY</span><span class="o">=</span>https://goproxy.cn,direct
+</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="nb">set</span><span class="w"> </span><span class="nv">GOROOT</span><span class="o">=</span>D:<span class="se">\e</span>nvironment<span class="se">\G</span>o
+</span><span id="__span-1-21"><a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="nb">set</span><span class="w"> </span><span class="nv">GOSUMDB</span><span class="o">=</span>sum.golang.org
+</span><span id="__span-1-22"><a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="nb">set</span><span class="w"> </span><span class="nv">GOTMPDIR</span><span class="o">=</span>
+</span><span id="__span-1-23"><a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a><span class="nb">set</span><span class="w"> </span><span class="nv">GOTOOLDIR</span><span class="o">=</span>D:<span class="se">\e</span>nvironment<span class="se">\G</span>o<span class="se">\p</span>kg<span class="se">\t</span>ool<span class="se">\w</span>indows_amd64
+</span><span id="__span-1-24"><a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a><span class="nb">set</span><span class="w"> </span><span class="nv">GOVCS</span><span class="o">=</span>
+</span><span id="__span-1-25"><a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a><span class="nb">set</span><span class="w"> </span><span class="nv">GOVERSION</span><span class="o">=</span>go1.17.3
+</span><span id="__span-1-26"><a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a><span class="nb">set</span><span class="w"> </span><span class="nv">GCCGO</span><span class="o">=</span>gccgo
+</span><span id="__span-1-27"><a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a><span class="nb">set</span><span class="w"> </span><span class="nv">AR</span><span class="o">=</span>ar
+</span><span id="__span-1-28"><a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a><span class="nb">set</span><span class="w"> </span><span class="nv">CC</span><span class="o">=</span>gcc
+</span><span id="__span-1-29"><a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a><span class="nb">set</span><span class="w"> </span><span class="nv">CXX</span><span class="o">=</span>g++
+</span><span id="__span-1-30"><a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a><span class="nb">set</span><span class="w"> </span><span class="nv">CGO_ENABLED</span><span class="o">=</span><span class="m">1</span>
+</span><span id="__span-1-31"><a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a><span class="nb">set</span><span class="w"> </span><span class="nv">GOMOD</span><span class="o">=</span>NUL
+</span><span id="__span-1-32"><a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a><span class="nb">set</span><span class="w"> </span><span class="nv">CGO_CFLAGS</span><span class="o">=</span>-g<span class="w"> </span>-O2
+</span><span id="__span-1-33"><a id="__codelineno-1-33" name="__codelineno-1-33" href="#__codelineno-1-33"></a><span class="nb">set</span><span class="w"> </span><span class="nv">CGO_CPPFLAGS</span><span class="o">=</span>
+</span><span id="__span-1-34"><a id="__codelineno-1-34" name="__codelineno-1-34" href="#__codelineno-1-34"></a><span class="nb">set</span><span class="w"> </span><span class="nv">CGO_CXXFLAGS</span><span class="o">=</span>-g<span class="w"> </span>-O2
+</span><span id="__span-1-35"><a id="__codelineno-1-35" name="__codelineno-1-35" href="#__codelineno-1-35"></a><span class="nb">set</span><span class="w"> </span><span class="nv">CGO_FFLAGS</span><span class="o">=</span>-g<span class="w"> </span>-O2
+</span><span id="__span-1-36"><a id="__codelineno-1-36" name="__codelineno-1-36" href="#__codelineno-1-36"></a><span class="nb">set</span><span class="w"> </span><span class="nv">CGO_LDFLAGS</span><span class="o">=</span>-g<span class="w"> </span>-O2
+</span><span id="__span-1-37"><a id="__codelineno-1-37" name="__codelineno-1-37" href="#__codelineno-1-37"></a><span class="nb">set</span><span class="w"> </span><span class="nv">PKG_CONFIG</span><span class="o">=</span>pkg-config
+</span><span id="__span-1-38"><a id="__codelineno-1-38" name="__codelineno-1-38" href="#__codelineno-1-38"></a><span class="nb">set</span><span class="w"> </span><span class="nv">GOGCCFLAGS</span><span class="o">=</span>-m64<span class="w"> </span>-mthreads<span class="w"> </span>-fno-caret-diagnostics<span class="w"> </span>-Qunused-arguments<span class="w"> </span>-fmessage-length<span class="o">=</span><span class="m">0</span><span class="w"> </span>-fdebug-prefix-map<span class="o">=</span>C:<span class="se">\U</span>sers<span class="se">\a</span>dmin<span class="se">\A</span>ppData<span class="se">\L</span>ocal<span class="se">\T</span>emp<span class="se">\g</span>o-build3769788971<span class="o">=</span>/tmp/
+</span><span id="__span-1-39"><a id="__codelineno-1-39" name="__codelineno-1-39" href="#__codelineno-1-39"></a>go-build<span class="w"> </span>-gno-record-gcc-switches
+</span></code></pre></div>
+<blockquote>
+<p>Go1.14版本之后，都推荐使用<code>go mod</code>模式来管理依赖环境了，也不再强制我们把代码必须写在<code>GOPATH</code>下面的src目录了，你可以在你电脑的任意位置编写go代码。</p>
+</blockquote>
+<p>其中我们比较关心的环境变量有如下几个：</p>
+<ul>
+<li><code>GOPATH</code>：可以理解为 go 的工作目录，此目录包含两个文件夹</li>
+</ul>
+<p><strong>-- bin</strong>：存放 go 编译生成的可执行文件</p>
+<p><strong>-- pkg</strong>：存放 go 项目依赖的第三方 module</p>
+<ul>
+<li>
+<p><code>GOROOT</code>：是我们安装 go 开发包的路径</p>
+</li>
+<li>
+<p><code>GO111MODULE</code>：要启用<code>go module</code>支持首先要设置环境变量<code>GO111MODULE</code>，通过它可以开启或关闭模块支持，它有三个可选值：<code>off</code>、<code>on</code>、<code>auto</code>，默认值是<code>on</code>。</p>
+</li>
+<li>
+<p><code>GO111MODULE=off</code>禁用模块支持，编译时会从<code>GOPATH</code>和<code>vendor</code>文件夹中查找包。</p>
+</li>
+<li><code>GO111MODULE=on</code>启用模块支持，编译时会忽略<code>GOPATH</code>和<code>vendor</code>文件夹，只根据 <code>go.mod</code>下载依赖。</li>
+<li><code>GO111MODULE=auto</code>，当项目在<code>$GOPATH/src</code>外且项目根目录有<code>go.mod</code>文件时，开启模块支持。</li>
+</ul>
+<p>使用 go module 管理依赖后会在项目根目录下生成两个文件<code>go.mod</code>和<code>go.sum</code>。</p>
+<ul>
+<li><code>GOPROXY</code>：Go1.13之后<code>GOPROXY</code>默认值为<code>https://proxy.golang.org</code>，在国内是无法访问的，所以十分建议大家设置<code>GOPROXY</code>，这里我推荐使用<a href="https://studygolang.com/topics/10014">goproxy.cn</a>。通过如下命令设置：</li>
+</ul>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>go<span class="w"> </span>env<span class="w"> </span>-w<span class="w"> </span><span class="nv">GOPROXY</span><span class="o">=</span>https://goproxy.cn,direct
+</span></code></pre></div>
+<h1 id="go_2">四. Go 开发工具</h1>
+<p>Go 采用的是 <code>UTF-8</code> 编码的文本文件存放源代码，理论上使用任何一款文本编辑器都可以做 Go 语言开发，比较常用的开发工具是 <code>VS Code</code>和<code>Goland</code>。 <code>VS Code</code>是微软开源的编辑器，而<code>Goland</code>是 jetbrains 出品的付费 IDE。</p>
+<p>因为我是做的比较多的是 Java 开发，使用的是 idea，并且习惯了 idea 不想下载其他的开发工具，所以这里介绍在 idea 中安装 Go 插件进行开发。</p>
+<p>打开 idea 在 Plugins 中搜索 go ，安装下图所示的插件：</p>
+<p><img alt="image-20211116170251306" src="https://gitee.com/peterwd/pic-oss/raw/master/image/202111161702483.png" /></p>
+<p>安装完成后，最好是重启一下 idea，让插件生效。安装好插件之后，go 的开发工具其实就配置好了，</p>
+<h1 id="go_3">五. 第一个 Go 程序</h1>
+<p>现在我们来创建第一个Go项目——<code>hello-go</code>，在我们桌面创建一个<code>hello-go</code>目录。</p>
+<p>使用 <code>go module</code> 模式新建项目时，我们需要通过 <code>go mod init 项目名</code> 命令对项目进行初始化，该命令会在项目根目录下生成 <code>go.mod</code> 文件。例如，我们使用<code>hello-go</code> 作为我们第一个Go项目的名称，在前面创建目录的 <code>cmd</code> 命令行中执行如下命令：</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>go<span class="w"> </span>mod<span class="w"> </span>init<span class="w"> </span>hello-go
+</span></code></pre></div>
+<p>查看生成的 <code>go.mod</code> 文件：</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>&gt;<span class="w"> </span>cat<span class="w"> </span>go.mod
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>module<span class="w"> </span>hello-go
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>go<span class="w"> </span><span class="m">1</span>.17
+</span></code></pre></div>
+<p>使用 idea 打开 <code>hello-go</code> 目录，idea 会提示你没有配置 <code>GOROOT</code>，我们根据提示，添加安装的 <code>GOROOT</code>路径即可。选择项目，右键新建一个 <code>Go File</code> 文件：</p>
+<p><img alt="image-20211116172302837" src="https://gitee.com/peterwd/pic-oss/raw/master/image/202111161723138.png" /></p>
+<p><img alt="image-20211116172405071" src="https://gitee.com/peterwd/pic-oss/raw/master/image/202111161724293.png" /></p>
+<p>在 <code>main.go</code> 文件中输入如下内容：</p>
+<div class="language-go highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">package</span><span class="w"> </span><span class="nx">main</span><span class="w">  </span><span class="c1">// 声明 main 包，表明当前是一个可执行程序</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="kn">import</span><span class="w"> </span><span class="s">&quot;fmt&quot;</span><span class="w">  </span><span class="c1">// 导入内置 fmt 包</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="kd">func</span><span class="w"> </span><span class="nx">main</span><span class="p">(){</span><span class="w">  </span><span class="c1">// main函数，是程序执行的入口</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Hello World!&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1">// 在终端打印 Hello World!</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><img alt="image-20211116172635327" src="https://gitee.com/peterwd/pic-oss/raw/master/image/202111161726581.png" /></p>
+<p>在 idea 中的第一个 Go 程序就运行成功了~</p>
+<p>在 <code>cmd</code> 终端中输入命令 <code>go run main.go</code>也可以执行程序，该命令本质上也是先编译再执行。</p>
+<h2 id="go_4">编译 Go 程序为可执行文件</h2>
+<p><code>go build</code>命令表示将源代码编译成可执行文件。</p>
+<p>在 idea 的终端中执行下面的命令，如下图所示：</p>
+<p><img alt="image-20211116173548406" src="https://gitee.com/peterwd/pic-oss/raw/master/image/202111161735563.png" /></p>
+<p>默认我们<code>go build</code>的可执行文件都是当前操作系统可执行的文件，它先编译源代码在当前目录生成可执行文件，所以我们可以在当前目录执行 <code>hello-go.exe</code>，如果我们希望在其他地方也可以执行，则需要使用 <code>go install</code> 命令。</p>
+<p><code>go install</code>表示安装的意思，它先编译源代码得到可执行文件，然后将可执行文件移动到<code>GOPATH</code>的 <code>bin</code> 目录下。因为我们的环境变量中配置了<code>GOPATH</code>下的 <code>bin</code> 目录，所以我们就可以在任意地方直接执行可执行文件了。</p>
+<p>参考文档</p>
+<p>https://www.liwenzhou.com/posts/Go/install_go_dev/</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "content.code.select"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+    
+  </body>
+</html>
