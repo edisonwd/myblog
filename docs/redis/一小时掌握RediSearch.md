@@ -1,6 +1,8 @@
 # 一小时掌握RediSearch
 
-# 一、简介
+> 本文翻译自：https://github.com/RediSearch/redisearch-getting-started
+
+## 一、简介
 
 RediSearch 提供了一种简单且高效的方式，可以基于任意字段（二级索引）对数据进行索引，并在已索引的数据集上执行搜索和聚合操作。
 RediSearch主要提供了如下功能：
@@ -14,7 +16,7 @@ RediSearch主要提供了如下功能：
 在本教程中，你将学习如何使用 **redis-stack** 镜像来运行 [redisearch 模块](https://redis.io/docs/latest/develop/ai/search-and-query/)，该模块为 Redis 提供了索引和全文搜索等功能。
 
 
-# 二、安装 RediSearch
+## 二、安装 RediSearch
 
 有多种方式可以运行 RediSearch：
 
@@ -22,7 +24,9 @@ RediSearch主要提供了如下功能：
 * 使用 [Docker](https://hub.docker.com/r/redis/redis-stack)
 
 我们现在使用 Docker 方式。
-**1.1 安装docker**
+
+### **1.1 安装docker**
+
 如果你使用 mac 可以考虑使用 [Colima](https://github.com/abiosoft/colima) ， Colima 是一个开源的 Docker 容器运行时，旨在通过最小化设置运行容器和 Kubernetes。
 
 在mac中安装 colima 命令：
@@ -33,7 +37,7 @@ brew install colima
 ```sh
 colima start
 ```
-**1.2 启动 Redis 实例**
+### **1.2 启动 Redis 实例**
 
 执行下面的命令启动 redis-stack 容器
 ```shell
@@ -55,7 +59,7 @@ docker ps
 docker exec -it redis-stack bash
 ```
 
-接着我们通过 redis-cli 连接测试使用 redis 服务：
+进入 docker 容器后，接着我们通过 redis-cli 连接测试使用 redis 服务：
 
 ```shell
 redis-cli
@@ -64,11 +68,11 @@ redis-cli
 现在你已经拥有了一个运行中的 Redis 实例，并且 RediSearch 模块已安装。接下来让我们开始探索它的基本功能。
 
 
-# 三、创建索引
+## 三、创建索引
 
 在创建索引之前，我们先来介绍数据集并插入一些数据。
 
-## 示例数据集
+### 示例数据集
 
 在本项目中，我们将使用一个简单的电影数据集。目前所有记录均为英文内容。关于多语言支持的更多知识将在其他教程中介绍。
 
@@ -104,7 +108,7 @@ redis-cli
 
 ---
 
-## 插入电影数据
+### 插入电影数据
 
 现在让我们向数据库中添加一些数据，插入几部电影。你可以使用 `redis-cli` 或 [Redis Insight](https://redis.io/insight/) 工具完成操作。
 
@@ -152,7 +156,7 @@ redis-cli
 
 ---
 
-## RediSearch 与索引机制
+### RediSearch 与索引机制
 
 RediSearch 极大地简化了这一过程，它提供了一种简单且自动的方式来为 Redis Hash 创建二级索引。（未来还将支持更多数据结构）
 
@@ -200,14 +204,14 @@ RediSearch 极大地简化了这一过程，它提供了一种简单且自动的
 ```
 
 
-# 四、查询数据
+## 四、查询数据
 
 数据库中已包含了几部电影和一个索引，现在可以执行一些查询操作了。
 
 
-## 查询示例
+### 查询示例
 
-### **示例：查找所有标题中包含 "`war`" 的电影**
+**示例：查找所有标题中包含 "`war`" 的电影**
 
 ```bash
 > FT.SEARCH idx:movie "war"
@@ -264,7 +268,7 @@ RediSearch 极大地简化了这一过程，它提供了一种简单且自动的
 
 ---
 
-### **示例：查找包含 "`war`" 但不包含 "`jedi`" 的电影**
+**示例：查找包含 "`war`" 但不包含 "`jedi`" 的电影**
 
 在查询中加入 `-jedi`（减号）表示排除包含 “jedi” 的结果。
 
@@ -274,14 +278,14 @@ RediSearch 极大地简化了这一过程，它提供了一种简单且自动的
 1) (integer) 1
 2) "movie:11002"
 3) 1) "title"
-   2) "Star Wars: Episode V - The Empire Strikes Back"
-   3) "release_year"
-   4) "1980"
+   1) "Star Wars: Episode V - The Empire Strikes Back"
+   2) "release_year"
+   3) "1980"
 ```
 
 ---
 
-### **示例：使用模糊搜索查找拼写错误的 "`gdfather`"**
+**示例：使用模糊搜索查找拼写错误的 "`gdfather`"**
 
 如你所见，“godfather” 被误写为 “gdfather”。但通过 [模糊匹配](https://oss.redislabs.com/redisearch/Query_Syntax/#fuzzy_matching) 仍然可以找到它。模糊匹配基于 [莱文斯坦距离（Levenshtein Distance）](https://zh.wikipedia.org/wiki/%E8%8E%B1%E6%96%87%E6%96%AF%E5%9D%A6%E8%B7%9D%E7%A6%BB) 实现。
 
@@ -294,16 +298,16 @@ RediSearch 极大地简化了这一过程，它提供了一种简单且自动的
 1) (integer) 1
 2) "movie:11003"
 3) 1) "title"
-   2) "The Godfather"
-   3) "release_year"
-   4) "1972"
+   1) "The Godfather"
+   2) "release_year"
+   3) "1972"
 ```
 
 注意：模糊匹配需用 `%` 包裹关键词。
 
 ---
 
-### **示例：查找所有类型为 `Thriller` 的电影**
+**示例：查找所有类型为 `Thriller` 的电影**
 
 `genre` 字段是以 `TAG` 类型索引的，支持精确匹配查询。
 
@@ -315,14 +319,14 @@ RediSearch 极大地简化了这一过程，它提供了一种简单且自动的
 1) (integer) 1
 2) "movie:11004"
 3) 1) "title"
-   2) "Heat"
-   3) "release_year"
-   4) "1995"
+   1) "Heat"
+   2) "release_year"
+   3) "1995"
 ```
 
 ---
 
-### **示例：查找所有类型为 `Thriller` 或 `Action` 的电影**
+**示例：查找所有类型为 `Thriller` 或 `Action` 的电影**
 
 ```bash
 > FT.SEARCH idx:movie "@genre:{Thriller|Action}" RETURN 2 title release_year
@@ -330,26 +334,26 @@ RediSearch 极大地简化了这一过程，它提供了一种简单且自动的
 1) (integer) 3
 2) "movie:11004"
 3) 1) "title"
-   2) "Heat"
-   3) "release_year"
-   4) "1995"
+   1) "Heat"
+   2) "release_year"
+   3) "1995"
 4) "movie:11005"
 5) 1) "title"
-   2) "Star Wars: Episode VI - Return of the Jedi"
-   3) "release_year"
-   4) "1983"
+   1) "Star Wars: Episode VI - Return of the Jedi"
+   2) "release_year"
+   3) "1983"
 6) "movie:11002"
 7) 1) "title"
-   2) "Star Wars: Episode V - The Empire Strikes Back"
-   3) "release_year"
-   4) "1980"
+   1) "Star Wars: Episode V - The Empire Strikes Back"
+   2) "release_year"
+   3) "1980"
 ```
 
 关于标签过滤器的更多信息，请参考 [官方文档](https://redis.io/docs/latest/develop/ai/search-and-query/advanced-concepts/query_syntax/#tag-filters)。
 
 ---
 
-### **示例：查找类型为 `Thriller` 或 `Action` 且标题不含 `Jedi` 的电影**
+**示例：查找类型为 `Thriller` 或 `Action` 且标题不含 `Jedi` 的电影**
 
 ```bash
 > FT.SEARCH idx:movie "@genre:{Thriller|Action} @title:-jedi" RETURN 2 title release_year
@@ -357,19 +361,19 @@ RediSearch 极大地简化了这一过程，它提供了一种简单且自动的
 1) (integer) 2
 2) "movie:11004"
 3) 1) "title"
-   2) "Heat"
-   3) "release_year"
-   4) "1995"
+   1) "Heat"
+   2) "release_year"
+   3) "1995"
 4) "movie:11002"
 5) 1) "title"
-   2) "Star Wars: Episode V - The Empire Strikes Back"
-   3) "release_year"
-   4) "1980"
+   1) "Star Wars: Episode V - The Empire Strikes Back"
+   2) "release_year"
+   3) "1980"
 ```
 
 ---
 
-### **示例：查找 1970 到 1980 年之间（含）上映的所有电影**
+**示例：查找 1970 到 1980 年之间（含）上映的所有电影**
 
 `FT.SEARCH` 提供两种方式查询数值字段：
 
@@ -389,14 +393,14 @@ RediSearch 极大地简化了这一过程，它提供了一种简单且自动的
 1) (integer) 2
 2) "movie:11003"
 3) 1) "title"
-   2) "The Godfather"
-   3) "release_year"
-   4) "1972"
+   1) "The Godfather"
+   2) "release_year"
+   3) "1972"
 4) "movie:11002"
 5) 1) "title"
-   2) "Star Wars: Episode V - The Empire Strikes Back"
-   3) "release_year"
-   4) "1980"
+   1) "Star Wars: Episode V - The Empire Strikes Back"
+   2) "release_year"
+   3) "1980"
 ```
 
 若要排除某个端点值，在数字前加 `( ` 即可。例如排除 1980 年：
@@ -407,7 +411,7 @@ RediSearch 极大地简化了这一过程，它提供了一种简单且自动的
 
 ---
 
-## 插入、更新、删除与过期文档
+### 插入、更新、删除与过期文档
 
 在本教程中，你已完成以下操作：
 
@@ -479,7 +483,7 @@ RediSearch 极大地简化了这一过程，它提供了一种简单且自动的
 
 ---
 
-## 更多功能
+### 更多功能
 
 关于索引和搜索，还有更多高级功能可在文档中查阅：
 
@@ -488,9 +492,9 @@ RediSearch 极大地简化了这一过程，它提供了一种简单且自动的
 
 接下来，我们将学习如何查看、修改和删除索引。
 
-# 五、管理索引
+## 五、管理索引
 
-## 列出并查看索引
+### 列出并查看索引
 
 `FT._LIST` 命令可以列出当前数据库中所有的 RediSearch 索引：
 
@@ -520,7 +524,7 @@ RediSearch 极大地简化了这一过程，它提供了一种简单且自动的
 
 ---
 
-## 更新索引结构
+### 更新索引结构
 
 在开发应用过程中，随着数据库中数据的增加，你可能需要为索引添加新的字段。此时可以使用 `FT.ALTER` 命令来修改现有索引。
 
@@ -543,7 +547,7 @@ RediSearch 极大地简化了这一过程，它提供了一种简单且自动的
 
 ---
 
-## 删除索引
+### 删除索引
 
 你可以使用 `FT.DROPINDEX` 命令删除一个索引：
 
@@ -580,7 +584,7 @@ RediSearch 极大地简化了这一过程，它提供了一种简单且自动的
 
 
 
-# 六、示例数据集
+## 六、示例数据集
 
 在之前的步骤中，你只使用了少量电影数据。现在让我们导入更多数据：
 
@@ -590,9 +594,9 @@ RediSearch 极大地简化了这一过程，它提供了一种简单且自动的
 
 ---
 
-## 数据集说明
+### 数据集说明
 
-### **电影（Movies）**
+#### **电影（Movies）**
 
 文件 [import_movies.redis](https://github.com/RediSearch/redisearch-getting-started/blob/master/sample-app/redisearch-docker/dataset/import_movies.redis) 是一个脚本，用于创建 922 个 Hash 结构。
 
@@ -672,7 +676,7 @@ RediSearch 极大地简化了这一过程，它提供了一种简单且自动的
 
 ---
 
-### **剧院（Theaters）**
+#### **剧院（Theaters）**
 
 文件 [import_theaters.redis](https://github.com/RediSearch/redisearch-getting-started/blob/master/sample-app/redisearch-docker/dataset/import_theaters.redis) 是一个脚本，用于创建 117 个 Hash（用于地理空间查询）。  
 *注意：此数据集是纽约市的剧院列表，不全是电影院，但对本项目影响不大。*
@@ -746,7 +750,7 @@ RediSearch 极大地简化了这一过程，它提供了一种简单且自动的
 
 ---
 
-### **用户（Users）**
+#### **用户（Users）**
 
 文件 [import_users.redis](https://github.com/RediSearch/redisearch-getting-started/blob/master/sample-app/redisearch-docker/dataset/import_users.redis) 是一个脚本，用于创建 5996 个 Hash。
 
@@ -847,7 +851,7 @@ RediSearch 极大地简化了这一过程，它提供了一种简单且自动的
 
 ---
 
-## 导入电影、剧院和用户数据
+### 导入电影、剧院和用户数据
 
 在导入数据之前，请先清空数据库：
 
@@ -888,9 +892,9 @@ $ redis-cli -h localhost -p 6379 < import_users.redis
 
 ---
 
-## 创建索引
+### 创建索引
 
-### **创建 `idx:movie` 索引：**
+#### **创建 `idx:movie` 索引：**
 
 ```bash
 > FT.CREATE idx:movie ON hash PREFIX 1 "movie:" SCHEMA title TEXT SORTABLE plot TEXT WEIGHT 0.5 release_year NUMERIC SORTABLE rating NUMERIC SORTABLE votes NUMERIC SORTABLE genre TAG SORTABLE
@@ -902,7 +906,7 @@ $ redis-cli -h localhost -p 6379 < import_users.redis
 
 ---
 
-### **创建 `idx:theater` 索引：**
+#### **创建 `idx:theater` 索引：**
 
 此索引主要用于展示 RediSearch 的地理空间查询能力。
 
@@ -926,7 +930,7 @@ $ redis-cli -h localhost -p 6379 < import_users.redis
 
 ---
 
-### **创建 `idx:user` 索引：**
+#### **创建 `idx:user` 索引：**
 
 ```bash
 > FT.CREATE idx:user ON hash PREFIX 1 "user:" SCHEMA gender TAG country TAG SORTABLE last_login NUMERIC SORTABLE location GEO
@@ -939,7 +943,7 @@ $ redis-cli -h localhost -p 6379 < import_users.redis
 下一步：[查询电影数据库](007-query-movies.md)
 
 
-# 七、查询电影数据集
+## 七、查询电影数据集
 
 如本教程前面所述，RediSearch 的目标之一是提供丰富的查询功能，例如：
 
@@ -950,7 +954,7 @@ $ redis-cli -h localhost -p 6379 < import_users.redis
 
 
 
-## 条件查询（Conditions）
+### 条件查询（Conditions）
 
 学习 RediSearch 查询能力的最佳方式是从了解各种条件选项开始。
 
@@ -1179,7 +1183,7 @@ FT.SEARCH "idx:movie" "@title:(heat) | @genre:{Drama|Comedy} " RETURN 3 title pl
 ---
 </details>
 
-## 小结
+### 小结
 
 * **无字段查询**：作用于所有 `TEXT` 字段，支持词干扩展（stemming）
 * **限定字段查询**：使用 `@field:` 语法
@@ -1187,7 +1191,7 @@ FT.SEARCH "idx:movie" "@title:(heat) | @genre:{Drama|Comedy} " RETURN 3 title pl
 
 ---
 
-## 排序（Sort）
+### 排序（Sort）
 
 查询数据时常见的需求是对结果按特定字段排序，并进行分页浏览。
 
@@ -1225,7 +1229,7 @@ FT.SEARCH "idx:movie" "@title:(heat) | @genre:{Drama|Comedy} " RETURN 3 title pl
 
 ---
 
-## 分页（Paginate）
+### 分页（Paginate）
 
 <details> 
   <summary>
@@ -1263,7 +1267,7 @@ FT.SEARCH "idx:movie" "@title:(heat) | @genre:{Drama|Comedy} " RETURN 3 title pl
 
 ---
 
-## 计数（Count）
+### 计数（Count）
 
 <details> 
   <summary>
@@ -1306,7 +1310,7 @@ FT.SEARCH "idx:movie" "@title:(heat) | @genre:{Drama|Comedy} " RETURN 3 title pl
 
 ---
 
-## 地理空间查询（Geospatial Queries）
+### 地理空间查询（Geospatial Queries）
 
 <details> 
   <summary>
@@ -1338,7 +1342,7 @@ FT.SEARCH "idx:movie" "@title:(heat) | @genre:{Drama|Comedy} " RETURN 3 title pl
 </details>
 
 
-# 八、聚合查询（Aggregation）
+## 八、聚合查询（Aggregation）
 
 除了像使用 `FT.SEARCH` 命令那样以文档列表的形式检索数据外，应用程序常见的另一个需求是进行“聚合”操作。
 
@@ -1350,7 +1354,7 @@ FT.SEARCH "idx:movie" "@title:(heat) | @genre:{Drama|Comedy} " RETURN 3 title pl
 
 ---
 
-## 分组与排序（Group By & Sort By）
+### 分组与排序（Group By & Sort By）
 
 <details> 
   <summary>
@@ -1481,9 +1485,9 @@ FT.SEARCH "idx:movie" "@title:(heat) | @genre:{Drama|Comedy} " RETURN 3 title pl
 
 ---
 
-## 应用函数（Apply Functions）
+### 应用函数（Apply Functions）
 
-### 时间提取与转换
+#### 时间提取与转换
 
 <details> 
   <summary>
@@ -1557,7 +1561,7 @@ RediSearch 的聚合功能允许对每条记录应用变换操作，这通过 [A
 
 ---
 
-## 过滤（Filter）
+### 过滤（Filter）
 
 在之前的例子中，我们使用了查询字符串参数来选择全部文档（`"*"`）或子集（如 `"@gender:{female}"`）。
 
@@ -1627,9 +1631,9 @@ RediSearch 的聚合功能允许对每条记录应用变换操作，这通过 [A
 ---
 </details>
 
-# 九、其他选项
+## 九、其他选项
 
-## 使用过滤器创建索引
+### 使用过滤器创建索引
 
 在前面的示例中，我们通过 `PREFIX` 来创建索引，即所有匹配指定类型和前缀的键都会被纳入索引。
 
@@ -1647,7 +1651,7 @@ FT.CREATE idx:drama ON Hash PREFIX 1 "movie:" FILTER "@genre=='Drama' && @releas
 
 你可以运行 `FT.INFO idx:drama` 命令来查看该索引的定义和统计信息。
 
-### 注意事项：
+### 注意事项
 * `PREFIX` 是必需的，不能省略。
 * 在本应用中，这种索引并不特别有用，因为同样的数据也可以从 `idx:movie` 索引中查询得到。
 
@@ -1672,5 +1676,5 @@ FT.CREATE idx:drama ON Hash PREFIX 1 "movie:" FILTER "@genre=='Drama' && @releas
 两者均返回 24 部符合条件的电影，说明索引数据一致。
 
 
-参考文档：
+## 参考文档：
 1. https://github.com/RediSearch/redisearch-getting-started
