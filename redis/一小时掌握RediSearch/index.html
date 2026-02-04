@@ -1,0 +1,5496 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../../rag/%E4%BD%BF%E7%94%A8Nanonets-OCR-s%E6%A8%A1%E5%9E%8B%E5%AE%9E%E7%8E%B0PDF%E6%96%87%E4%BB%B6%E8%BD%ACmarkdown/">
+      
+      
+        <link rel="next" href="../../springboot/Spring%20Boot%20%E4%B8%AD%E4%BD%BF%E7%94%A8%20Validation/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>一小时掌握RediSearch - My Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#redisearch" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="My Docs" class="md-header__button md-logo" aria-label="My Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            My Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              一小时掌握RediSearch
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="My Docs" class="md-nav__button md-logo" aria-label="My Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    My Docs
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    首页
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Devops
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Devops
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../devops/apisix%E5%9C%A8k8s%E4%B8%AD%E7%9A%84%E5%AE%9E%E8%B7%B5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    apisix在k8s中的实践
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../devops/devops%E5%B7%A5%E5%85%B7zadig%E5%AE%9E%E8%B7%B5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    devops工具zadig实践
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../devops/Docker%E6%9E%84%E5%BB%BA%E6%8F%90%E9%80%9F%E8%83%8C%E5%90%8E%E7%9A%84%E7%9C%9F%E7%9B%B8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker构建提速背后的真相
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../devops/k8s%E4%B8%AD%E7%9A%84nginx-ingress%E5%A6%82%E4%BD%95%E9%85%8D%E7%BD%AE%E8%B7%AF%E5%BE%84%E9%87%8D%E5%AE%9A%E5%90%91/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    k8s中的nginx-ingress如何配置路径重定向
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../devops/%E5%9C%A8k8s%E4%B8%AD%E5%AE%89%E8%A3%85%E5%B9%B6%E4%BD%BF%E7%94%A8jenkins/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    在k8s中安装并使用jenkins
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../devops/%E5%9C%A8k8s%E4%B8%AD%E5%AE%89%E8%A3%85%E5%B9%B6%E4%BD%BF%E7%94%A8nexus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    在k8s中安装并使用nexus
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../devops/%E5%A6%82%E4%BD%95%E6%8F%90%E9%AB%98docker%E5%AE%B9%E5%99%A8%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    如何提高docker容器的安全性
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Go
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Go
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../go/go%E8%AF%AD%E8%A8%80grpc%E6%A1%86%E6%9E%B6%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E5%AE%9E%E8%B7%B5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    go语言grpc框架从入门到实践
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../go/%E3%80%90golang%E3%80%91%E4%BD%BF%E7%94%A8chan%E6%94%B6%E9%9B%86%E5%A4%9A%E5%8D%8F%E7%A8%8B%E6%89%A7%E8%A1%8C%E7%9A%84%E7%BB%93%E6%9E%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    【golang】使用chan收集多协程执行的结果
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../go/%E3%80%90golang%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    【golang学习记录】环境搭建
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Image
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Image
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_1" id="__nav_4_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    收集的学习资料
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    收集的学习资料
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../image/%E6%94%B6%E9%9B%86%E7%9A%84%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/%E5%9C%A8%E7%BA%BF%E9%98%85%E8%AF%BB%E4%B9%A6%E7%B1%8D%E6%B1%87%E6%80%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    在线阅读书籍汇总
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Java
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Java
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../java/Java%20%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Java 编程思想
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../java/Java11%E5%92%8CJava17%E4%B9%8B%E9%97%B4%E6%9C%89%E5%93%AA%E4%BA%9B%E6%96%B0%E5%8F%98%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Java11和Java17之间有哪些新变化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../java/java%E4%B8%AD%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E7%BA%BF%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    java中如何实现线程间通信
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../java/Java%E4%B8%AD%E8%8E%B7%E5%8F%96ThreadDumps%E7%9A%848%E7%A7%8D%E6%96%B9%E5%BC%8F%E6%B1%87%E6%80%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Java中获取ThreadDumps的8种方式汇总
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../java/Java%E5%92%8Cgo%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0LRU%E7%AE%97%E6%B3%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Java和go语言实现LRU算法
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../java/Java%E5%BC%82%E5%B8%B8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Java异常
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../java/Java%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E8%AE%BE%E8%AE%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Java异常处理设计
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../java/maven%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E6%B1%87%E6%80%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    maven基础知识汇总
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../java/Mockito%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mockito单元测试框架使用指南
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../java/Mockito%E7%9A%84%E5%B8%B8%E8%A7%81%E6%A0%B8%E5%BF%83%E5%8A%9F%E8%83%BD%E5%8F%8A%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mockito的常见核心功能及最佳实践
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../java/springboot%E4%BD%BF%E7%94%A8k8s%E7%9A%84configMap%E4%BD%9C%E4%B8%BA%E5%A4%96%E9%83%A8%E9%85%8D%E7%BD%AE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    springboot使用k8s的configMap作为外部配置
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../java/%E4%BD%BF%E7%94%A8maven%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8F%92%E4%BB%B6%E5%AE%9E%E7%8E%B0devops/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    使用maven自定义插件实现devops
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../java/%E5%A6%82%E4%BD%95%E7%9B%91%E6%8E%A7%20Java%20%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    如何监控 Java 垃圾回收
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../java/%E5%A6%82%E4%BD%95%E8%B0%83%E4%BC%98%20Java%20%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    如何调优 Java 垃圾收集
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../java/%E6%98%AF%E4%BB%80%E4%B9%88%E8%AE%A9Java%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E7%9A%84CPU%E4%BD%BF%E7%94%A8%E7%8E%87%E9%A3%99%E5%8D%87/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    是什么让Java应用程序的CPU使用率飙升
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../java/%E7%AE%80%E5%8D%95%E7%90%86%E8%A7%A3%20Java%20%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    简单理解 Java 垃圾收集器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../java/%E9%98%85%E8%AF%BB%E9%98%BF%E9%87%8CJava%E5%BC%80%E5%8F%91%E6%89%8B%E5%86%8C%E8%AE%B0%E5%BD%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阅读阿里Java开发手册记录
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Other
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Other
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../other/Python%E8%84%9A%E6%9C%AC%E5%A4%84%E7%90%86Markdown%E5%9B%BE%E7%89%87%E6%9C%AC%E5%9C%B0%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python脚本处理Markdown图片本地化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../other/%E4%BC%98%E7%A7%80%E5%8D%9A%E5%AE%A2%E6%B1%87%E6%80%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    优秀博客汇总
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../other/%E4%BD%BF%E7%94%A8Awescnb%E6%9E%84%E5%BB%BA%E9%85%B7%E7%82%AB%E7%9A%84%E5%8D%9A%E5%AE%A2%E5%9B%AD%E7%9A%AE%E8%82%A4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    使用Awescnb构建酷炫的博客园皮肤
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../other/%E5%9C%A8markdown%E4%B8%AD%E4%BD%BF%E7%94%A8%E8%A1%A8%E6%83%85%E7%AC%A6%E5%8F%B7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    在markdown中使用表情符号
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../other/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Python
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python/gunicorn%E8%B6%85%E6%97%B6%E6%8A%A5%E9%94%99/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    gunicorn超时报错
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python/python%E4%B8%ADThreadPoolExecutor%E8%BF%90%E8%A1%8C%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    python中ThreadPoolExecutor运行原理解析
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python/python%E4%BD%BF%E7%94%A8%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%8F%90%E5%8F%96json%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E5%80%BC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    python使用正则表达式提取json字符串的值
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python/python%E5%AE%9E%E7%8E%B0%E6%8E%98%E9%87%91%E5%AE%9A%E6%97%B6%E7%AD%BE%E5%88%B0%E6%8A%BD%E5%A5%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    python实现掘金定时签到抽奖
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python/%E4%BD%BF%E7%94%A8python%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    使用python问题总结
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rag
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Rag
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rag/PDF%E9%A1%B5%E7%9C%89%E9%A1%B5%E8%84%9A%E8%AF%86%E5%88%AB%E4%B8%8E%E5%8E%BB%E9%99%A4%E6%96%B9%E6%A1%88/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PDF页眉页脚识别与去除方案
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rag/RAG%E6%8A%80%E6%9C%AF%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8%E6%8C%91%E6%88%98%E5%88%86%E6%9E%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RAG技术及其应用挑战分析
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rag/%E3%80%90langgraph%E3%80%91%E5%9C%A8%E6%9C%AC%E5%9C%B0%E8%BF%90%E8%A1%8CLangSmith%20Studio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    【langgraph】在本地运行LangSmith Studio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rag/%E3%80%90RAG%E3%80%91chunk%E5%88%86%E5%9D%97%E5%AE%9E%E8%B7%B5%E7%AF%87/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    【RAG】chunk分块实践篇
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rag/%E3%80%90RAG%E3%80%91chunk%E5%88%86%E5%9D%97%E7%90%86%E8%AE%BA%E7%AF%87/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    【RAG】chunk分块理论篇
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rag/%E3%80%90RAG%E3%80%91docling%E7%BB%93%E5%90%88OCR%E5%AE%9E%E7%8E%B0pdf%E8%BD%ACmarkdown/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    【RAG】docling结合OCR实现pdf转markdown
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rag/%E3%80%90RAG%E3%80%91%E4%BD%BF%E7%94%A8PyMuPDF4LLM%E8%A7%A3%E6%9E%90PDF%E7%9A%84%E5%9B%BE%E7%89%87%E5%92%8C%E8%A1%A8%E6%A0%BC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    【RAG】使用PyMuPDF4LLM解析PDF的图片和表格
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rag/%E3%80%90RAG%E3%80%91%E6%9E%84%E5%BB%BA%E5%90%91%E9%87%8F%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    【RAG】构建向量数据库索引
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rag/%E3%80%90RAG%E4%BC%98%E5%8C%96%E3%80%91%E5%B0%86pdf%E5%92%8Cdocx%E8%BD%AC%E6%8D%A2%E4%B8%BAmarkdown%E6%A0%BC%E5%BC%8F/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    【RAG优化】将pdf和docx转换为markdown格式
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rag/%E4%BD%BF%E7%94%A8Nanonets-OCR-s%E6%A8%A1%E5%9E%8B%E5%AE%9E%E7%8E%B0PDF%E6%96%87%E4%BB%B6%E8%BD%ACmarkdown/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    使用Nanonets-OCR-s模型实现PDF文件转markdown
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Redis
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Redis
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    一小时掌握RediSearch
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    一小时掌握RediSearch
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        一、简介
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#redisearch_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        二、安装 RediSearch
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="二、安装 RediSearch">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 安装docker
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-redis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 启动 Redis 实例
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        三、创建索引
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="三、创建索引">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        示例数据集
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        键名与数据结构
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        插入电影数据
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#redisearch_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RediSearch 与索引机制
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        创建索引
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        四、查询数据
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="四、查询数据">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        查询示例
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        插入、更新、删除与过期文档
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        更多功能
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        五、管理索引
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="五、管理索引">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        列出并查看索引
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        更新索引结构
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        删除索引
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        六、示例数据集
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="六、示例数据集">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        数据集说明
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="数据集说明">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#movies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        电影（Movies）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#theaters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        剧院（Theaters）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#users" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        用户（Users）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        导入电影、剧院和用户数据
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        创建索引
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="创建索引">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#idxmovie" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        创建 idx:movie 索引：
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#idxtheater" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        创建 idx:theater 索引：
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#idxuser" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        创建 idx:user 索引：
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        七、查询电影数据集
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="七、查询电影数据集">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#conditions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        条件查询（Conditions）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        小结
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sort" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        排序（Sort）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paginate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        分页（Paginate）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#count" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        计数（Count）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#geospatial-queries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        地理空间查询（Geospatial Queries）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#aggregation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        八、聚合查询（Aggregation）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="八、聚合查询（Aggregation）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#group-by-sort-by" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        分组与排序（Group By &amp; Sort By）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#apply-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        应用函数（Apply Functions）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="应用函数（Apply Functions）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        时间提取与转换
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        过滤（Filter）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        九、其他选项
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="九、其他选项">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        使用过滤器创建索引
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_24" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        注意事项
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_25" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        参考文档：
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Springboot
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Springboot
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../springboot/Spring%20Boot%20%E4%B8%AD%E4%BD%BF%E7%94%A8%20Validation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Spring Boot 中使用 Validation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../springboot/Spring%20Boot%E4%B8%AD%E4%BD%BF%E7%94%A8MyBatis%20Generator%E7%94%9F%E6%88%90%E5%8A%A8%E6%80%81SQL/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Spring Boot中使用MyBatis Generator生成动态SQL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../springboot/Spring%20Boot%E9%A1%B9%E7%9B%AE%E8%87%AA%E5%B7%B1%E5%B0%81%E8%A3%85%E4%B8%80%E4%B8%AA%E5%88%86%E9%A1%B5%E6%9F%A5%E8%AF%A2%E5%B7%A5%E5%85%B7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Spring Boot项目自己封装一个分页查询工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../springboot/springboot%20%E5%A4%A7%E5%9E%8B%E5%A4%8D%E6%9D%82%E9%A1%B9%E7%9B%AE%E7%9A%84%E5%8C%85%E7%BB%93%E6%9E%84%E8%AE%BE%E8%AE%A1%28DDD%29/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    springboot 大型复杂项目的包结构设计(DDD)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../springboot/springboot%E4%B8%AD%E4%BD%BF%E7%94%A8MapStruct%E6%95%99%E7%A8%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    springboot中使用MapStruct教程
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../springboot/springboot%E9%A1%B9%E7%9B%AE%E4%B8%AD%20PO%20BO%20VO%20DTO%20POJO%20DAO%E6%A6%82%E5%BF%B5%E5%8F%8A%E5%85%B6%E4%BD%9C%E7%94%A8%EF%BC%88%E9%99%84%E8%BD%AC%E6%8D%A2%E5%9B%BE%EF%BC%89/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    springboot项目中 PO BO VO DTO POJO DAO概念及其作用（附转换图）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../springboot/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E5%8D%81%E5%88%86%E9%92%9F%E5%AE%9E%E7%8E%B0springboot%20%2B%20MyBatis%20Dynamic%20SQL/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    从零开始十分钟实现springboot + MyBatis Dynamic SQL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    大模型
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    大模型
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E6%A8%A1%E5%9E%8B/langchain%E4%BD%BF%E7%94%A8token%E5%88%87%E5%88%86chunk/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    langchain使用token切分chunk
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E6%A8%A1%E5%9E%8B/LLM%E7%BB%9F%E4%B8%80%E7%BD%91%E5%85%B3%EF%BC%9ALiteLLM%20%E8%AF%A6%E7%BB%86%E4%BB%8B%E7%BB%8D/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LLM统一网关：LiteLLM 详细介绍
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E6%A8%A1%E5%9E%8B/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%B7%A5%E5%85%B7%E8%B0%83%E7%94%A8%E5%8E%9F%E7%90%86%E5%92%8C%E5%AE%9E%E8%B7%B5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    大模型工具调用原理和实践
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E6%A8%A1%E5%9E%8B/%E5%A6%82%E4%BD%95%E8%AE%A9%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%BE%93%E5%87%BA%E7%BB%93%E6%9E%84%E5%8C%96%E6%95%B0%E6%8D%AE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    如何让大模型输出结构化数据
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12" >
+        
+          
+          <label class="md-nav__link" for="__nav_12" id="__nav_12_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    工具
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_12">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    工具
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%B7%A5%E5%85%B7/%E4%BD%BF%E7%94%A8uv%E5%AE%9E%E7%8E%B0python%E9%A1%B9%E7%9B%AE%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86%E5%AE%9E%E8%B7%B5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    使用uv实现python项目依赖管理实践
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%B7%A5%E5%85%B7/%E4%BD%BF%E7%94%A8%E8%BF%87%E7%9A%84%E5%BC%80%E6%BA%90%E5%B7%A5%E5%85%B7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    使用过的开源工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_13" >
+        
+          
+          <label class="md-nav__link" for="__nav_13" id="__nav_13_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    爬虫
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_13_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_13">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    爬虫
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%88%AC%E8%99%AB/BeautifulSoup%E7%9A%84%E4%BD%BF%E7%94%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BeautifulSoup的使用
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%88%AC%E8%99%AB/selenium%E5%A6%82%E4%BD%95%E6%8B%96%E5%8A%A8%E6%BB%9A%E5%8A%A8%E6%9D%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    selenium如何拖动滚动条
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%88%AC%E8%99%AB/%E3%80%90%E7%88%AC%E8%99%AB%E3%80%91docker%E9%83%A8%E7%BD%B2python%2Bselenium%2Bfirefox-headless/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    【爬虫】docker部署python+selenium+firefox-headless
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%88%AC%E8%99%AB/%E3%80%90%E7%88%AC%E8%99%AB%E3%80%91python%2Bselenium%2Bfirefox%E4%BD%BF%E7%94%A8%E4%B8%8E%E9%83%A8%E7%BD%B2%E8%AF%A6%E8%A7%A3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    【爬虫】python+selenium+firefox使用与部署详解
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14" >
+        
+          
+          <label class="md-nav__link" for="__nav_14" id="__nav_14_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    算法
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_14_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    算法
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%AE%97%E6%B3%95/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F%E5%9B%BE%E6%96%87%E8%AE%B2%E8%A7%A3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    归并排序图文讲解
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        一、简介
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#redisearch_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        二、安装 RediSearch
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="二、安装 RediSearch">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 安装docker
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-redis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 启动 Redis 实例
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        三、创建索引
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="三、创建索引">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        示例数据集
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        键名与数据结构
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        插入电影数据
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#redisearch_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RediSearch 与索引机制
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        创建索引
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        四、查询数据
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="四、查询数据">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        查询示例
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        插入、更新、删除与过期文档
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        更多功能
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        五、管理索引
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="五、管理索引">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        列出并查看索引
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        更新索引结构
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        删除索引
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        六、示例数据集
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="六、示例数据集">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        数据集说明
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="数据集说明">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#movies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        电影（Movies）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#theaters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        剧院（Theaters）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#users" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        用户（Users）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        导入电影、剧院和用户数据
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        创建索引
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="创建索引">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#idxmovie" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        创建 idx:movie 索引：
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#idxtheater" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        创建 idx:theater 索引：
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#idxuser" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        创建 idx:user 索引：
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        七、查询电影数据集
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="七、查询电影数据集">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#conditions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        条件查询（Conditions）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        小结
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sort" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        排序（Sort）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paginate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        分页（Paginate）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#count" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        计数（Count）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#geospatial-queries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        地理空间查询（Geospatial Queries）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#aggregation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        八、聚合查询（Aggregation）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="八、聚合查询（Aggregation）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#group-by-sort-by" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        分组与排序（Group By &amp; Sort By）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#apply-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        应用函数（Apply Functions）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="应用函数（Apply Functions）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        时间提取与转换
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        过滤（Filter）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        九、其他选项
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="九、其他选项">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        使用过滤器创建索引
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_24" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        注意事项
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_25" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        参考文档：
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="redisearch">一小时掌握RediSearch</h1>
+<blockquote>
+<p>本文翻译自：https://github.com/RediSearch/redisearch-getting-started</p>
+</blockquote>
+<h2 id="_1">一、简介</h2>
+<p>RediSearch 提供了一种简单且高效的方式，可以基于任意字段（二级索引）对数据进行索引，并在已索引的数据集上执行搜索和聚合操作。
+RediSearch主要提供了如下功能：
+- 丰富的查询语言
+- JSON 和哈希文档的增量索引
+- 向量搜索
+- 全文搜索
+- 地理空间查询
+- 聚合</p>
+<p>在本教程中，你将学习如何使用 <strong>redis-stack</strong> 镜像来运行 <a href="https://redis.io/docs/latest/develop/ai/search-and-query/">redisearch 模块</a>，该模块为 Redis 提供了索引和全文搜索等功能。</p>
+<h2 id="redisearch_1">二、安装 RediSearch</h2>
+<p>有多种方式可以运行 RediSearch：</p>
+<ul>
+<li>从 <a href="https://github.com/RediSearch/RediSearch">源码</a> 构建并安装到现有的 Redis 实例中</li>
+<li>使用 <a href="https://hub.docker.com/r/redis/redis-stack">Docker</a></li>
+</ul>
+<p>我们现在使用 Docker 方式。</p>
+<h3 id="11-docker"><strong>1.1 安装docker</strong></h3>
+<p>如果你使用 mac 可以考虑使用 <a href="https://github.com/abiosoft/colima">Colima</a> ， Colima 是一个开源的 Docker 容器运行时，旨在通过最小化设置运行容器和 Kubernetes。</p>
+<p>在mac中安装 colima 命令：
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>brew<span class="w"> </span>install<span class="w"> </span>colima
+</span></code></pre></div>
+安装成功后，启动 colima 命令如下：
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>colima<span class="w"> </span>start
+</span></code></pre></div></p>
+<h3 id="12-redis"><strong>1.2 启动 Redis 实例</strong></h3>
+<p>执行下面的命令启动 redis-stack 容器
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>redis-stack<span class="w"> </span>-p<span class="w"> </span><span class="m">6379</span>:6379<span class="w"> </span>-p<span class="w"> </span><span class="m">8001</span>:8001<span class="w"> </span>redis/redis-stack:latest
+</span></code></pre></div></p>
+<blockquote>
+<p>将在 <code>http://localhost:8001</code> 上启动 Redis Insight GUI
+</p>
+</blockquote>
+<p>安装成功后我们可以通过 docker ps 命令查看容器的运行信息：</p>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>docker<span class="w"> </span>ps
+</span></code></pre></div>
+<p>使用下面的命令进入 docker 容器：</p>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>redis-stack<span class="w"> </span>bash
+</span></code></pre></div>
+<p>进入 docker 容器后，接着我们通过 redis-cli 连接测试使用 redis 服务：</p>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>redis-cli
+</span></code></pre></div>
+<p>现在你已经拥有了一个运行中的 Redis 实例，并且 RediSearch 模块已安装。接下来让我们开始探索它的基本功能。</p>
+<h2 id="_2">三、创建索引</h2>
+<p>在创建索引之前，我们先来介绍数据集并插入一些数据。</p>
+<h3 id="_3">示例数据集</h3>
+<p>在本项目中，我们将使用一个简单的电影数据集。目前所有记录均为英文内容。关于多语言支持的更多知识将在其他教程中介绍。</p>
+<p>一部电影包含以下属性：</p>
+<ul>
+<li><strong><code>movie_id</code></strong> ：电影的唯一 ID（数据库内部标识）</li>
+<li><strong><code>title</code></strong> ：电影标题</li>
+<li><strong><code>plot</code></strong> ：电影剧情简介</li>
+<li><strong><code>genre</code></strong> ：电影类型（目前每部电影只包含一个类型）</li>
+<li><strong><code>release_year</code></strong> ：上映年份（数值型）</li>
+<li><strong><code>rating</code></strong> ：公众评分（数值）</li>
+<li><strong><code>votes</code></strong> ：评分人数</li>
+<li><strong><code>poster</code></strong> ：电影海报链接</li>
+<li><strong><code>imdb_id</code></strong> ：该电影在 <a href="https://imdb.com">IMDB</a> 数据库中的 ID</li>
+</ul>
+<hr />
+<h3 id="_4">键名与数据结构</h3>
+<p>作为 Redis 开发者，在构建应用时首要考虑的问题之一是定义键名和数据结构（即数据建模）。</p>
+<p>在 Redis 中定义键名的一种常见方式是使用特定的命名模式。例如，在本应用中，数据库可能涉及多种业务对象：电影、演员、剧院、用户等，我们可以采用如下命名模式：</p>
+<ul>
+<li><code>业务对象:ID</code></li>
+</ul>
+<p>例如：
+* <code>movie:001</code> 表示 ID 为 001 的电影
+* <code>user:001</code> 表示 ID 为 001 的用户</p>
+<p>对于电影信息，建议使用 Redis 的 <a href="https://redis.io/topics/data-types#hashes">Hash</a> 数据结构。</p>
+<p><strong>Redis Hash 允许将电影的所有属性组织为独立字段，这不仅便于管理，也使得 RediSearch 能够根据索引定义对这些字段进行索引。</strong></p>
+<hr />
+<h3 id="_5">插入电影数据</h3>
+<p>现在让我们向数据库中添加一些数据，插入几部电影。你可以使用 <code>redis-cli</code> 或 <a href="https://redis.io/insight/">Redis Insight</a> 工具完成操作。</p>
+<blockquote>
+<p><strong>如果使用 vs code 可以考虑使用插件 </strong><a href="https://marketplace.visualstudio.com/items?itemName=redis.redis-for-vscode"><strong>Redis for VS Code</strong></a><strong> 连接到 Redis 实例进行后续的操作</strong>
+</p>
+</blockquote>
+<p>连接到 Redis 实例后，运行以下命令：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>&gt;<span class="w"> </span>HSET<span class="w"> </span>movie:11002<span class="w"> </span>title<span class="w"> </span><span class="s2">&quot;Star Wars: Episode V - The Empire Strikes Back&quot;</span><span class="w"> </span>plot<span class="w"> </span><span class="s2">&quot;After the Rebels are brutally overpowered by the Empire on the ice planet Hoth, Luke Skywalker begins Jedi training with Yoda, while his friends are pursued by Darth Vader and a bounty hunter named Boba Fett all over the galaxy.&quot;</span><span class="w"> </span>release_year<span class="w"> </span><span class="m">1980</span><span class="w"> </span>genre<span class="w"> </span><span class="s2">&quot;Action&quot;</span><span class="w"> </span>rating<span class="w"> </span><span class="m">8</span>.7<span class="w"> </span>votes<span class="w"> </span><span class="m">1127635</span><span class="w"> </span>imdb_id<span class="w"> </span>tt0080684
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>&gt;<span class="w"> </span>HSET<span class="w"> </span>movie:11003<span class="w"> </span>title<span class="w"> </span><span class="s2">&quot;The Godfather&quot;</span><span class="w"> </span>plot<span class="w"> </span><span class="s2">&quot;The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.&quot;</span><span class="w"> </span>release_year<span class="w"> </span><span class="m">1972</span><span class="w"> </span>genre<span class="w"> </span><span class="s2">&quot;Drama&quot;</span><span class="w"> </span>rating<span class="w"> </span><span class="m">9</span>.2<span class="w"> </span>votes<span class="w"> </span><span class="m">1563839</span><span class="w"> </span>imdb_id<span class="w"> </span>tt0068646
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>&gt;<span class="w"> </span>HSET<span class="w"> </span>movie:11004<span class="w"> </span>title<span class="w"> </span><span class="s2">&quot;Heat&quot;</span><span class="w"> </span>plot<span class="w"> </span><span class="s2">&quot;A group of professional bank robbers start to feel the heat from police when they unknowingly leave a clue at their latest heist.&quot;</span><span class="w"> </span>release_year<span class="w"> </span><span class="m">1995</span><span class="w"> </span>genre<span class="w"> </span><span class="s2">&quot;Thriller&quot;</span><span class="w"> </span>rating<span class="w"> </span><span class="m">8</span>.2<span class="w"> </span>votes<span class="w"> </span><span class="m">559490</span><span class="w"> </span>imdb_id<span class="w"> </span>tt0113277
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>&gt;<span class="w"> </span>HSET<span class="w"> </span><span class="s2">&quot;movie:11005&quot;</span><span class="w"> </span>title<span class="w"> </span><span class="s2">&quot;Star Wars: Episode VI - Return of the Jedi&quot;</span><span class="w"> </span>genre<span class="w"> </span><span class="s2">&quot;Action&quot;</span><span class="w"> </span>votes<span class="w"> </span><span class="m">906260</span><span class="w"> </span>rating<span class="w"> </span><span class="m">8</span>.3<span class="w"> </span>release_year<span class="w"> </span><span class="m">1983</span><span class="w">  </span>plot<span class="w"> </span><span class="s2">&quot;The Rebels dispatch to Endor to destroy the second Empire&#39;s Death Star.&quot;</span><span class="w"> </span>ibmdb_id<span class="w"> </span><span class="s2">&quot;tt0086190&quot;</span><span class="w"> </span>
+</span></code></pre></div>
+<p>现在可以通过电影 ID 获取其信息。例如，获取某部电影的标题和评分：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>&gt;<span class="w"> </span>HMGET<span class="w"> </span>movie:11002<span class="w"> </span>title<span class="w"> </span>rating
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="m">1</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;Star Wars: Episode V - The Empire Strikes Back&quot;</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="m">2</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;8.7&quot;</span>
+</span></code></pre></div>
+<blockquote>
+<p><strong>中文在控制台无法正常显示，可以在 Redis Insight GUI 中查看，访问：http://localhost:8001</strong>
+</p>
+</blockquote>
+<p>你也可以通过以下命令增加电影评分：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>&gt;<span class="w"> </span>HINCRBYFLOAT<span class="w"> </span>movie:11002<span class="w"> </span>rating<span class="w"> </span><span class="m">0</span>.1
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="s2">&quot;8.8&quot;</span>
+</span></code></pre></div>
+<p>但如何根据“上映年份”、“评分”或“标题”来查询一部或多部电影呢？</p>
+<p>一种方法是读取所有电影数据，逐一检查每个字段，然后返回符合条件的结果——显然，这是一种非常低效的做法。</p>
+<p>传统上，Redis 开发者会手动使用 SET 或 SORTED SET 结构创建自定义的二级索引，指向原始的 Hash 数据。但这需要复杂的设计和实现。</p>
+<p>而 RediSearch 模块正是为了解决这个问题而诞生的。</p>
+<hr />
+<h3 id="redisearch_2">RediSearch 与索引机制</h3>
+<p>RediSearch 极大地简化了这一过程，它提供了一种简单且自动的方式来为 Redis Hash 创建二级索引。（未来还将支持更多数据结构）</p>
+<p><img alt="Secondary Index" src="https://github.com/RediSearch/redisearch-getting-started/blob/master/docs/images/secondary-index.png?raw=true" /></p>
+<p>使用 RediSearch 时，若要基于某个字段进行查询，必须先对该字段建立索引。下面我们为电影数据索引以下字段：</p>
+<ul>
+<li>标题（Title）</li>
+<li>上映年份（Release Year）</li>
+<li>评分（Rating）</li>
+<li>类型（Genre）</li>
+</ul>
+<p>创建索引时需要定义：</p>
+<ul>
+<li>要索引的数据：所有键名以 <code>movie:</code> 开头的 <em>Hash</em></li>
+<li>要索引的字段及其类型（通过 Schema 定义）</li>
+</ul>
+<blockquote>
+<p>⚠️ <strong>警告：不要索引所有字段</strong></p>
+<p>索引会占用内存空间，并且在主数据更新时也需要同步更新索引。因此，请谨慎设计索引，并根据实际需求保持其定义的最新状态。</p>
+</blockquote>
+<hr />
+<h3 id="_6">创建索引</h3>
+<p>使用以下命令创建索引：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>&gt; FT.CREATE idx:movie ON hash PREFIX 1 &quot;movie:&quot; SCHEMA title TEXT SORTABLE release_year NUMERIC SORTABLE rating NUMERIC SORTABLE genre TAG SORTABLE
+</span></code></pre></div>
+<p>在执行命令之前，我们先详细解析这条命令：</p>
+<ul>
+<li><code>FT.CREATE</code>：根据指定规范创建索引。</li>
+<li><code>idx:movie</code>：索引的名称。索引名称将用于所有相关键名，建议保持简短。</li>
+<li><code>ON hash</code>：要索引的数据结构类型。<em>支持 hash 和 json 。</em></li>
+<li><code>PREFIX 1 "movie:"</code>：需要被索引的键的前缀。这是一个列表，因为我们只想索引 <code>movie:*</code> 类型的键，所以数量为 1。如果你还想同时索引具有相同字段的 <code>tv_show:*</code> 键，可以写成：<code>PREFIX 2 "movie:" "tv_show:"</code></li>
+<li><code>SCHEMA ...</code>：定义索引的模式，包括字段及其类型。如命令所示，我们使用了 TEXT（文本）、NUMERIC（数值）、TAG（标签）以及 SORTABLE（可排序）参数。</li>
+</ul>
+<p>你可以在 <a href="https://redis.io/docs/latest/commands/ft.create/">官方文档</a> 中了解更多关于 <code>FT.CREATE</code> 命令的信息。</p>
+<p>你可以使用以下命令查看索引的详细信息：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>&gt; FT.INFO idx:movie
+</span></code></pre></div>
+<h2 id="_7">四、查询数据</h2>
+<p>数据库中已包含了几部电影和一个索引，现在可以执行一些查询操作了。</p>
+<h3 id="_8">查询示例</h3>
+<p><strong>示例：查找所有标题中包含 "<code>war</code>" 的电影</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>&gt;<span class="w"> </span>FT.SEARCH<span class="w"> </span>idx:movie<span class="w"> </span><span class="s2">&quot;war&quot;</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="m">1</span><span class="o">)</span><span class="w"> </span><span class="o">(</span>integer<span class="o">)</span><span class="w"> </span><span class="m">2</span>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="m">2</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;movie:11005&quot;</span>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="m">3</span><span class="o">)</span><span class="w">  </span><span class="m">1</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;title&quot;</span>
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="w">    </span><span class="m">2</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;Star Wars: Episode VI - Return of the Jedi&quot;</span>
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="w">    </span>...
+</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="w">   </span><span class="m">14</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;tt0086190&quot;</span>
+</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="m">4</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;movie:11002&quot;</span>
+</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="m">5</span><span class="o">)</span><span class="w">  </span><span class="m">1</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;title&quot;</span>
+</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a><span class="w">    </span><span class="m">2</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;Star Wars: Episode V - The Empire Strikes Back&quot;</span>
+</span><span id="__span-11-12"><a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a><span class="w">    </span>...
+</span><span id="__span-11-13"><a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a><span class="w">   </span><span class="m">13</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;imdb_id&quot;</span>
+</span><span id="__span-11-14"><a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a><span class="w">   </span><span class="m">14</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;tt0080684&quot;</span>
+</span></code></pre></div>
+<p><code>FT.SEARCH</code> 命令返回一个结果列表，第一个值是匹配结果的数量，随后是具体的元素（键名与字段）。</p>
+<p>你可以看到，尽管你只使用了“war”这个词，但系统仍然找到了 “Star Wars: Episode V - The Empire Strikes Back” 这部电影。这是因为标题字段被作为文本（TEXT）进行了索引，因此该字段在索引时经过了分词 和 <a href="https://redis.io/docs/latest/develop/ai/search-and-query/advanced-concepts/stemming/">词干提取</a> 处理。</p>
+<blockquote>
+<p><font style="color:rgb(51, 51, 51);">添加中文文档时，为索引器设置 LANGUAGE chinese 以正确标记术语。 如果您使用默认语言，则会根据标点符号和空格提取搜索词。 中文分词器使用分段算法（通过 </font><a href="https://github.com/lionsoul2014/friso">Friso</a><font style="color:rgb(51, 51, 51);">），该算法对文本进行分段并根据预定义的字典进行检查。 有关详细信息，请参阅词干提取。</font>
+</p>
+</blockquote>
+<p>稍后我们会更详细地介绍查询语法，进一步了解搜索功能。</p>
+<p>你也可以使用 <code>RETURN</code> 参数限制返回的字段。例如，运行相同的查询但只返回标题和上映年份：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>&gt;<span class="w"> </span>FT.SEARCH<span class="w"> </span>idx:movie<span class="w"> </span><span class="s2">&quot;war&quot;</span><span class="w"> </span>RETURN<span class="w"> </span><span class="m">2</span><span class="w"> </span>title<span class="w"> </span>release_year
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="m">1</span><span class="o">)</span><span class="w"> </span><span class="o">(</span>integer<span class="o">)</span><span class="w"> </span><span class="m">2</span>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="m">2</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;movie:11005&quot;</span>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="m">3</span><span class="o">)</span><span class="w"> </span><span class="m">1</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;title&quot;</span>
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="w">   </span><span class="m">1</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;Star Wars: Episode VI - Return of the Jedi&quot;</span>
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="w">   </span><span class="m">2</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;release_year&quot;</span>
+</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="w">   </span><span class="m">3</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;1983&quot;</span>
+</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="m">4</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;movie:11002&quot;</span>
+</span><span id="__span-12-10"><a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="m">5</span><span class="o">)</span><span class="w"> </span><span class="m">1</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;title&quot;</span>
+</span><span id="__span-12-11"><a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a><span class="w">   </span><span class="m">1</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;Star Wars: Episode V - The Empire Strikes Back&quot;</span>
+</span><span id="__span-12-12"><a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a><span class="w">   </span><span class="m">2</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;release_year&quot;</span>
+</span><span id="__span-12-13"><a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a><span class="w">   </span><span class="m">3</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;1980&quot;</span>
+</span></code></pre></div>
+<p>这个查询没有指定具体字段，但仍能返回结果，因为 RediSearch 默认会在所有 <code>TEXT</code> 类型字段中进行搜索。当前索引中只有 <code>title</code> 是 <code>TEXT</code> 字段。稍后你会学习如何更新索引以添加更多字段。</p>
+<p>如果需要在特定字段上查询，可以使用 <code>@field:</code> 语法，例如：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>&gt;<span class="w"> </span>FT.SEARCH<span class="w"> </span>idx:movie<span class="w"> </span><span class="s2">&quot;@title:war&quot;</span><span class="w"> </span>RETURN<span class="w"> </span><span class="m">2</span><span class="w"> </span>title<span class="w"> </span>release_year
+</span></code></pre></div>
+<hr />
+<p><strong>示例：查找包含 "<code>war</code>" 但不包含 "<code>jedi</code>" 的电影</strong></p>
+<p>在查询中加入 <code>-jedi</code>（减号）表示排除包含 “jedi” 的结果。</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>&gt;<span class="w"> </span>FT.SEARCH<span class="w"> </span>idx:movie<span class="w"> </span><span class="s2">&quot;war -jedi&quot;</span><span class="w"> </span>RETURN<span class="w"> </span><span class="m">2</span><span class="w"> </span>title<span class="w"> </span>release_year
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="m">1</span><span class="o">)</span><span class="w"> </span><span class="o">(</span>integer<span class="o">)</span><span class="w"> </span><span class="m">1</span>
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="m">2</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;movie:11002&quot;</span>
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="m">3</span><span class="o">)</span><span class="w"> </span><span class="m">1</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;title&quot;</span>
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="w">   </span><span class="m">1</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;Star Wars: Episode V - The Empire Strikes Back&quot;</span>
+</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="w">   </span><span class="m">2</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;release_year&quot;</span>
+</span><span id="__span-14-8"><a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a><span class="w">   </span><span class="m">3</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;1980&quot;</span>
+</span></code></pre></div>
+<hr />
+<p><strong>示例：使用模糊搜索查找拼写错误的 "<code>gdfather</code>"</strong></p>
+<p>如你所见，“godfather” 被误写为 “gdfather”。但通过 <a href="https://oss.redislabs.com/redisearch/Query_Syntax/#fuzzy_matching">模糊匹配</a> 仍然可以找到它。模糊匹配基于 <a href="https://zh.wikipedia.org/wiki/%E8%8E%B1%E6%96%87%E6%96%AF%E5%9D%A6%E8%B7%9D%E7%A6%BB">莱文斯坦距离（Levenshtein Distance）</a> 实现。</p>
+<blockquote>
+<p><font style="color:rgb(51, 51, 51);">莱文斯坦距离（Levenshtein distance）是编辑距离的一种，用于度量两个字符串通过插入、删除或替换操作转换为彼此所需的最少编辑次数</font>
+</p>
+</blockquote>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>&gt;<span class="w"> </span>FT.SEARCH<span class="w"> </span>idx:movie<span class="w"> </span><span class="s2">&quot; %gdfather% &quot;</span><span class="w"> </span>RETURN<span class="w"> </span><span class="m">2</span><span class="w"> </span>title<span class="w"> </span>release_year
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="m">1</span><span class="o">)</span><span class="w"> </span><span class="o">(</span>integer<span class="o">)</span><span class="w"> </span><span class="m">1</span>
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="m">2</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;movie:11003&quot;</span>
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="m">3</span><span class="o">)</span><span class="w"> </span><span class="m">1</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;title&quot;</span>
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="w">   </span><span class="m">1</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;The Godfather&quot;</span>
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="w">   </span><span class="m">2</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;release_year&quot;</span>
+</span><span id="__span-15-8"><a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a><span class="w">   </span><span class="m">3</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;1972&quot;</span>
+</span></code></pre></div>
+<p>注意：模糊匹配需用 <code>%</code> 包裹关键词。</p>
+<hr />
+<p><strong>示例：查找所有类型为 <code>Thriller</code> 的电影</strong></p>
+<p><code>genre</code> 字段是以 <code>TAG</code> 类型索引的，支持精确匹配查询。</p>
+<p>查询 TAG 字段的语法为：<code>@字段名:{值}</code></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>&gt;<span class="w"> </span>FT.SEARCH<span class="w"> </span>idx:movie<span class="w"> </span><span class="s2">&quot;@genre:{Thriller}&quot;</span><span class="w"> </span>RETURN<span class="w"> </span><span class="m">2</span><span class="w"> </span>title<span class="w"> </span>release_year
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="m">1</span><span class="o">)</span><span class="w"> </span><span class="o">(</span>integer<span class="o">)</span><span class="w"> </span><span class="m">1</span>
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="m">2</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;movie:11004&quot;</span>
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="m">3</span><span class="o">)</span><span class="w"> </span><span class="m">1</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;title&quot;</span>
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="w">   </span><span class="m">1</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;Heat&quot;</span>
+</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="w">   </span><span class="m">2</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;release_year&quot;</span>
+</span><span id="__span-16-8"><a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a><span class="w">   </span><span class="m">3</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;1995&quot;</span>
+</span></code></pre></div>
+<hr />
+<p><strong>示例：查找所有类型为 <code>Thriller</code> 或 <code>Action</code> 的电影</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>&gt;<span class="w"> </span>FT.SEARCH<span class="w"> </span>idx:movie<span class="w"> </span><span class="s2">&quot;@genre:{Thriller|Action}&quot;</span><span class="w"> </span>RETURN<span class="w"> </span><span class="m">2</span><span class="w"> </span>title<span class="w"> </span>release_year
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="m">1</span><span class="o">)</span><span class="w"> </span><span class="o">(</span>integer<span class="o">)</span><span class="w"> </span><span class="m">3</span>
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="m">2</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;movie:11004&quot;</span>
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="m">3</span><span class="o">)</span><span class="w"> </span><span class="m">1</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;title&quot;</span>
+</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a><span class="w">   </span><span class="m">1</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;Heat&quot;</span>
+</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a><span class="w">   </span><span class="m">2</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;release_year&quot;</span>
+</span><span id="__span-17-8"><a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a><span class="w">   </span><span class="m">3</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;1995&quot;</span>
+</span><span id="__span-17-9"><a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a><span class="m">4</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;movie:11005&quot;</span>
+</span><span id="__span-17-10"><a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a><span class="m">5</span><span class="o">)</span><span class="w"> </span><span class="m">1</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;title&quot;</span>
+</span><span id="__span-17-11"><a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a><span class="w">   </span><span class="m">1</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;Star Wars: Episode VI - Return of the Jedi&quot;</span>
+</span><span id="__span-17-12"><a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a><span class="w">   </span><span class="m">2</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;release_year&quot;</span>
+</span><span id="__span-17-13"><a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a><span class="w">   </span><span class="m">3</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;1983&quot;</span>
+</span><span id="__span-17-14"><a id="__codelineno-17-14" name="__codelineno-17-14" href="#__codelineno-17-14"></a><span class="m">6</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;movie:11002&quot;</span>
+</span><span id="__span-17-15"><a id="__codelineno-17-15" name="__codelineno-17-15" href="#__codelineno-17-15"></a><span class="m">7</span><span class="o">)</span><span class="w"> </span><span class="m">1</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;title&quot;</span>
+</span><span id="__span-17-16"><a id="__codelineno-17-16" name="__codelineno-17-16" href="#__codelineno-17-16"></a><span class="w">   </span><span class="m">1</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;Star Wars: Episode V - The Empire Strikes Back&quot;</span>
+</span><span id="__span-17-17"><a id="__codelineno-17-17" name="__codelineno-17-17" href="#__codelineno-17-17"></a><span class="w">   </span><span class="m">2</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;release_year&quot;</span>
+</span><span id="__span-17-18"><a id="__codelineno-17-18" name="__codelineno-17-18" href="#__codelineno-17-18"></a><span class="w">   </span><span class="m">3</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;1980&quot;</span>
+</span></code></pre></div>
+<p>关于标签过滤器的更多信息，请参考 <a href="https://redis.io/docs/latest/develop/ai/search-and-query/advanced-concepts/query_syntax/#tag-filters">官方文档</a>。</p>
+<hr />
+<p><strong>示例：查找类型为 <code>Thriller</code> 或 <code>Action</code> 且标题不含 <code>Jedi</code> 的电影</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>&gt;<span class="w"> </span>FT.SEARCH<span class="w"> </span>idx:movie<span class="w"> </span><span class="s2">&quot;@genre:{Thriller|Action} @title:-jedi&quot;</span><span class="w"> </span>RETURN<span class="w"> </span><span class="m">2</span><span class="w"> </span>title<span class="w"> </span>release_year
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="m">1</span><span class="o">)</span><span class="w"> </span><span class="o">(</span>integer<span class="o">)</span><span class="w"> </span><span class="m">2</span>
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="m">2</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;movie:11004&quot;</span>
+</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="m">3</span><span class="o">)</span><span class="w"> </span><span class="m">1</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;title&quot;</span>
+</span><span id="__span-18-6"><a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a><span class="w">   </span><span class="m">1</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;Heat&quot;</span>
+</span><span id="__span-18-7"><a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a><span class="w">   </span><span class="m">2</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;release_year&quot;</span>
+</span><span id="__span-18-8"><a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a><span class="w">   </span><span class="m">3</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;1995&quot;</span>
+</span><span id="__span-18-9"><a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a><span class="m">4</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;movie:11002&quot;</span>
+</span><span id="__span-18-10"><a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a><span class="m">5</span><span class="o">)</span><span class="w"> </span><span class="m">1</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;title&quot;</span>
+</span><span id="__span-18-11"><a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a><span class="w">   </span><span class="m">1</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;Star Wars: Episode V - The Empire Strikes Back&quot;</span>
+</span><span id="__span-18-12"><a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a><span class="w">   </span><span class="m">2</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;release_year&quot;</span>
+</span><span id="__span-18-13"><a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a><span class="w">   </span><span class="m">3</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;1980&quot;</span>
+</span></code></pre></div>
+<hr />
+<p><strong>示例：查找 1970 到 1980 年之间（含）上映的所有电影</strong></p>
+<p><code>FT.SEARCH</code> 提供两种方式查询数值字段：</p>
+<ul>
+<li>使用 <code>FILTER</code> 参数<br />
+  或</li>
+<li>在查询字符串中使用 <code>@field:[min max]</code> 语法</li>
+</ul>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>&gt;<span class="w"> </span>FT.SEARCH<span class="w"> </span>idx:movie<span class="w"> </span>*<span class="w"> </span>FILTER<span class="w"> </span>release_year<span class="w"> </span><span class="m">1970</span><span class="w"> </span><span class="m">1980</span><span class="w"> </span>RETURN<span class="w"> </span><span class="m">2</span><span class="w"> </span>title<span class="w"> </span>release_year
+</span></code></pre></div>
+<p>或</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>&gt;<span class="w"> </span>FT.SEARCH<span class="w"> </span>idx:movie<span class="w"> </span><span class="s2">&quot;@release_year:[1970 1980]&quot;</span><span class="w"> </span>RETURN<span class="w"> </span><span class="m">2</span><span class="w"> </span>title<span class="w"> </span>release_year
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="m">1</span><span class="o">)</span><span class="w"> </span><span class="o">(</span>integer<span class="o">)</span><span class="w"> </span><span class="m">2</span>
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="m">2</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;movie:11003&quot;</span>
+</span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a><span class="m">3</span><span class="o">)</span><span class="w"> </span><span class="m">1</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;title&quot;</span>
+</span><span id="__span-20-6"><a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a><span class="w">   </span><span class="m">1</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;The Godfather&quot;</span>
+</span><span id="__span-20-7"><a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a><span class="w">   </span><span class="m">2</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;release_year&quot;</span>
+</span><span id="__span-20-8"><a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a><span class="w">   </span><span class="m">3</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;1972&quot;</span>
+</span><span id="__span-20-9"><a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a><span class="m">4</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;movie:11002&quot;</span>
+</span><span id="__span-20-10"><a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a><span class="m">5</span><span class="o">)</span><span class="w"> </span><span class="m">1</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;title&quot;</span>
+</span><span id="__span-20-11"><a id="__codelineno-20-11" name="__codelineno-20-11" href="#__codelineno-20-11"></a><span class="w">   </span><span class="m">1</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;Star Wars: Episode V - The Empire Strikes Back&quot;</span>
+</span><span id="__span-20-12"><a id="__codelineno-20-12" name="__codelineno-20-12" href="#__codelineno-20-12"></a><span class="w">   </span><span class="m">2</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;release_year&quot;</span>
+</span><span id="__span-20-13"><a id="__codelineno-20-13" name="__codelineno-20-13" href="#__codelineno-20-13"></a><span class="w">   </span><span class="m">3</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;1980&quot;</span>
+</span></code></pre></div>
+<p>若要排除某个端点值，在数字前加 <code>(</code> 即可。例如排除 1980 年：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>&gt;<span class="w"> </span>FT.SEARCH<span class="w"> </span>idx:movie<span class="w"> </span><span class="s2">&quot;@release_year:[1970 (1980]&quot;</span><span class="w"> </span>RETURN<span class="w"> </span><span class="m">2</span><span class="w"> </span>title<span class="w"> </span>release_year
+</span></code></pre></div>
+<hr />
+<h3 id="_9">插入、更新、删除与过期文档</h3>
+<p>在本教程中，你已完成以下操作：</p>
+<ol>
+<li>创建了几部电影（作为 Redis Hash，我们称之为“文档”），键名为 <code>movie:*</code> 模式</li>
+<li>使用 <code>FT.CREATE</code> 命令创建了索引</li>
+<li>使用 <code>FT.SEARCH</code> 查询数据</li>
+</ol>
+<p>当你创建索引时，通过 <code>idx:movie ON hash PREFIX 1 "movie:"</code> 参数，索引引擎会自动扫描所有现有匹配的键并建立索引。之后任何符合该模式的新数据也会被自动索引。</p>
+<p>下面我们来验证这一点：先统计电影数量，添加一部新电影，再重新统计：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>&gt;<span class="w"> </span>FT.SEARCH<span class="w"> </span>idx:movie<span class="w"> </span><span class="s2">&quot;*&quot;</span><span class="w"> </span>LIMIT<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span>
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="m">1</span><span class="o">)</span><span class="w"> </span><span class="o">(</span>integer<span class="o">)</span><span class="w"> </span><span class="m">4</span>
+</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>
+</span><span id="__span-22-5"><a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>&gt;<span class="w"> </span>HSET<span class="w"> </span>movie:11033<span class="w"> </span>title<span class="w"> </span><span class="s2">&quot;Tomorrow Never Dies&quot;</span><span class="w"> </span>plot<span class="w"> </span><span class="s2">&quot;James Bond sets out to stop a media mogul&#39;s plan to induce war between China and the U.K in order to obtain exclusive global media coverage.&quot;</span><span class="w"> </span>release_year<span class="w"> </span><span class="m">1997</span><span class="w"> </span>genre<span class="w"> </span><span class="s2">&quot;Action&quot;</span><span class="w"> </span>rating<span class="w"> </span><span class="m">6</span>.5<span class="w"> </span>votes<span class="w"> </span><span class="m">177732</span><span class="w"> </span>imdb_id<span class="w"> </span>tt0120347
+</span><span id="__span-22-6"><a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a>
+</span><span id="__span-22-7"><a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a>&gt;<span class="w"> </span>FT.SEARCH<span class="w"> </span>idx:movie<span class="w"> </span><span class="s2">&quot;*&quot;</span><span class="w"> </span>LIMIT<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span>
+</span><span id="__span-22-8"><a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a>
+</span><span id="__span-22-9"><a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a><span class="m">1</span><span class="o">)</span><span class="w"> </span><span class="o">(</span>integer<span class="o">)</span><span class="w"> </span><span class="m">5</span>
+</span></code></pre></div>
+<p>新的电影已被自动索引。你可以在任意索引字段上进行搜索：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>&gt;<span class="w"> </span>FT.SEARCH<span class="w"> </span>idx:movie<span class="w"> </span><span class="s2">&quot;never&quot;</span><span class="w"> </span>RETURN<span class="w"> </span><span class="m">2</span><span class="w"> </span>title<span class="w"> </span>release_year
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="m">1</span><span class="o">)</span><span class="w"> </span><span class="o">(</span>integer<span class="o">)</span><span class="w"> </span><span class="m">1</span>
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a><span class="m">2</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;movie:11033&quot;</span>
+</span><span id="__span-23-5"><a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a><span class="m">3</span><span class="o">)</span><span class="w"> </span><span class="m">1</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;title&quot;</span>
+</span><span id="__span-23-6"><a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a><span class="w">   </span><span class="m">2</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;Tomorrow Never Dies&quot;</span>
+</span><span id="__span-23-7"><a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a><span class="w">   </span><span class="m">3</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;release_year&quot;</span>
+</span><span id="__span-23-8"><a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a><span class="w">   </span><span class="m">4</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;1997&quot;</span>
+</span></code></pre></div>
+<p>现在我们<strong>更新</strong>其中一个字段，并搜索 <code>007</code>：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>&gt;<span class="w"> </span>HSET<span class="w"> </span>movie:11033<span class="w"> </span>title<span class="w"> </span><span class="s2">&quot;Tomorrow Never Dies - 007&quot;</span>
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>
+</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>&gt;<span class="w"> </span>FT.SEARCH<span class="w"> </span>idx:movie<span class="w"> </span><span class="s2">&quot;007&quot;</span><span class="w"> </span>RETURN<span class="w"> </span><span class="m">2</span><span class="w"> </span>title<span class="w"> </span>release_year
+</span><span id="__span-24-4"><a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>
+</span><span id="__span-24-5"><a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a><span class="m">1</span><span class="o">)</span><span class="w"> </span><span class="o">(</span>integer<span class="o">)</span><span class="w"> </span><span class="m">1</span>
+</span><span id="__span-24-6"><a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a><span class="m">2</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;movie:11033&quot;</span>
+</span><span id="__span-24-7"><a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a><span class="m">3</span><span class="o">)</span><span class="w"> </span><span class="m">1</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;title&quot;</span>
+</span><span id="__span-24-8"><a id="__codelineno-24-8" name="__codelineno-24-8" href="#__codelineno-24-8"></a><span class="w">   </span><span class="m">2</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;Tomorrow Never Dies - 007&quot;</span>
+</span><span id="__span-24-9"><a id="__codelineno-24-9" name="__codelineno-24-9" href="#__codelineno-24-9"></a><span class="w">   </span><span class="m">3</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;release_year&quot;</span>
+</span><span id="__span-24-10"><a id="__codelineno-24-10" name="__codelineno-24-10" href="#__codelineno-24-10"></a><span class="w">   </span><span class="m">4</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;1997&quot;</span>
+</span></code></pre></div>
+<p>当删除一个 Hash 时，索引也会同步更新；同样地，当键过期（TTL）时，索引也会自动清理。</p>
+<p>例如，设置这部詹姆斯·邦德电影在 20 秒后过期：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>&gt;<span class="w"> </span>EXPIRE<span class="w"> </span><span class="s2">&quot;movie:11033&quot;</span><span class="w"> </span><span class="m">20</span>
+</span></code></pre></div>
+<p>你可以运行以下查询，20 秒后你会发现文档已消失，搜索不再返回结果，说明索引已同步更新：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>&gt;<span class="w"> </span>FT.SEARCH<span class="w"> </span>idx:movie<span class="w"> </span><span class="s2">&quot;007&quot;</span><span class="w"> </span>RETURN<span class="w"> </span><span class="m">2</span><span class="w"> </span>title<span class="w"> </span>release_year
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>
+</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a><span class="m">1</span><span class="o">)</span><span class="w"> </span><span class="o">(</span>integer<span class="o">)</span><span class="w"> </span><span class="m">0</span>
+</span></code></pre></div>
+<blockquote>
+<p><strong>注意</strong>：当你将 Redis 用作主数据库时，通常不会依赖 TTL 来删除数据。但如果存储的数据是临时性的（例如作为其他数据源或 Web 服务的缓存层、用户会话内容等），则常被称为 “<a href="https://redislabs.com/blog/the-case-for-ephemeral-search/">瞬态搜索（Ephemeral Search）</a>” 场景：轻量、快速且支持自动过期。</p>
+</blockquote>
+<hr />
+<h3 id="_10">更多功能</h3>
+<p>关于索引和搜索，还有更多高级功能可在文档中查阅：</p>
+<ul>
+<li><a href="https://redis.io/commands/ft.search">FT.SEARCH 命令</a></li>
+<li><a href="https://redis.io/docs/latest/develop/ai/search-and-query/advanced-concepts/query_syntax/#basic-syntax">查询语法（Query Syntax）</a></li>
+</ul>
+<p>接下来，我们将学习如何查看、修改和删除索引。</p>
+<h2 id="_11">五、管理索引</h2>
+<h3 id="_12">列出并查看索引</h3>
+<p><code>FT._LIST</code> 命令可以列出当前数据库中所有的 RediSearch 索引：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>&gt; FT._LIST
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>1) &quot;idx:movie&quot;
+</span></code></pre></div>
+<p>使用 <code>FT.INFO</code> 命令可以查看某个特定索引的详细信息：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>&gt; FT.INFO &quot;idx:movie&quot; 
+</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>
+</span><span id="__span-28-3"><a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a> 1) &quot;index_name&quot;
+</span><span id="__span-28-4"><a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a> 2) &quot;idx:movie&quot;
+</span><span id="__span-28-5"><a id="__codelineno-28-5" name="__codelineno-28-5" href="#__codelineno-28-5"></a> ...
+</span><span id="__span-28-6"><a id="__codelineno-28-6" name="__codelineno-28-6" href="#__codelineno-28-6"></a> 5) &quot;index_definition&quot;
+</span><span id="__span-28-7"><a id="__codelineno-28-7" name="__codelineno-28-7" href="#__codelineno-28-7"></a> ...
+</span><span id="__span-28-8"><a id="__codelineno-28-8" name="__codelineno-28-8" href="#__codelineno-28-8"></a> 7) &quot;fields&quot;
+</span><span id="__span-28-9"><a id="__codelineno-28-9" name="__codelineno-28-9" href="#__codelineno-28-9"></a> ...
+</span><span id="__span-28-10"><a id="__codelineno-28-10" name="__codelineno-28-10" href="#__codelineno-28-10"></a>9) &quot;num_docs&quot;
+</span><span id="__span-28-11"><a id="__codelineno-28-11" name="__codelineno-28-11" href="#__codelineno-28-11"></a>10) &quot;4&quot; 
+</span><span id="__span-28-12"><a id="__codelineno-28-12" name="__codelineno-28-12" href="#__codelineno-28-12"></a>...
+</span></code></pre></div>
+<p>返回结果包含索引名称、定义、字段列表、文档数量（本例中为 4）等元数据。</p>
+<hr />
+<h3 id="_13">更新索引结构</h3>
+<p>在开发应用过程中，随着数据库中数据的增加，你可能需要为索引添加新的字段。此时可以使用 <code>FT.ALTER</code> 命令来修改现有索引。</p>
+<p>例如，为电影索引添加 <code>plot</code>（剧情简介）字段：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>&gt; FT.ALTER idx:movie SCHEMA ADD plot TEXT WEIGHT 0.5
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>&quot;OK&quot;
+</span></code></pre></div>
+<p>其中 <code>WEIGHT</code> 表示该字段在计算搜索相关性得分时的重要性，是一个加权乘数（默认值为 1）。本例中将 <code>plot</code> 的权重设为 0.5，表示其重要性低于 <code>title</code>（标题）。</p>
+<p>现在我们可以基于新加入索引的字段进行查询：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>&gt; FT.SEARCH idx:movie &quot;empire @genre:{Action}&quot; RETURN 2 title plot
+</span></code></pre></div>
+<p>这条查询会查找标题或剧情中包含 “empire” 且类型为 “Action” 的电影，并返回其标题和剧情内容。</p>
+<hr />
+<h3 id="_14">删除索引</h3>
+<p>你可以使用 <code>FT.DROPINDEX</code> 命令删除一个索引：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>&gt; FT.DROPINDEX idx:movie
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>
+</span><span id="__span-31-3"><a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a>&quot;OK&quot;
+</span></code></pre></div>
+<p><strong>注意：删除索引不会影响已被索引的 Hash 数据本身</strong>，也就是说，所有电影数据仍然保留在数据库中。</p>
+<p>你可以通过以下命令验证数据是否仍在：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>&gt; SCAN 0 MATCH movie:*
+</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a>
+</span><span id="__span-32-3"><a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a>1) &quot;0&quot;
+</span><span id="__span-32-4"><a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a>2) 1) &quot;movie:11002&quot;
+</span><span id="__span-32-5"><a id="__codelineno-32-5" name="__codelineno-32-5" href="#__codelineno-32-5"></a>   2) &quot;movie:11004&quot;
+</span><span id="__span-32-6"><a id="__codelineno-32-6" name="__codelineno-32-6" href="#__codelineno-32-6"></a>   3) &quot;movie:11003&quot;
+</span><span id="__span-32-7"><a id="__codelineno-32-7" name="__codelineno-32-7" href="#__codelineno-32-7"></a>   4) &quot;movie:11005&quot;
+</span></code></pre></div>
+<p>如上所示，所有以 <code>movie:</code> 开头的键依然存在。</p>
+<blockquote>
+<p>💡 提示：如果希望在删除索引的同时也删除对应的文档（Hash），可以在命令后加上 <code>DD</code> 参数：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>FT.DROPINDEX idx:movie DD
+</span></code></pre></div>
+</blockquote>
+<p><code>DD</code> 表示 "Drop Documents"，执行后不仅会删除索引，还会清除所有被索引的 Redis 键。</p>
+<h2 id="_15">六、示例数据集</h2>
+<p>在之前的步骤中，你只使用了少量电影数据。现在让我们导入更多数据：</p>
+<ul>
+<li>更多的电影 —— 用于探索更多查询方式  </li>
+<li>剧院信息 —— 用于探索 Redis 的地理空间（geospatial）功能  </li>
+<li>用户数据 —— 用于进行聚合分析（aggregations）</li>
+</ul>
+<hr />
+<h3 id="_16">数据集说明</h3>
+<h4 id="movies"><strong>电影（Movies）</strong></h4>
+<p>文件 <a href="https://github.com/RediSearch/redisearch-getting-started/blob/master/sample-app/redisearch-docker/dataset/import_movies.redis">import_movies.redis</a> 是一个脚本，用于创建 922 个 Hash 结构。</p>
+<p>电影的 Hash 包含以下字段：</p>
+<ul>
+<li><strong><code>movie:id</code></strong> ：电影的唯一 ID，数据库内部标识（作为 Hash 的键名）</li>
+<li><strong><code>title</code></strong> ：电影标题</li>
+<li><strong><code>plot</code></strong> ：电影剧情简介</li>
+<li><strong><code>genre</code></strong> ：电影类型，目前每部电影只有一个类型</li>
+<li><strong><code>release_year</code></strong> ：电影上映年份（数值型）</li>
+<li><strong><code>rating</code></strong> ：公众评分（数值）</li>
+<li><strong><code>votes</code></strong> ：评分人数</li>
+<li><strong><code>poster</code></strong> ：电影海报链接</li>
+<li><strong><code>imdb_id</code></strong> ：该电影在 <a href="https://imdb.com">IMDB</a> 数据库中的 ID</li>
+</ul>
+<details> 
+  <summary>示例数据: <b>movie:343</b></summary>
+  <table>
+      <thead>
+        <tr>
+            <th>字段</th>
+            <th>值</th>
+        </tr>
+    </thead>
+  <tbody>
+    <tr>
+        <th>title</th>
+        <td style='font-family:monospace; font-size: 0.875em; "'>
+        Spider-Man
+        </td>
+    </tr>
+    <tr>
+        <th>plot</th>
+        <td style='font-family:monospace; font-size: 0.875em; "'>
+        当一个性格内向害羞的高中生被基因改造的蜘蛛咬伤后，他获得了类似蜘蛛的能力，并最终必须以超级英雄的身份对抗邪恶，尤其是在家庭遭遇悲剧之后。
+        </td>
+    </tr>
+    <tr>
+        <th>genre</th>
+        <td style='font-family:monospace; font-size: 0.875em; "'>
+        Action
+        </td>
+    </tr>
+    <tr>
+        <th>release_year</th>
+        <td style='font-family:monospace; font-size: 0.875em; "'>
+        2002
+        </td>
+    </tr>
+    <tr>
+        <th>rating</th>
+        <td style='font-family:monospace; font-size: 0.875em; "'>
+        7.3
+        </td>
+    </tr>
+    <tr>
+        <th>votes</th>
+        <td style='font-family:monospace; font-size: 0.875em; "'>
+        662219
+        </td>
+    </tr>
+    <tr>
+        <th>poster</th>
+        <td style='font-family:monospace; font-size: 0.875em; "'>
+        https://m.media-amazon.com/images/M/MV5BZDEyN2NhMjgtMjdhNi00MmNlLWE5YTgtZGE4MzNjMTRlMGEwXkEyXkFqcGdeQXVyNDUyOTg3Njg@._V1_SX300.jpg
+        </td>
+    </tr>
+    <tr>
+        <th>imdb_id</th>
+        <td style='font-family:monospace; font-size: 0.875em; "'>
+        tt0145487
+        </td>
+    </tr>
+    <tbody>
+  </table>
+</details>
+
+<hr />
+<h4 id="theaters"><strong>剧院（Theaters）</strong></h4>
+<p>文件 <a href="https://github.com/RediSearch/redisearch-getting-started/blob/master/sample-app/redisearch-docker/dataset/import_theaters.redis">import_theaters.redis</a> 是一个脚本，用于创建 117 个 Hash（用于地理空间查询）。<br />
+<em>注意：此数据集是纽约市的剧院列表，不全是电影院，但对本项目影响不大。</em></p>
+<p>剧院 Hash 包含以下字段：</p>
+<ul>
+<li><strong><code>theater:id</code></strong> ：剧院的唯一 ID，数据库内部标识（作为 Hash 键名）</li>
+<li><strong><code>name</code></strong> ：剧院名称</li>
+<li><strong><code>address</code></strong> ：街道地址</li>
+<li><strong><code>city</code></strong> ：城市（本数据集中所有剧院都在纽约）</li>
+<li><strong><code>zip</code></strong> ：邮政编码</li>
+<li><strong><code>phone</code></strong> ：联系电话</li>
+<li><strong><code>url</code></strong> ：剧院网站 URL</li>
+<li><strong><code>location</code></strong> ：包含 <code>经度,纬度</code> 的字符串，用于构建地理索引字段</li>
+</ul>
+<details> 
+ <summary>示例数据: <b>theater:20</b></summary>
+  <table>
+      <thead>
+        <tr>
+            <th>字段</th>
+            <th>值</th>
+        </tr>
+    </thead>
+  <tbody>
+    <tr>
+        <th>name</th>
+        <td style='font-family:monospace; font-size: 0.875em; "'>
+        Broadway Theatre
+        </td>
+    </tr>
+    <tr>
+        <th>address</th>
+        <td style='font-family:monospace; font-size: 0.875em; "'>
+        1681 Broadway
+        </td>
+    </tr>
+    <tr>
+        <th>city</th>
+        <td style='font-family:monospace; font-size: 0.875em; "'>
+        New York
+        </td>
+    </tr>
+    <tr>
+        <th>zip</th>
+        <td style='font-family:monospace; font-size: 0.875em; "'>
+        10019
+        </td>
+    </tr>
+    <tr>
+        <th>phone</th>
+        <td style='font-family:monospace; font-size: 0.875em; "'>
+        212 944-3700
+        </td>
+    </tr>
+    <tr>
+        <th>url</th>
+        <td style='font-family:monospace; font-size: 0.875em; "'>
+        http://www.shubertorganization.com/theatres/broadway.asp
+        </td>
+    </tr>
+    <tr>
+        <th>location</th>
+        <td style='font-family:monospace; font-size: 0.875em; "'>
+        -73.98335054631019,40.763270202723625
+        </td>
+    </tr>
+    <tbody>
+  </table>
+</details>
+
+<hr />
+<h4 id="users"><strong>用户（Users）</strong></h4>
+<p>文件 <a href="https://github.com/RediSearch/redisearch-getting-started/blob/master/sample-app/redisearch-docker/dataset/import_users.redis">import_users.redis</a> 是一个脚本，用于创建 5996 个 Hash。</p>
+<p>用户 Hash 包含以下字段：</p>
+<ul>
+<li><strong><code>user:id</code></strong> ：用户的唯一 ID</li>
+<li><strong><code>first_name</code></strong> ：名字</li>
+<li><strong><code>last_name</code></strong> ：姓氏</li>
+<li><strong><code>email</code></strong> ：邮箱地址</li>
+<li><strong><code>gender</code></strong> ：性别（<code>female</code> / <code>male</code>）</li>
+<li><strong><code>country</code></strong> ：国家名称</li>
+<li><strong><code>country_code</code></strong> ：国家代码</li>
+<li><strong><code>city</code></strong> ：所在城市</li>
+<li><strong><code>longitude</code></strong> ：经度</li>
+<li><strong><code>latitude</code></strong> ：纬度</li>
+<li><strong><code>last_login</code></strong> ：上次登录时间，以 Unix 时间戳（Epoch 时间）表示</li>
+<li><strong><code>ip_address</code></strong> ：IP 地址</li>
+</ul>
+<details> 
+ <summary>示例数据: <b>user:3233</b></summary>
+  <table>
+      <thead>
+        <tr>
+            <th>字段</th>
+            <th>值</th>
+        </tr>
+    </thead>
+  <tbody>
+    <tr>
+        <th>first_name</th>
+        <td style='font-family:monospace; font-size: 0.875em; "'>
+        Rosetta
+        </td>
+    </tr>
+    <tr>
+        <th>last_name</th>
+        <td style='font-family:monospace; font-size: 0.875em; "'>
+        Olyff
+        </td>
+    </tr>
+    <tr>
+        <th>email</th>
+        <td style='font-family:monospace; font-size: 0.875em; "'>
+        rolyff6g@163.com
+        </td>
+    </tr>
+    <tr>
+        <th>gender</th>
+        <td style='font-family:monospace; font-size: 0.875em; "'>
+        female
+        </td>
+    </tr>
+    <tr>
+        <th>country</th>
+        <td style='font-family:monospace; font-size: 0.875em; "'>
+        China
+        </td>
+    </tr>
+    <tr>
+        <th>country_code</th>
+        <td style='font-family:monospace; font-size: 0.875em; "'>
+        CN
+        </td>
+    </tr>
+    <tr>
+        <th>city</th>
+        <td style='font-family:monospace; font-size: 0.875em; "'>
+        Huangdao
+        </td>
+    </tr>
+    <tr>
+        <th>longitude</th>
+        <td style='font-family:monospace; font-size: 0.875em; "'>
+        120.04619
+        </td>
+    </tr>
+    <tr>
+        <th>latitude</th>
+        <td style='font-family:monospace; font-size: 0.875em; "'>
+        35.872664
+        </td>
+    </tr>
+    <tr>
+        <th>last_login</th>
+        <td style='font-family:monospace; font-size: 0.875em; "'>
+        1570386621
+        </td>
+    </tr>
+    <tr>
+        <th>ip_address</th>
+        <td style='font-family:monospace; font-size: 0.875em; "'>
+        218.47.90.79
+        </td>
+    </tr>
+    <tbody>
+  </table>
+</details>
+
+<hr />
+<h3 id="_17">导入电影、剧院和用户数据</h3>
+<p>在导入数据之前，请先清空数据库：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>&gt; FLUSHALL
+</span></code></pre></div>
+<p>最简单的导入方式是使用 <code>redis-cli</code> 执行以下终端命令：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>$<span class="w"> </span>redis-cli<span class="w"> </span>-h<span class="w"> </span>localhost<span class="w"> </span>-p<span class="w"> </span><span class="m">6379</span><span class="w"> </span>&lt;<span class="w"> </span>import_movies.redis
+</span><span id="__span-35-2"><a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a>
+</span><span id="__span-35-3"><a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a>$<span class="w"> </span>redis-cli<span class="w"> </span>-h<span class="w"> </span>localhost<span class="w"> </span>-p<span class="w"> </span><span class="m">6379</span><span class="w"> </span>&lt;<span class="w"> </span>import_theaters.redis
+</span><span id="__span-35-4"><a id="__codelineno-35-4" name="__codelineno-35-4" href="#__codelineno-35-4"></a>
+</span><span id="__span-35-5"><a id="__codelineno-35-5" name="__codelineno-35-5" href="#__codelineno-35-5"></a>$<span class="w"> </span>redis-cli<span class="w"> </span>-h<span class="w"> </span>localhost<span class="w"> </span>-p<span class="w"> </span><span class="m">6379</span><span class="w"> </span>&lt;<span class="w"> </span>import_users.redis
+</span></code></pre></div>
+<p>你可以使用 Redis Insight 或 <code>redis-cli</code> 查看数据内容：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>&gt;<span class="w"> </span>HMGET<span class="w"> </span><span class="s2">&quot;movie:343&quot;</span><span class="w"> </span>title<span class="w"> </span>release_year<span class="w"> </span>genre
+</span><span id="__span-36-2"><a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a>
+</span><span id="__span-36-3"><a id="__codelineno-36-3" name="__codelineno-36-3" href="#__codelineno-36-3"></a><span class="m">1</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;Spider-Man&quot;</span>
+</span><span id="__span-36-4"><a id="__codelineno-36-4" name="__codelineno-36-4" href="#__codelineno-36-4"></a><span class="m">2</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;2002&quot;</span>
+</span><span id="__span-36-5"><a id="__codelineno-36-5" name="__codelineno-36-5" href="#__codelineno-36-5"></a><span class="m">3</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;Action&quot;</span>
+</span><span id="__span-36-6"><a id="__codelineno-36-6" name="__codelineno-36-6" href="#__codelineno-36-6"></a>
+</span><span id="__span-36-7"><a id="__codelineno-36-7" name="__codelineno-36-7" href="#__codelineno-36-7"></a>&gt;<span class="w"> </span>HMGET<span class="w"> </span><span class="s2">&quot;theater:20&quot;</span><span class="w"> </span>name<span class="w"> </span>location
+</span><span id="__span-36-8"><a id="__codelineno-36-8" name="__codelineno-36-8" href="#__codelineno-36-8"></a><span class="m">1</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;Broadway Theatre&quot;</span>
+</span><span id="__span-36-9"><a id="__codelineno-36-9" name="__codelineno-36-9" href="#__codelineno-36-9"></a><span class="m">2</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;-73.98335054631019,40.763270202723625&quot;</span>
+</span><span id="__span-36-10"><a id="__codelineno-36-10" name="__codelineno-36-10" href="#__codelineno-36-10"></a>
+</span><span id="__span-36-11"><a id="__codelineno-36-11" name="__codelineno-36-11" href="#__codelineno-36-11"></a>&gt;<span class="w"> </span>HMGET<span class="w"> </span><span class="s2">&quot;user:343&quot;</span><span class="w"> </span>first_name<span class="w"> </span>last_name<span class="w"> </span>last_login
+</span><span id="__span-36-12"><a id="__codelineno-36-12" name="__codelineno-36-12" href="#__codelineno-36-12"></a><span class="m">1</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;Umeko&quot;</span>
+</span><span id="__span-36-13"><a id="__codelineno-36-13" name="__codelineno-36-13" href="#__codelineno-36-13"></a><span class="m">2</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;Castagno&quot;</span>
+</span><span id="__span-36-14"><a id="__codelineno-36-14" name="__codelineno-36-14" href="#__codelineno-36-14"></a><span class="m">3</span><span class="o">)</span><span class="w"> </span><span class="s2">&quot;1574769122&quot;</span>
+</span></code></pre></div>
+<p>你也可以使用 <code>DBSIZE</code> 命令查看当前数据库中的键数量。</p>
+<hr />
+<h3 id="_18">创建索引</h3>
+<h4 id="idxmovie"><strong>创建 <code>idx:movie</code> 索引：</strong></h4>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>&gt;<span class="w"> </span>FT.CREATE<span class="w"> </span>idx:movie<span class="w"> </span>ON<span class="w"> </span><span class="nb">hash</span><span class="w"> </span>PREFIX<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="s2">&quot;movie:&quot;</span><span class="w"> </span>SCHEMA<span class="w"> </span>title<span class="w"> </span>TEXT<span class="w"> </span>SORTABLE<span class="w"> </span>plot<span class="w"> </span>TEXT<span class="w"> </span>WEIGHT<span class="w"> </span><span class="m">0</span>.5<span class="w"> </span>release_year<span class="w"> </span>NUMERIC<span class="w"> </span>SORTABLE<span class="w"> </span>rating<span class="w"> </span>NUMERIC<span class="w"> </span>SORTABLE<span class="w"> </span>votes<span class="w"> </span>NUMERIC<span class="w"> </span>SORTABLE<span class="w"> </span>genre<span class="w"> </span>TAG<span class="w"> </span>SORTABLE
+</span><span id="__span-37-2"><a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a>
+</span><span id="__span-37-3"><a id="__codelineno-37-3" name="__codelineno-37-3" href="#__codelineno-37-3"></a><span class="s2">&quot;OK&quot;</span>
+</span></code></pre></div>
+<p>电影数据现已建立索引。你可以运行 <code>FT.INFO "idx:movie"</code> 命令并查看返回的 <code>num_docs</code> 值（应为 922）。</p>
+<hr />
+<h4 id="idxtheater"><strong>创建 <code>idx:theater</code> 索引：</strong></h4>
+<p>此索引主要用于展示 RediSearch 的地理空间查询能力。</p>
+<p>此前我们创建过三种类型的索引字段：</p>
+<ul>
+<li><code>Text</code>（文本）</li>
+<li><code>Numeric</code>（数值）</li>
+<li><code>Tag</code>（标签）</li>
+</ul>
+<p>现在我们将引入第四种类型：<code>Geo</code>（地理坐标）</p>
+<p>剧院数据中的 <code>location</code> 字段包含了经度和纬度信息，在索引中将这样使用：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>&gt;<span class="w"> </span>FT.CREATE<span class="w"> </span>idx:theater<span class="w"> </span>ON<span class="w"> </span><span class="nb">hash</span><span class="w"> </span>PREFIX<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="s2">&quot;theater:&quot;</span><span class="w"> </span>SCHEMA<span class="w"> </span>name<span class="w"> </span>TEXT<span class="w"> </span>SORTABLE<span class="w"> </span>location<span class="w"> </span>GEO
+</span><span id="__span-38-2"><a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a>
+</span><span id="__span-38-3"><a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a><span class="s2">&quot;OK&quot;</span>
+</span></code></pre></div>
+<p>剧院数据也已建立索引。运行 <code>FT.INFO "idx:theater"</code> 可查看 <code>num_docs</code> 是否为 117。</p>
+<hr />
+<h4 id="idxuser"><strong>创建 <code>idx:user</code> 索引：</strong></h4>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>&gt;<span class="w"> </span>FT.CREATE<span class="w"> </span>idx:user<span class="w"> </span>ON<span class="w"> </span><span class="nb">hash</span><span class="w"> </span>PREFIX<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="s2">&quot;user:&quot;</span><span class="w"> </span>SCHEMA<span class="w"> </span>gender<span class="w"> </span>TAG<span class="w"> </span>country<span class="w"> </span>TAG<span class="w"> </span>SORTABLE<span class="w"> </span>last_login<span class="w"> </span>NUMERIC<span class="w"> </span>SORTABLE<span class="w"> </span>location<span class="w"> </span>GEO
+</span><span id="__span-39-2"><a id="__codelineno-39-2" name="__codelineno-39-2" href="#__codelineno-39-2"></a>
+</span><span id="__span-39-3"><a id="__codelineno-39-3" name="__codelineno-39-3" href="#__codelineno-39-3"></a><span class="s2">&quot;OK&quot;</span>
+</span></code></pre></div>
+<hr />
+<p>下一步：<a href="007-query-movies.md">查询电影数据库</a></p>
+<h2 id="_19">七、查询电影数据集</h2>
+<p>如本教程前面所述，RediSearch 的目标之一是提供丰富的查询功能，例如：</p>
+<ul>
+<li>简单和复杂的查询条件</li>
+<li>排序（Sorting）</li>
+<li>分页（Pagination）</li>
+<li>计数（Counting）</li>
+</ul>
+<h3 id="conditions">条件查询（Conditions）</h3>
+<p>学习 RediSearch 查询能力的最佳方式是从了解各种条件选项开始。</p>
+<details> 
+  <summary>
+  <i><b>
+  查找所有标题或剧情中包含“heat”或相关词汇的电影
+  </b></i>
+  </summary>
+
+<div class="language-text highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>&gt; FT.SEARCH &quot;idx:movie&quot; &quot;heat&quot; RETURN 2 title plot
+</span><span id="__span-40-2"><a id="__codelineno-40-2" name="__codelineno-40-2" href="#__codelineno-40-2"></a>
+</span><span id="__span-40-3"><a id="__codelineno-40-3" name="__codelineno-40-3" href="#__codelineno-40-3"></a>1) (integer) 4
+</span><span id="__span-40-4"><a id="__codelineno-40-4" name="__codelineno-40-4" href="#__codelineno-40-4"></a>2) &quot;movie:1141&quot;
+</span><span id="__span-40-5"><a id="__codelineno-40-5" name="__codelineno-40-5" href="#__codelineno-40-5"></a>3) 1) &quot;title&quot;
+</span><span id="__span-40-6"><a id="__codelineno-40-6" name="__codelineno-40-6" href="#__codelineno-40-6"></a>   2) &quot;Heat&quot;
+</span><span id="__span-40-7"><a id="__codelineno-40-7" name="__codelineno-40-7" href="#__codelineno-40-7"></a>   3) &quot;plot&quot;
+</span><span id="__span-40-8"><a id="__codelineno-40-8" name="__codelineno-40-8" href="#__codelineno-40-8"></a>   4) &quot;A group of professional bank robbers start to feel the heat from police when they unknowingly leave a clue at their latest heist.&quot;
+</span><span id="__span-40-9"><a id="__codelineno-40-9" name="__codelineno-40-9" href="#__codelineno-40-9"></a>4) &quot;movie:818&quot;
+</span><span id="__span-40-10"><a id="__codelineno-40-10" name="__codelineno-40-10" href="#__codelineno-40-10"></a>5) 1) &quot;title&quot;
+</span><span id="__span-40-11"><a id="__codelineno-40-11" name="__codelineno-40-11" href="#__codelineno-40-11"></a>   2) &quot;California Heat&quot;
+</span><span id="__span-40-12"><a id="__codelineno-40-12" name="__codelineno-40-12" href="#__codelineno-40-12"></a>   3) &quot;plot&quot;
+</span><span id="__span-40-13"><a id="__codelineno-40-13" name="__codelineno-40-13" href="#__codelineno-40-13"></a>   4) &quot;A lifeguard bets he can be true to just one woman.&quot;
+</span><span id="__span-40-14"><a id="__codelineno-40-14" name="__codelineno-40-14" href="#__codelineno-40-14"></a>6) &quot;movie:736&quot;
+</span><span id="__span-40-15"><a id="__codelineno-40-15" name="__codelineno-40-15" href="#__codelineno-40-15"></a>7) 1) &quot;title&quot;
+</span><span id="__span-40-16"><a id="__codelineno-40-16" name="__codelineno-40-16" href="#__codelineno-40-16"></a>   2) &quot;Chicago Justice&quot;
+</span><span id="__span-40-17"><a id="__codelineno-40-17" name="__codelineno-40-17" href="#__codelineno-40-17"></a>   3) &quot;plot&quot;
+</span><span id="__span-40-18"><a id="__codelineno-40-18" name="__codelineno-40-18" href="#__codelineno-40-18"></a>   4) &quot;The State&#39;s Attorney&#39;s dedicated team of prosecutors and investigators navigates heated city politics and controversy head-on,while fearlessly pursuing justice.&quot;
+</span><span id="__span-40-19"><a id="__codelineno-40-19" name="__codelineno-40-19" href="#__codelineno-40-19"></a>8) &quot;movie:1109&quot;
+</span><span id="__span-40-20"><a id="__codelineno-40-20" name="__codelineno-40-20" href="#__codelineno-40-20"></a>9) 1) &quot;title&quot;
+</span><span id="__span-40-21"><a id="__codelineno-40-21" name="__codelineno-40-21" href="#__codelineno-40-21"></a>   2) &quot;Love &amp; Hip Hop: Miami&quot;
+</span><span id="__span-40-22"><a id="__codelineno-40-22" name="__codelineno-40-22" href="#__codelineno-40-22"></a>   3) &quot;plot&quot;
+</span><span id="__span-40-23"><a id="__codelineno-40-23" name="__codelineno-40-23" href="#__codelineno-40-23"></a>   4) &quot;&#39;Love and Hip Hop Miami&#39; turns up the heat and doesn&#39;t hold back in making the 305 the place to be. Multi-platinum selling hip-hop legend Trick Daddy is back in the studio collaborating ...&quot;
+</span></code></pre></div>
+
+第一行返回匹配结果的数量（`4` 部电影），随后是具体的电影列表。
+
+这个查询是一个“无字段限定”的查询，意味着查询引擎会：
+* 在索引中的所有 `TEXT` 字段（`title` 和 `plot`）中搜索
+* 搜索关键词 `heat` 及其词根相关的词（例如 `heated`），这就是为什么 `movie:736` 也会被返回（得益于 [词干提取](https://oss.redislabs.com/redisearch/Stemming/) 功能）
+* 按评分（score）排序返回结果。注意：`title` 字段权重为 1.0，`plot` 权重为 0.5，因此当关键词出现在标题中时，得分更高。
+
+---
+</details>
+
+<details> 
+  <summary>
+  <i><b>
+    查找标题中包含“heat”或相关词汇的所有电影
+  </b></i>
+  </summary>
+
+此时需要使用 `@title` 语法将条件限定在 `title` 字段上：
+
+<div class="language-text highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>&gt; FT.SEARCH &quot;idx:movie&quot; &quot;@title:heat&quot; RETURN 2 title plot
+</span><span id="__span-41-2"><a id="__codelineno-41-2" name="__codelineno-41-2" href="#__codelineno-41-2"></a>1) (integer) 2
+</span><span id="__span-41-3"><a id="__codelineno-41-3" name="__codelineno-41-3" href="#__codelineno-41-3"></a>2) &quot;movie:1141&quot;
+</span><span id="__span-41-4"><a id="__codelineno-41-4" name="__codelineno-41-4" href="#__codelineno-41-4"></a>3) 1) &quot;title&quot;
+</span><span id="__span-41-5"><a id="__codelineno-41-5" name="__codelineno-41-5" href="#__codelineno-41-5"></a>   2) &quot;Heat&quot;
+</span><span id="__span-41-6"><a id="__codelineno-41-6" name="__codelineno-41-6" href="#__codelineno-41-6"></a>   3) &quot;plot&quot;
+</span><span id="__span-41-7"><a id="__codelineno-41-7" name="__codelineno-41-7" href="#__codelineno-41-7"></a>   4) &quot;A group of professional bank robbers start to feel the heat from police when they unknowingly leave a clue at their latest heist.&quot;
+</span><span id="__span-41-8"><a id="__codelineno-41-8" name="__codelineno-41-8" href="#__codelineno-41-8"></a>4) &quot;movie:818&quot;
+</span><span id="__span-41-9"><a id="__codelineno-41-9" name="__codelineno-41-9" href="#__codelineno-41-9"></a>5) 1) &quot;title&quot;
+</span><span id="__span-41-10"><a id="__codelineno-41-10" name="__codelineno-41-10" href="#__codelineno-41-10"></a>   2) &quot;California Heat&quot;
+</span><span id="__span-41-11"><a id="__codelineno-41-11" name="__codelineno-41-11" href="#__codelineno-41-11"></a>   3) &quot;plot&quot;
+</span><span id="__span-41-12"><a id="__codelineno-41-12" name="__codelineno-41-12" href="#__codelineno-41-12"></a>   4) &quot;A lifeguard bets he can be true to just one woman.&quot;
+</span></code></pre></div>
+
+这次只返回了 2 部电影。
+
+---
+</details>
+
+<details> 
+  <summary>
+  <i><b>
+  查找标题包含“heat”但不包含“california”的所有电影
+  </b></i>
+  </summary>
+
+你需要将字段条件用括号括起来，并在 `california` 前加上 `-` 表示排除：
+
+<div class="language-text highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>&gt; FT.SEARCH &quot;idx:movie&quot; &quot;@title:(heat -california)&quot; RETURN 2 title plot
+</span><span id="__span-42-2"><a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a>1) (integer) 1
+</span><span id="__span-42-3"><a id="__codelineno-42-3" name="__codelineno-42-3" href="#__codelineno-42-3"></a>2) &quot;movie:1141&quot;
+</span><span id="__span-42-4"><a id="__codelineno-42-4" name="__codelineno-42-4" href="#__codelineno-42-4"></a>3) 1) &quot;title&quot;
+</span><span id="__span-42-5"><a id="__codelineno-42-5" name="__codelineno-42-5" href="#__codelineno-42-5"></a>   2) &quot;Heat&quot;
+</span><span id="__span-42-6"><a id="__codelineno-42-6" name="__codelineno-42-6" href="#__codelineno-42-6"></a>   3) &quot;plot&quot;
+</span><span id="__span-42-7"><a id="__codelineno-42-7" name="__codelineno-42-7" href="#__codelineno-42-7"></a>   4) &quot;A group of professional bank robbers start to feel the heat from police when they unknowingly leave a clue at their latest heist.&quot;
+</span></code></pre></div>
+
+仅返回一部电影。
+
+**注意**：如果不加 `( ... )`，`-california` 条件会被应用到所有文本字段上。
+
+你可以通过以下两个查询验证区别：
+
+<div class="language-text highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>&gt; FT.SEARCH &quot;idx:movie&quot; &quot;@title:(heat -woman)&quot; RETURN 2 title plot
+</span></code></pre></div>
+
+<div class="language-text highlight"><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>&gt; FT.SEARCH &quot;idx:movie&quot; &quot;@title:heat -woman&quot; RETURN 2 title plot
+</span></code></pre></div>
+
+你会发现第一个查询只在标题中排除含 “woman” 的电影，返回 “Heat” 和 “California Heat”；而第二个查询会排除任何字段（如 `plot`）中包含 “woman” 的电影，因此 “California Heat” 被排除。
+
+---
+</details>
+
+<details> 
+  <summary>
+  <i><b>
+  查找类型为 'Drama' 且标题包含 'heat' 的所有电影
+  </b></i>
+  </summary>
+
+如前所述，电影索引包含：
+* `title` 和 `plot` 作为 `TEXT` 类型
+* `genre` 作为 `TAG` 类型
+
+之前我们已经了解如何对 `TEXT` 字段设置条件。
+
+[TAG](https://oss.redislabs.com/redisearch/Tags/) 类型略有不同：索引引擎 **不会进行词干提取**，必须完全匹配。
+
+要对 TAG 字段设置条件，需使用 `@field:{value}` 语法，大括号 `{...}` 表示这是一个 TAG 查询：
+
+<div class="language-text highlight"><pre><span></span><code><span id="__span-45-1"><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>&gt;  FT.SEARCH &quot;idx:movie&quot; &quot;@title:(heat) @genre:{Drama} &quot; RETURN 3 title plot genre
+</span><span id="__span-45-2"><a id="__codelineno-45-2" name="__codelineno-45-2" href="#__codelineno-45-2"></a>1) (integer) 1
+</span><span id="__span-45-3"><a id="__codelineno-45-3" name="__codelineno-45-3" href="#__codelineno-45-3"></a>2) &quot;movie:1141&quot;
+</span><span id="__span-45-4"><a id="__codelineno-45-4" name="__codelineno-45-4" href="#__codelineno-45-4"></a>3) 1) &quot;title&quot;
+</span><span id="__span-45-5"><a id="__codelineno-45-5" name="__codelineno-45-5" href="#__codelineno-45-5"></a>   2) &quot;Heat&quot;
+</span><span id="__span-45-6"><a id="__codelineno-45-6" name="__codelineno-45-6" href="#__codelineno-45-6"></a>   3) &quot;plot&quot;
+</span><span id="__span-45-7"><a id="__codelineno-45-7" name="__codelineno-45-7" href="#__codelineno-45-7"></a>   4) &quot;A group of professional bank robbers start to feel the heat from police when they unknowingly leave a clue at their latest heist.&quot;
+</span><span id="__span-45-8"><a id="__codelineno-45-8" name="__codelineno-45-8" href="#__codelineno-45-8"></a>   5) &quot;genre&quot;
+</span><span id="__span-45-9"><a id="__codelineno-45-9" name="__codelineno-45-9" href="#__codelineno-45-9"></a>   6) &quot;Drama&quot;
+</span></code></pre></div>
+
+此查询对两个字段设置了条件，并对 `genre` 进行了精确匹配。
+
+**TAG 字段适用于需要字符串精确匹配的场景。**
+
+---
+</details>
+
+<details> 
+  <summary>
+  <i><b>
+  查找类型为 'Drama' 或 'Comedy' 且标题包含 'heat' 的所有电影
+  </b></i>
+  </summary>
+
+与前一个查询类似，可以使用 `|` 符号在 `{}` 内列出多个值表示“或”关系：
+
+<div class="language-text highlight"><pre><span></span><code><span id="__span-46-1"><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a>&gt; FT.SEARCH &quot;idx:movie&quot; &quot;@title:(heat)  @genre:{Drama|Comedy} &quot; RETURN 3 title plot genre
+</span><span id="__span-46-2"><a id="__codelineno-46-2" name="__codelineno-46-2" href="#__codelineno-46-2"></a>
+</span><span id="__span-46-3"><a id="__codelineno-46-3" name="__codelineno-46-3" href="#__codelineno-46-3"></a>1) (integer) 2
+</span><span id="__span-46-4"><a id="__codelineno-46-4" name="__codelineno-46-4" href="#__codelineno-46-4"></a>2) &quot;movie:1141&quot;
+</span><span id="__span-46-5"><a id="__codelineno-46-5" name="__codelineno-46-5" href="#__codelineno-46-5"></a>3) 1) &quot;title&quot;
+</span><span id="__span-46-6"><a id="__codelineno-46-6" name="__codelineno-46-6" href="#__codelineno-46-6"></a>   2) &quot;Heat&quot;
+</span><span id="__span-46-7"><a id="__codelineno-46-7" name="__codelineno-46-7" href="#__codelineno-46-7"></a>   3) &quot;plot&quot;
+</span><span id="__span-46-8"><a id="__codelineno-46-8" name="__codelineno-46-8" href="#__codelineno-46-8"></a>   4) &quot;A group of professional bank robbers start to feel the heat from police when they unknowingly leave a clue at their latest heist.&quot;
+</span><span id="__span-46-9"><a id="__codelineno-46-9" name="__codelineno-46-9" href="#__codelineno-46-9"></a>   5) &quot;genre&quot;
+</span><span id="__span-46-10"><a id="__codelineno-46-10" name="__codelineno-46-10" href="#__codelineno-46-10"></a>   6) &quot;Drama&quot;
+</span><span id="__span-46-11"><a id="__codelineno-46-11" name="__codelineno-46-11" href="#__codelineno-46-11"></a>4) &quot;movie:818&quot;
+</span><span id="__span-46-12"><a id="__codelineno-46-12" name="__codelineno-46-12" href="#__codelineno-46-12"></a>5) 1) &quot;title&quot;
+</span><span id="__span-46-13"><a id="__codelineno-46-13" name="__codelineno-46-13" href="#__codelineno-46-13"></a>   2) &quot;California Heat&quot;
+</span><span id="__span-46-14"><a id="__codelineno-46-14" name="__codelineno-46-14" href="#__codelineno-46-14"></a>   3) &quot;plot&quot;
+</span><span id="__span-46-15"><a id="__codelineno-46-15" name="__codelineno-46-15" href="#__codelineno-46-15"></a>   4) &quot;A lifeguard bets he can be true to just one woman.&quot;
+</span><span id="__span-46-16"><a id="__codelineno-46-16" name="__codelineno-46-16" href="#__codelineno-46-16"></a>   5) &quot;genre&quot;
+</span><span id="__span-46-17"><a id="__codelineno-46-17" name="__codelineno-46-17" href="#__codelineno-46-17"></a>   6) &quot;Comedy&quot;
+</span></code></pre></div>
+
+你也可以把 `|` 放在整个条件之间，比如查找标题含 "heat"，或类型是 Drama 或 Comedy 的所有电影：
+
+<div class="language-text highlight"><pre><span></span><code><span id="__span-47-1"><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>FT.SEARCH &quot;idx:movie&quot; &quot;@title:(heat) | @genre:{Drama|Comedy} &quot; RETURN 3 title plot genre
+</span></code></pre></div>
+
+---
+</details>
+
+<details> 
+  <summary>
+  <i><b>查找类型为 'Mystery' 或 'Thriller'，且上映年份为 2014 或 2018 的所有电影</b></i>
+  </summary>
+
+这个查询引入了对数值字段（`release_year`）的查询。
+
+与之前类似，使用 `@field:` 语法，但数值字段需要指定一个范围区间。
+
+这里使用两个区间条件并用 `|`（OR）连接：
+
+<div class="language-text highlight"><pre><span></span><code><span id="__span-48-1"><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a>&gt; FT.SEARCH &quot;idx:movie&quot; &quot;@genre:{Mystery|Thriller} (@release_year:[2018 2018] | @release_year:[2014 2014] )&quot;   RETURN 3 title release_year genre
+</span><span id="__span-48-2"><a id="__codelineno-48-2" name="__codelineno-48-2" href="#__codelineno-48-2"></a>
+</span><span id="__span-48-3"><a id="__codelineno-48-3" name="__codelineno-48-3" href="#__codelineno-48-3"></a>1) (integer) 3
+</span><span id="__span-48-4"><a id="__codelineno-48-4" name="__codelineno-48-4" href="#__codelineno-48-4"></a>2) &quot;movie:461&quot;
+</span><span id="__span-48-5"><a id="__codelineno-48-5" name="__codelineno-48-5" href="#__codelineno-48-5"></a>3) 1) &quot;title&quot;
+</span><span id="__span-48-6"><a id="__codelineno-48-6" name="__codelineno-48-6" href="#__codelineno-48-6"></a>   2) &quot;The Boat ()&quot;
+</span><span id="__span-48-7"><a id="__codelineno-48-7" name="__codelineno-48-7" href="#__codelineno-48-7"></a>   3) &quot;release_year&quot;
+</span><span id="__span-48-8"><a id="__codelineno-48-8" name="__codelineno-48-8" href="#__codelineno-48-8"></a>   4) &quot;2018&quot;
+</span><span id="__span-48-9"><a id="__codelineno-48-9" name="__codelineno-48-9" href="#__codelineno-48-9"></a>   5) &quot;genre&quot;
+</span><span id="__span-48-10"><a id="__codelineno-48-10" name="__codelineno-48-10" href="#__codelineno-48-10"></a>   6) &quot;Mystery&quot;
+</span><span id="__span-48-11"><a id="__codelineno-48-11" name="__codelineno-48-11" href="#__codelineno-48-11"></a>4) &quot;movie:65&quot;
+</span><span id="__span-48-12"><a id="__codelineno-48-12" name="__codelineno-48-12" href="#__codelineno-48-12"></a>5) 1) &quot;title&quot;
+</span><span id="__span-48-13"><a id="__codelineno-48-13" name="__codelineno-48-13" href="#__codelineno-48-13"></a>   2) &quot;The Loft&quot;
+</span><span id="__span-48-14"><a id="__codelineno-48-14" name="__codelineno-48-14" href="#__codelineno-48-14"></a>   3) &quot;release_year&quot;
+</span><span id="__span-48-15"><a id="__codelineno-48-15" name="__codelineno-48-15" href="#__codelineno-48-15"></a>   4) &quot;2014&quot;
+</span><span id="__span-48-16"><a id="__codelineno-48-16" name="__codelineno-48-16" href="#__codelineno-48-16"></a>   5) &quot;genre&quot;
+</span><span id="__span-48-17"><a id="__codelineno-48-17" name="__codelineno-48-17" href="#__codelineno-48-17"></a>   6) &quot;Mystery&quot;
+</span><span id="__span-48-18"><a id="__codelineno-48-18" name="__codelineno-48-18" href="#__codelineno-48-18"></a>6) &quot;movie:989&quot;
+</span><span id="__span-48-19"><a id="__codelineno-48-19" name="__codelineno-48-19" href="#__codelineno-48-19"></a>7) 1) &quot;title&quot;
+</span><span id="__span-48-20"><a id="__codelineno-48-20" name="__codelineno-48-20" href="#__codelineno-48-20"></a>   2) &quot;Los Angeles Overnight&quot;
+</span><span id="__span-48-21"><a id="__codelineno-48-21" name="__codelineno-48-21" href="#__codelineno-48-21"></a>   3) &quot;release_year&quot;
+</span><span id="__span-48-22"><a id="__codelineno-48-22" name="__codelineno-48-22" href="#__codelineno-48-22"></a>   4) &quot;2018&quot;
+</span><span id="__span-48-23"><a id="__codelineno-48-23" name="__codelineno-48-23" href="#__codelineno-48-23"></a>   5) &quot;genre&quot;
+</span><span id="__span-48-24"><a id="__codelineno-48-24" name="__codelineno-48-24" href="#__codelineno-48-24"></a>   6) &quot;Thriller&quot;
+</span></code></pre></div>
+
+---
+</details>
+
+<h3 id="_20">小结</h3>
+<ul>
+<li><strong>无字段查询</strong>：作用于所有 <code>TEXT</code> 字段，支持词干扩展（stemming）</li>
+<li><strong>限定字段查询</strong>：使用 <code>@field:</code> 语法</li>
+<li><strong>多条件组合</strong>：默认是“与”（AND）关系；若需“或”（OR）关系，使用 <code>|</code> 符号</li>
+</ul>
+<hr />
+<h3 id="sort">排序（Sort）</h3>
+<p>查询数据时常见的需求是对结果按特定字段排序，并进行分页浏览。</p>
+<details> 
+  <summary>
+  <i><b>查询所有 `Action` 类型的电影，按上映年份从最新到最旧排序</b></i>
+  </summary>
+
+<div class="language-text highlight"><pre><span></span><code><span id="__span-49-1"><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a>&gt; FT.SEARCH &quot;idx:movie&quot; &quot;@genre:{Action}&quot;  SORTBY release_year DESC RETURN 2 title release_year
+</span><span id="__span-49-2"><a id="__codelineno-49-2" name="__codelineno-49-2" href="#__codelineno-49-2"></a> 1) (integer) 186
+</span><span id="__span-49-3"><a id="__codelineno-49-3" name="__codelineno-49-3" href="#__codelineno-49-3"></a> 2) &quot;movie:360&quot;
+</span><span id="__span-49-4"><a id="__codelineno-49-4" name="__codelineno-49-4" href="#__codelineno-49-4"></a> 3) 1) &quot;release_year&quot;
+</span><span id="__span-49-5"><a id="__codelineno-49-5" name="__codelineno-49-5" href="#__codelineno-49-5"></a>    2) &quot;2019&quot;
+</span><span id="__span-49-6"><a id="__codelineno-49-6" name="__codelineno-49-6" href="#__codelineno-49-6"></a>    3) &quot;title&quot;
+</span><span id="__span-49-7"><a id="__codelineno-49-7" name="__codelineno-49-7" href="#__codelineno-49-7"></a>    4) &quot;Spider-Man: Far from Home&quot;
+</span><span id="__span-49-8"><a id="__codelineno-49-8" name="__codelineno-49-8" href="#__codelineno-49-8"></a> ...
+</span><span id="__span-49-9"><a id="__codelineno-49-9" name="__codelineno-49-9" href="#__codelineno-49-9"></a>20) &quot;movie:278&quot;
+</span><span id="__span-49-10"><a id="__codelineno-49-10" name="__codelineno-49-10" href="#__codelineno-49-10"></a>21) 1) &quot;release_year&quot;
+</span><span id="__span-49-11"><a id="__codelineno-49-11" name="__codelineno-49-11" href="#__codelineno-49-11"></a>    2) &quot;2016&quot;
+</span><span id="__span-49-12"><a id="__codelineno-49-12" name="__codelineno-49-12" href="#__codelineno-49-12"></a>    3) &quot;title&quot;
+</span><span id="__span-49-13"><a id="__codelineno-49-13" name="__codelineno-49-13" href="#__codelineno-49-13"></a>    4) &quot;Mechanic: Resurrection&quot;
+</span></code></pre></div>
+
+第一行返回匹配的文档数量（186 部）。
+
+`FT.SEARCH` 默认返回前 10 条结果。下一查询将展示如何分页。
+
+**注意**：`FT.SEARCH` 中只能使用一个 `SORTBY` 子句。如果想按多个字段排序（例如先按 `genre` 升序，再按 `release_year` 降序），需使用 `FT.AGGREGATE`，这将在下一部分介绍。
+
+另外，用于 `SORTBY` 的字段必须在索引定义中标记为 `SORTABLE`。
+
+
+</details>
+
+<hr />
+<h3 id="paginate">分页（Paginate）</h3>
+<details> 
+  <summary>
+  <i><b>查询所有 `Action` 类型的电影，按上映年份从最旧到最新排序，每批返回 100 部电影</b></i>
+  </summary>
+
+<div class="language-text highlight"><pre><span></span><code><span id="__span-50-1"><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a>&gt; FT.SEARCH &quot;idx:movie&quot; &quot;@genre:{Action}&quot; LIMIT 0 100  SORTBY release_year ASC RETURN 2 title release_year
+</span><span id="__span-50-2"><a id="__codelineno-50-2" name="__codelineno-50-2" href="#__codelineno-50-2"></a>  1) (integer) 186
+</span><span id="__span-50-3"><a id="__codelineno-50-3" name="__codelineno-50-3" href="#__codelineno-50-3"></a>  2) &quot;movie:892&quot;
+</span><span id="__span-50-4"><a id="__codelineno-50-4" name="__codelineno-50-4" href="#__codelineno-50-4"></a>  3) 1) &quot;release_year&quot;
+</span><span id="__span-50-5"><a id="__codelineno-50-5" name="__codelineno-50-5" href="#__codelineno-50-5"></a>     2) &quot;1966&quot;
+</span><span id="__span-50-6"><a id="__codelineno-50-6" name="__codelineno-50-6" href="#__codelineno-50-6"></a>     3) &quot;title&quot;
+</span><span id="__span-50-7"><a id="__codelineno-50-7" name="__codelineno-50-7" href="#__codelineno-50-7"></a>     4) &quot;Texas,Adios&quot;
+</span><span id="__span-50-8"><a id="__codelineno-50-8" name="__codelineno-50-8" href="#__codelineno-50-8"></a>...  
+</span><span id="__span-50-9"><a id="__codelineno-50-9" name="__codelineno-50-9" href="#__codelineno-50-9"></a>200) &quot;movie:12&quot;
+</span><span id="__span-50-10"><a id="__codelineno-50-10" name="__codelineno-50-10" href="#__codelineno-50-10"></a>201) 1) &quot;release_year&quot;
+</span><span id="__span-50-11"><a id="__codelineno-50-11" name="__codelineno-50-11" href="#__codelineno-50-11"></a>     2) &quot;2014&quot;
+</span><span id="__span-50-12"><a id="__codelineno-50-12" name="__codelineno-50-12" href="#__codelineno-50-12"></a>     3) &quot;title&quot;
+</span><span id="__span-50-13"><a id="__codelineno-50-13" name="__codelineno-50-13" href="#__codelineno-50-13"></a>     4) &quot;Fury&quot;
+</span></code></pre></div>
+
+结果与前例相似：
+* 共找到 186 部电影
+* 第一部是最老的（1966 年）
+* 批次中最晚的是 2014 年上映的
+
+要获取下一批，请修改 `LIMIT` 参数：
+
+<div class="language-text highlight"><pre><span></span><code><span id="__span-51-1"><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a>&gt; FT.SEARCH &quot;idx:movie&quot; &quot;@genre:{Action}&quot; LIMIT 100 200  SORTBY release_year ASC RETURN 2 title release_year
+</span></code></pre></div>
+
+</details>
+
+<hr />
+<h3 id="count">计数（Count）</h3>
+<details> 
+  <summary>
+  <i><b>统计 'Action' 类型电影的数量</b></i>
+  </summary>
+
+根据之前的示例，使用 `LIMIT 0 0` 可以只返回匹配文档的数量，不返回实际数据：
+
+<div class="language-text highlight"><pre><span></span><code><span id="__span-52-1"><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a>&gt; FT.SEARCH &quot;idx:movie&quot; &quot;@genre:{Action}&quot; LIMIT 0 0
+</span><span id="__span-52-2"><a id="__codelineno-52-2" name="__codelineno-52-2" href="#__codelineno-52-2"></a>
+</span><span id="__span-52-3"><a id="__codelineno-52-3" name="__codelineno-52-3" href="#__codelineno-52-3"></a>1) (integer) 186
+</span></code></pre></div>
+
+---
+</details>
+
+<details> 
+  <summary>
+  <i><b>统计 2017 年上映的 'Action' 类型电影数量</b></i>
+  </summary>
+
+同样使用 `LIMIT 0 0`：
+
+<div class="language-text highlight"><pre><span></span><code><span id="__span-53-1"><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a>&gt; FT.SEARCH &quot;idx:movie&quot; &quot;@genre:{Action}&quot; FILTER release_year 2017 2017 LIMIT 0 0
+</span><span id="__span-53-2"><a id="__codelineno-53-2" name="__codelineno-53-2" href="#__codelineno-53-2"></a>
+</span><span id="__span-53-3"><a id="__codelineno-53-3" name="__codelineno-53-3" href="#__codelineno-53-3"></a>1) (integer) 5
+</span></code></pre></div>
+
+也可以使用以下语法：
+
+<div class="language-text highlight"><pre><span></span><code><span id="__span-54-1"><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a>&gt; FT.SEARCH &quot;idx:movie&quot; &quot;@genre:{Action} @release_year:[2017 2017]&quot; LIMIT 0 0
+</span><span id="__span-54-2"><a id="__codelineno-54-2" name="__codelineno-54-2" href="#__codelineno-54-2"></a>
+</span><span id="__span-54-3"><a id="__codelineno-54-3" name="__codelineno-54-3" href="#__codelineno-54-3"></a>1) (integer) 5
+</span></code></pre></div>
+
+</details>
+
+<hr />
+<h3 id="geospatial-queries">地理空间查询（Geospatial Queries）</h3>
+<details> 
+  <summary>
+  <i><b>查找距离 MOMA 不足 400 米的所有剧院名称和地址</b></i>
+  </summary>
+
+假设你在位于 “11 W 53rd St, New York” 的现代艺术博物馆（MOMA），想查找周围 400 米内的所有剧院。
+
+首先确定当前位置的经纬度：`-73.9798156,40.7614367`，然后执行以下查询：
+
+<div class="language-text highlight"><pre><span></span><code><span id="__span-55-1"><a id="__codelineno-55-1" name="__codelineno-55-1" href="#__codelineno-55-1"></a>&gt; FT.SEARCH &quot;idx:theater&quot; &quot;@location:[-73.9798156 40.7614367 400 m]&quot; RETURN 2 name address
+</span><span id="__span-55-2"><a id="__codelineno-55-2" name="__codelineno-55-2" href="#__codelineno-55-2"></a>
+</span><span id="__span-55-3"><a id="__codelineno-55-3" name="__codelineno-55-3" href="#__codelineno-55-3"></a>1) (integer) 5
+</span><span id="__span-55-4"><a id="__codelineno-55-4" name="__codelineno-55-4" href="#__codelineno-55-4"></a> 2) &quot;theater:30&quot;
+</span><span id="__span-55-5"><a id="__codelineno-55-5" name="__codelineno-55-5" href="#__codelineno-55-5"></a> 3) 1) &quot;name&quot;
+</span><span id="__span-55-6"><a id="__codelineno-55-6" name="__codelineno-55-6" href="#__codelineno-55-6"></a>    2) &quot;Ed Sullivan Theater&quot;
+</span><span id="__span-55-7"><a id="__codelineno-55-7" name="__codelineno-55-7" href="#__codelineno-55-7"></a>    3) &quot;address&quot;
+</span><span id="__span-55-8"><a id="__codelineno-55-8" name="__codelineno-55-8" href="#__codelineno-55-8"></a>    4) &quot;1697 Broadway&quot;
+</span><span id="__span-55-9"><a id="__codelineno-55-9" name="__codelineno-55-9" href="#__codelineno-55-9"></a>...
+</span><span id="__span-55-10"><a id="__codelineno-55-10" name="__codelineno-55-10" href="#__codelineno-55-10"></a>10) &quot;theater:115&quot;
+</span><span id="__span-55-11"><a id="__codelineno-55-11" name="__codelineno-55-11" href="#__codelineno-55-11"></a>11) 1) &quot;name&quot;
+</span><span id="__span-55-12"><a id="__codelineno-55-12" name="__codelineno-55-12" href="#__codelineno-55-12"></a>    2) &quot;Winter Garden Theatre&quot;
+</span><span id="__span-55-13"><a id="__codelineno-55-13" name="__codelineno-55-13" href="#__codelineno-55-13"></a>    3) &quot;address&quot;
+</span><span id="__span-55-14"><a id="__codelineno-55-14" name="__codelineno-55-14" href="#__codelineno-55-14"></a>    4) &quot;1634 Broadway&quot;
+</span></code></pre></div>
+
+
+</details>
+
+<h2 id="aggregation">八、聚合查询（Aggregation）</h2>
+<p>除了像使用 <code>FT.SEARCH</code> 命令那样以文档列表的形式检索数据外，应用程序常见的另一个需求是进行“聚合”操作。</p>
+<p>例如，在查看电影数据时，你可能希望按年份对电影数量进行分组，并从最新年份开始排序显示。</p>
+<p>为此，RediSearch 提供了 <code>FT.AGGREGATE</code> 命令，它通过一个<strong>数据处理流水线（pipeline）</strong> 来描述聚合操作。</p>
+<p>下面我们来看一些示例。</p>
+<hr />
+<h3 id="group-by-sort-by">分组与排序（Group By &amp; Sort By）</h3>
+<details> 
+  <summary>
+  <i><b>
+  按年份统计电影数量
+  </b></i>
+  </summary>
+
+<div class="language-text highlight"><pre><span></span><code><span id="__span-56-1"><a id="__codelineno-56-1" name="__codelineno-56-1" href="#__codelineno-56-1"></a>&gt; FT.AGGREGATE &quot;idx:movie&quot; &quot;*&quot; GROUPBY 1 @release_year REDUCE COUNT 0 AS nb_of_movies
+</span><span id="__span-56-2"><a id="__codelineno-56-2" name="__codelineno-56-2" href="#__codelineno-56-2"></a>
+</span><span id="__span-56-3"><a id="__codelineno-56-3" name="__codelineno-56-3" href="#__codelineno-56-3"></a> 1) (integer) 60
+</span><span id="__span-56-4"><a id="__codelineno-56-4" name="__codelineno-56-4" href="#__codelineno-56-4"></a> 2) 1) &quot;release_year&quot;
+</span><span id="__span-56-5"><a id="__codelineno-56-5" name="__codelineno-56-5" href="#__codelineno-56-5"></a>    2) &quot;1964&quot;
+</span><span id="__span-56-6"><a id="__codelineno-56-6" name="__codelineno-56-6" href="#__codelineno-56-6"></a>    3) &quot;nb_of_movies&quot;
+</span><span id="__span-56-7"><a id="__codelineno-56-7" name="__codelineno-56-7" href="#__codelineno-56-7"></a>    4) &quot;9&quot;
+</span><span id="__span-56-8"><a id="__codelineno-56-8" name="__codelineno-56-8" href="#__codelineno-56-8"></a> ...   
+</span><span id="__span-56-9"><a id="__codelineno-56-9" name="__codelineno-56-9" href="#__codelineno-56-9"></a> 61) 1) &quot;release_year&quot;
+</span><span id="__span-56-10"><a id="__codelineno-56-10" name="__codelineno-56-10" href="#__codelineno-56-10"></a>    2) &quot;2010&quot;
+</span><span id="__span-56-11"><a id="__codelineno-56-11" name="__codelineno-56-11" href="#__codelineno-56-11"></a>    3) &quot;nb_of_movies&quot;
+</span><span id="__span-56-12"><a id="__codelineno-56-12" name="__codelineno-56-12" href="#__codelineno-56-12"></a>    4) &quot;15&quot;
+</span></code></pre></div>
+
+此命令：
+- 查询所有电影（`*`）
+- 按 `release_year` 字段分组（`GROUPBY 1 @release_year`）
+- 使用 `REDUCE COUNT 0` 统计每组的数量，并命名为 `nb_of_movies`
+
+返回结果共 60 个不同的年份分组。
+
+---
+</details>
+
+<details> 
+  <summary>
+  <i><b>
+  按年份统计电影数量，从最新到最旧排序
+  </b></i>
+  </summary>
+
+<div class="language-text highlight"><pre><span></span><code><span id="__span-57-1"><a id="__codelineno-57-1" name="__codelineno-57-1" href="#__codelineno-57-1"></a>&gt; FT.AGGREGATE &quot;idx:movie&quot; &quot;*&quot; GROUPBY 1 @release_year REDUCE COUNT 0 AS nb_of_movies SORTBY 2 @release_year DESC 
+</span><span id="__span-57-2"><a id="__codelineno-57-2" name="__codelineno-57-2" href="#__codelineno-57-2"></a>
+</span><span id="__span-57-3"><a id="__codelineno-57-3" name="__codelineno-57-3" href="#__codelineno-57-3"></a>1) (integer) 60
+</span><span id="__span-57-4"><a id="__codelineno-57-4" name="__codelineno-57-4" href="#__codelineno-57-4"></a> 2) 1) &quot;release_year&quot;
+</span><span id="__span-57-5"><a id="__codelineno-57-5" name="__codelineno-57-5" href="#__codelineno-57-5"></a>    2) &quot;2019&quot;
+</span><span id="__span-57-6"><a id="__codelineno-57-6" name="__codelineno-57-6" href="#__codelineno-57-6"></a>    3) &quot;nb_of_movies&quot;
+</span><span id="__span-57-7"><a id="__codelineno-57-7" name="__codelineno-57-7" href="#__codelineno-57-7"></a>    4) &quot;14&quot;
+</span><span id="__span-57-8"><a id="__codelineno-57-8" name="__codelineno-57-8" href="#__codelineno-57-8"></a> ...   
+</span><span id="__span-57-9"><a id="__codelineno-57-9" name="__codelineno-57-9" href="#__codelineno-57-9"></a>11) 1) &quot;release_year&quot;
+</span><span id="__span-57-10"><a id="__codelineno-57-10" name="__codelineno-57-10" href="#__codelineno-57-10"></a>    2) &quot;2010&quot;
+</span><span id="__span-57-11"><a id="__codelineno-57-11" name="__codelineno-57-11" href="#__codelineno-57-11"></a>    3) &quot;nb_of_movies&quot;
+</span><span id="__span-57-12"><a id="__codelineno-57-12" name="__codelineno-57-12" href="#__codelineno-57-12"></a>    4) &quot;15&quot;
+</span></code></pre></div>
+
+在上一查询基础上添加了 `SORTBY @release_year DESC`，使结果按年份从新到旧排序。
+
+---
+</details>
+
+<details> 
+  <summary>
+  <i><b>
+  按类型统计电影数量、总评分人数和平均评分
+  </b></i>
+  </summary>
+
+<div class="language-text highlight"><pre><span></span><code><span id="__span-58-1"><a id="__codelineno-58-1" name="__codelineno-58-1" href="#__codelineno-58-1"></a>&gt; FT.AGGREGATE idx:movie &quot;*&quot; GROUPBY 1 @genre REDUCE COUNT 0 AS nb_of_movies REDUCE SUM 1 votes AS nb_of_votes REDUCE AVG 1 rating AS avg_rating SORTBY 4 @avg_rating DESC @nb_of_votes DESC
+</span><span id="__span-58-2"><a id="__codelineno-58-2" name="__codelineno-58-2" href="#__codelineno-58-2"></a>
+</span><span id="__span-58-3"><a id="__codelineno-58-3" name="__codelineno-58-3" href="#__codelineno-58-3"></a>
+</span><span id="__span-58-4"><a id="__codelineno-58-4" name="__codelineno-58-4" href="#__codelineno-58-4"></a> 1) (integer) 26
+</span><span id="__span-58-5"><a id="__codelineno-58-5" name="__codelineno-58-5" href="#__codelineno-58-5"></a> 2) 1) &quot;genre&quot;
+</span><span id="__span-58-6"><a id="__codelineno-58-6" name="__codelineno-58-6" href="#__codelineno-58-6"></a>    2) &quot;fantasy&quot;
+</span><span id="__span-58-7"><a id="__codelineno-58-7" name="__codelineno-58-7" href="#__codelineno-58-7"></a>    3) &quot;nb_of_movies&quot;
+</span><span id="__span-58-8"><a id="__codelineno-58-8" name="__codelineno-58-8" href="#__codelineno-58-8"></a>    4) &quot;1&quot;
+</span><span id="__span-58-9"><a id="__codelineno-58-9" name="__codelineno-58-9" href="#__codelineno-58-9"></a>    5) &quot;nb_of_votes&quot;
+</span><span id="__span-58-10"><a id="__codelineno-58-10" name="__codelineno-58-10" href="#__codelineno-58-10"></a>    6) &quot;1500090&quot;
+</span><span id="__span-58-11"><a id="__codelineno-58-11" name="__codelineno-58-11" href="#__codelineno-58-11"></a>    7) &quot;avg_rating&quot;
+</span><span id="__span-58-12"><a id="__codelineno-58-12" name="__codelineno-58-12" href="#__codelineno-58-12"></a>    8) &quot;8.8&quot;
+</span><span id="__span-58-13"><a id="__codelineno-58-13" name="__codelineno-58-13" href="#__codelineno-58-13"></a>...
+</span><span id="__span-58-14"><a id="__codelineno-58-14" name="__codelineno-58-14" href="#__codelineno-58-14"></a>11) 1) &quot;genre&quot;
+</span><span id="__span-58-15"><a id="__codelineno-58-15" name="__codelineno-58-15" href="#__codelineno-58-15"></a>    2) &quot;romance&quot;
+</span><span id="__span-58-16"><a id="__codelineno-58-16" name="__codelineno-58-16" href="#__codelineno-58-16"></a>    3) &quot;nb_of_movies&quot;
+</span><span id="__span-58-17"><a id="__codelineno-58-17" name="__codelineno-58-17" href="#__codelineno-58-17"></a>    4) &quot;2&quot;
+</span><span id="__span-58-18"><a id="__codelineno-58-18" name="__codelineno-58-18" href="#__codelineno-58-18"></a>    5) &quot;nb_of_votes&quot;
+</span><span id="__span-58-19"><a id="__codelineno-58-19" name="__codelineno-58-19" href="#__codelineno-58-19"></a>    6) &quot;746&quot;
+</span><span id="__span-58-20"><a id="__codelineno-58-20" name="__codelineno-58-20" href="#__codelineno-58-20"></a>    7) &quot;avg_rating&quot;
+</span><span id="__span-58-21"><a id="__codelineno-58-21" name="__codelineno-58-21" href="#__codelineno-58-21"></a>    8) &quot;6.65&quot;
+</span></code></pre></div>
+
+该查询：
+- 按 `genre` 分组
+- 计算每类电影数量（`COUNT`）
+- 累加总评分人数（`SUM votes`）
+- 计算平均评分（`AVG rating`）
+- 最后按平均评分降序、总评分人数降序排序
+
+---
+</details>
+
+<details> 
+  <summary>
+  <i><b>
+  按国家统计女性用户数量，并从高到低排序
+  </b></i>
+  </summary>
+
+<div class="language-text highlight"><pre><span></span><code><span id="__span-59-1"><a id="__codelineno-59-1" name="__codelineno-59-1" href="#__codelineno-59-1"></a>&gt; FT.AGGREGATE idx:user &quot;@gender:{female}&quot; GROUPBY 1 @country REDUCE COUNT 0 AS nb_of_users SORTBY 2 @nb_of_users DESC
+</span><span id="__span-59-2"><a id="__codelineno-59-2" name="__codelineno-59-2" href="#__codelineno-59-2"></a>
+</span><span id="__span-59-3"><a id="__codelineno-59-3" name="__codelineno-59-3" href="#__codelineno-59-3"></a> 1) (integer) 193
+</span><span id="__span-59-4"><a id="__codelineno-59-4" name="__codelineno-59-4" href="#__codelineno-59-4"></a> 2) 1) &quot;country&quot;
+</span><span id="__span-59-5"><a id="__codelineno-59-5" name="__codelineno-59-5" href="#__codelineno-59-5"></a>    2) &quot;china&quot;
+</span><span id="__span-59-6"><a id="__codelineno-59-6" name="__codelineno-59-6" href="#__codelineno-59-6"></a>    3) &quot;nb_of_users&quot;
+</span><span id="__span-59-7"><a id="__codelineno-59-7" name="__codelineno-59-7" href="#__codelineno-59-7"></a>    4) &quot;537&quot;
+</span><span id="__span-59-8"><a id="__codelineno-59-8" name="__codelineno-59-8" href="#__codelineno-59-8"></a>...
+</span><span id="__span-59-9"><a id="__codelineno-59-9" name="__codelineno-59-9" href="#__codelineno-59-9"></a>11) 1) &quot;country&quot;
+</span><span id="__span-59-10"><a id="__codelineno-59-10" name="__codelineno-59-10" href="#__codelineno-59-10"></a>    2) &quot;ukraine&quot;
+</span><span id="__span-59-11"><a id="__codelineno-59-11" name="__codelineno-59-11" href="#__codelineno-59-11"></a>    3) &quot;nb_of_users&quot;
+</span><span id="__span-59-12"><a id="__codelineno-59-12" name="__codelineno-59-12" href="#__codelineno-59-12"></a>    4) &quot;72&quot;
+</span></code></pre></div>
+
+此查询筛选出性别为女性的用户，按国家分组并统计人数，最后按数量降序排列。
+
+---
+</details>
+
+<hr />
+<h3 id="apply-functions">应用函数（Apply Functions）</h3>
+<h4 id="_21">时间提取与转换</h4>
+<details> 
+  <summary>
+  <i><b>
+  按年月统计登录次数
+  </b></i>
+  </summary>
+
+`idx:user` 索引中的 `last_login` 字段存储的是 Unix 时间戳（Epoch 时间）。
+
+RediSearch 的聚合功能允许对每条记录应用变换操作，这通过 [APPLY](https://oss.redislabs.com/redisearch/Aggregations/#apply_expressions) 参数实现。
+
+本例中，我们使用 [日期/时间函数](https://oss.redislabs.com/redisearch/Aggregations/#list_of_datetime_apply_functions) 从时间戳中提取年份和月份：
+
+<div class="language-text highlight"><pre><span></span><code><span id="__span-60-1"><a id="__codelineno-60-1" name="__codelineno-60-1" href="#__codelineno-60-1"></a>&gt; FT.AGGREGATE idx:user * APPLY year(@last_login) AS year APPLY &quot;monthofyear(@last_login) + 1&quot; AS month GROUPBY 2 @year @month REDUCE count 0 AS num_login SORTBY 4 @year ASC @month ASC
+</span><span id="__span-60-2"><a id="__codelineno-60-2" name="__codelineno-60-2" href="#__codelineno-60-2"></a>
+</span><span id="__span-60-3"><a id="__codelineno-60-3" name="__codelineno-60-3" href="#__codelineno-60-3"></a> 1) (integer) 13
+</span><span id="__span-60-4"><a id="__codelineno-60-4" name="__codelineno-60-4" href="#__codelineno-60-4"></a> 2) 1) &quot;year&quot;
+</span><span id="__span-60-5"><a id="__codelineno-60-5" name="__codelineno-60-5" href="#__codelineno-60-5"></a>    2) &quot;2019&quot;
+</span><span id="__span-60-6"><a id="__codelineno-60-6" name="__codelineno-60-6" href="#__codelineno-60-6"></a>    3) &quot;month&quot;
+</span><span id="__span-60-7"><a id="__codelineno-60-7" name="__codelineno-60-7" href="#__codelineno-60-7"></a>    4) &quot;9&quot;
+</span><span id="__span-60-8"><a id="__codelineno-60-8" name="__codelineno-60-8" href="#__codelineno-60-8"></a>    5) &quot;num_login&quot;
+</span><span id="__span-60-9"><a id="__codelineno-60-9" name="__codelineno-60-9" href="#__codelineno-60-9"></a>    6) &quot;230&quot;
+</span><span id="__span-60-10"><a id="__codelineno-60-10" name="__codelineno-60-10" href="#__codelineno-60-10"></a>...
+</span><span id="__span-60-11"><a id="__codelineno-60-11" name="__codelineno-60-11" href="#__codelineno-60-11"></a>14) 1) &quot;year&quot;
+</span><span id="__span-60-12"><a id="__codelineno-60-12" name="__codelineno-60-12" href="#__codelineno-60-12"></a>    2) &quot;2020&quot;
+</span><span id="__span-60-13"><a id="__codelineno-60-13" name="__codelineno-60-13" href="#__codelineno-60-13"></a>    3) &quot;month&quot;
+</span><span id="__span-60-14"><a id="__codelineno-60-14" name="__codelineno-60-14" href="#__codelineno-60-14"></a>    4) &quot;9&quot;
+</span><span id="__span-60-15"><a id="__codelineno-60-15" name="__codelineno-60-15" href="#__codelineno-60-15"></a>    5) &quot;num_login&quot;
+</span><span id="__span-60-16"><a id="__codelineno-60-16" name="__codelineno-60-16" href="#__codelineno-60-16"></a>    6) &quot;271&quot;
+</span></code></pre></div>
+
+说明：
+- `year(@last_login)`：提取年份
+- `monthofyear(@last_login) + 1`：提取月份（注意：`monthofyear()` 返回 0–11，加 1 后变为 1–12）
+- 按年和月分组，统计登录次数
+- 按年升序、月升序排序
+
+---
+</details>
+
+<details> 
+  <summary>
+  <i><b>
+  按星期几统计登录次数
+  </b></i>
+  </summary>
+
+利用日期时间函数也可以提取一周中的某天，来看看用户的登录行为在一周中是如何分布的：
+
+<div class="language-text highlight"><pre><span></span><code><span id="__span-61-1"><a id="__codelineno-61-1" name="__codelineno-61-1" href="#__codelineno-61-1"></a>&gt; FT.AGGREGATE idx:user * APPLY &quot;dayofweek(@last_login) +1&quot; AS dayofweek GROUPBY 1 @dayofweek REDUCE count 0 AS num_login SORTBY 2 @dayofweek ASC
+</span><span id="__span-61-2"><a id="__codelineno-61-2" name="__codelineno-61-2" href="#__codelineno-61-2"></a>
+</span><span id="__span-61-3"><a id="__codelineno-61-3" name="__codelineno-61-3" href="#__codelineno-61-3"></a>1) (integer) 7
+</span><span id="__span-61-4"><a id="__codelineno-61-4" name="__codelineno-61-4" href="#__codelineno-61-4"></a>2) 1) &quot;dayofweek&quot;
+</span><span id="__span-61-5"><a id="__codelineno-61-5" name="__codelineno-61-5" href="#__codelineno-61-5"></a>   2) &quot;1&quot;
+</span><span id="__span-61-6"><a id="__codelineno-61-6" name="__codelineno-61-6" href="#__codelineno-61-6"></a>   3) &quot;num_login&quot;
+</span><span id="__span-61-7"><a id="__codelineno-61-7" name="__codelineno-61-7" href="#__codelineno-61-7"></a>   4) &quot;815&quot;
+</span><span id="__span-61-8"><a id="__codelineno-61-8" name="__codelineno-61-8" href="#__codelineno-61-8"></a>...
+</span><span id="__span-61-9"><a id="__codelineno-61-9" name="__codelineno-61-9" href="#__codelineno-61-9"></a>8) 1) &quot;dayofweek&quot;
+</span><span id="__span-61-10"><a id="__codelineno-61-10" name="__codelineno-61-10" href="#__codelineno-61-10"></a>   2) &quot;7&quot;
+</span><span id="__span-61-11"><a id="__codelineno-61-11" name="__codelineno-61-11" href="#__codelineno-61-11"></a>   3) &quot;num_login&quot;
+</span><span id="__span-61-12"><a id="__codelineno-61-12" name="__codelineno-61-12" href="#__codelineno-61-12"></a>   4) &quot;906&quot;
+</span></code></pre></div>
+
+这里 `dayofweek()` 返回 0（星期日）到 6（星期六），加 1 后变为 1 到 7，分别代表星期一至星期日（或自定义解释）。结果展示了每天的登录总数。
+
+---
+</details>
+
+<hr />
+<h3 id="filter">过滤（Filter）</h3>
+<p>在之前的例子中，我们使用了查询字符串参数来选择全部文档（<code>"*"</code>）或子集（如 <code>"@gender:{female}"</code>）。</p>
+<p>此外，还可以使用 <strong>谓词表达式（predicate expression）</strong> 对聚合流水线中的中间结果进行过滤。这种过滤是在查询之后、基于当前流水线状态进行的，使用 <a href="https://oss.redislabs.com/redisearch/Aggregations/#filter_expressions">FILTER</a> 参数实现。</p>
+<details> 
+  <summary>
+  <i><b>
+  统计各国女性用户数量（排除中国），只保留超过 100 人的国家，并按数量从高到低排序
+  </b></i>
+  </summary>
+
+<div class="language-text highlight"><pre><span></span><code><span id="__span-62-1"><a id="__codelineno-62-1" name="__codelineno-62-1" href="#__codelineno-62-1"></a>&gt; FT.AGGREGATE idx:user &quot;@gender:{female}&quot; GROUPBY 1 @country  REDUCE COUNT 0 AS nb_of_users  FILTER &quot;@country!=&#39;china&#39; &amp;&amp; @nb_of_users &gt; 100&quot; SORTBY 2 @nb_of_users DESC
+</span><span id="__span-62-2"><a id="__codelineno-62-2" name="__codelineno-62-2" href="#__codelineno-62-2"></a>
+</span><span id="__span-62-3"><a id="__codelineno-62-3" name="__codelineno-62-3" href="#__codelineno-62-3"></a>1) (integer) 163
+</span><span id="__span-62-4"><a id="__codelineno-62-4" name="__codelineno-62-4" href="#__codelineno-62-4"></a>2) 1) &quot;country&quot;
+</span><span id="__span-62-5"><a id="__codelineno-62-5" name="__codelineno-62-5" href="#__codelineno-62-5"></a>   2) &quot;indonesia&quot;
+</span><span id="__span-62-6"><a id="__codelineno-62-6" name="__codelineno-62-6" href="#__codelineno-62-6"></a>   3) &quot;nb_of_users&quot;
+</span><span id="__span-62-7"><a id="__codelineno-62-7" name="__codelineno-62-7" href="#__codelineno-62-7"></a>   4) &quot;309&quot;
+</span><span id="__span-62-8"><a id="__codelineno-62-8" name="__codelineno-62-8" href="#__codelineno-62-8"></a>...
+</span><span id="__span-62-9"><a id="__codelineno-62-9" name="__codelineno-62-9" href="#__codelineno-62-9"></a>6) 1) &quot;country&quot;
+</span><span id="__span-62-10"><a id="__codelineno-62-10" name="__codelineno-62-10" href="#__codelineno-62-10"></a>   2) &quot;brazil&quot;
+</span><span id="__span-62-11"><a id="__codelineno-62-11" name="__codelineno-62-11" href="#__codelineno-62-11"></a>   3) &quot;nb_of_users&quot;
+</span><span id="__span-62-12"><a id="__codelineno-62-12" name="__codelineno-62-12" href="#__codelineno-62-12"></a>   4) &quot;108&quot;
+</span></code></pre></div>
+
+说明：
+- 先筛选出女性用户
+- 按国家分组并统计人数
+- 使用 `FILTER` 排除中国且人数少于等于 100 的组
+- 最后排序输出
+
+---
+</details>
+
+<details> 
+  <summary>
+  <i><b>
+  统计 2020 年每月的登录次数
+  </b></i>
+  </summary>
+
+类似前面的查询，但增加对年份的过滤条件：
+
+<div class="language-text highlight"><pre><span></span><code><span id="__span-63-1"><a id="__codelineno-63-1" name="__codelineno-63-1" href="#__codelineno-63-1"></a>&gt; FT.AGGREGATE idx:user * APPLY year(@last_login) AS year APPLY &quot;monthofyear(@last_login) + 1&quot; AS month GROUPBY 2 @year @month REDUCE count 0 AS num_login  FILTER &quot;@year==2020&quot; SORTBY 2 @month ASC
+</span><span id="__span-63-2"><a id="__codelineno-63-2" name="__codelineno-63-2" href="#__codelineno-63-2"></a>
+</span><span id="__span-63-3"><a id="__codelineno-63-3" name="__codelineno-63-3" href="#__codelineno-63-3"></a> 1) (integer) 13
+</span><span id="__span-63-4"><a id="__codelineno-63-4" name="__codelineno-63-4" href="#__codelineno-63-4"></a> 2) 1) &quot;year&quot;
+</span><span id="__span-63-5"><a id="__codelineno-63-5" name="__codelineno-63-5" href="#__codelineno-63-5"></a>    2) &quot;2020&quot;
+</span><span id="__span-63-6"><a id="__codelineno-63-6" name="__codelineno-63-6" href="#__codelineno-63-6"></a>    3) &quot;month&quot;
+</span><span id="__span-63-7"><a id="__codelineno-63-7" name="__codelineno-63-7" href="#__codelineno-63-7"></a>    4) &quot;1&quot;
+</span><span id="__span-63-8"><a id="__codelineno-63-8" name="__codelineno-63-8" href="#__codelineno-63-8"></a>    5) &quot;num_login&quot;
+</span><span id="__span-63-9"><a id="__codelineno-63-9" name="__codelineno-63-9" href="#__codelineno-63-9"></a>    6) &quot;520&quot;
+</span><span id="__span-63-10"><a id="__codelineno-63-10" name="__codelineno-63-10" href="#__codelineno-63-10"></a>...
+</span><span id="__span-63-11"><a id="__codelineno-63-11" name="__codelineno-63-11" href="#__codelineno-63-11"></a>10) 1) &quot;year&quot;
+</span><span id="__span-63-12"><a id="__codelineno-63-12" name="__codelineno-63-12" href="#__codelineno-63-12"></a>    2) &quot;2020&quot;
+</span><span id="__span-63-13"><a id="__codelineno-63-13" name="__codelineno-63-13" href="#__codelineno-63-13"></a>    3) &quot;month&quot;
+</span><span id="__span-63-14"><a id="__codelineno-63-14" name="__codelineno-63-14" href="#__codelineno-63-14"></a>    4) &quot;9&quot;
+</span><span id="__span-63-15"><a id="__codelineno-63-15" name="__codelineno-63-15" href="#__codelineno-63-15"></a>    5) &quot;num_login&quot;
+</span><span id="__span-63-16"><a id="__codelineno-63-16" name="__codelineno-63-16" href="#__codelineno-63-16"></a>    6) &quot;271&quot;
+</span></code></pre></div>
+
+使用 `FILTER "@year==2020"` 只保留年份为 2020 的分组，最终得到该年度各月的登录统计。
+
+---
+</details>
+
+<h2 id="_22">九、其他选项</h2>
+<h3 id="_23">使用过滤器创建索引</h3>
+<p>在前面的示例中，我们通过 <code>PREFIX</code> 来创建索引，即所有匹配指定类型和前缀的键都会被纳入索引。</p>
+<p>此外，还可以使用 <strong>过滤表达式（Filter）</strong> 来创建索引。例如：仅对 1990 年到 2000 年之间（不含 2000 年）上映的 "Drama" 类型电影建立索引。</p>
+<p><a href="https://oss.redislabs.com/redisearch/Aggregations/#filter_expressions"><code>FILTER</code></a> 表达式使用的是 <a href="https://oss.redislabs.com/redisearch/Aggregations/#filter_expressions">聚合查询中的过滤语法</a>。针对类型（genre）和上映年份（release_year），表达式如下：</p>
+<ul>
+<li><code>FILTER "@genre=='Drama' &amp;&amp; @release_year&gt;=1990 &amp;&amp; @release_year&lt;2000"</code></li>
+</ul>
+<p>因此，创建索引的命令为：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-64-1"><a id="__codelineno-64-1" name="__codelineno-64-1" href="#__codelineno-64-1"></a>FT.CREATE<span class="w"> </span>idx:drama<span class="w"> </span>ON<span class="w"> </span>Hash<span class="w"> </span>PREFIX<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="s2">&quot;movie:&quot;</span><span class="w"> </span>FILTER<span class="w"> </span><span class="s2">&quot;@genre==&#39;Drama&#39; &amp;&amp; @release_year&gt;=1990 &amp;&amp; @release_year&lt;2000&quot;</span><span class="w"> </span>SCHEMA<span class="w"> </span>title<span class="w"> </span>TEXT<span class="w"> </span>SORTABLE<span class="w"> </span>release_year<span class="w"> </span>NUMERIC<span class="w"> </span>SORTABLE
+</span></code></pre></div>
+<p>你可以运行 <code>FT.INFO idx:drama</code> 命令来查看该索引的定义和统计信息。</p>
+<h3 id="_24">注意事项</h3>
+<ul>
+<li><code>PREFIX</code> 是必需的，不能省略。</li>
+<li>在本应用中，这种索引并不特别有用，因为同样的数据也可以从 <code>idx:movie</code> 索引中查询得到。</li>
+</ul>
+<p>你可以通过以下两个查询验证数据是否正确被索引，它们应返回相同数量的文档。</p>
+<p>在 <code>idx:drama</code> 上执行：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-65-1"><a id="__codelineno-65-1" name="__codelineno-65-1" href="#__codelineno-65-1"></a>&gt; FT.SEARCH idx:drama &quot;  @release_year:[1990 (2000]&quot; LIMIT 0 0
+</span><span id="__span-65-2"><a id="__codelineno-65-2" name="__codelineno-65-2" href="#__codelineno-65-2"></a>
+</span><span id="__span-65-3"><a id="__codelineno-65-3" name="__codelineno-65-3" href="#__codelineno-65-3"></a>1) (integer) 24
+</span></code></pre></div>
+<p>在 <code>idx:movie</code> 上执行：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-66-1"><a id="__codelineno-66-1" name="__codelineno-66-1" href="#__codelineno-66-1"></a>&gt; FT.SEARCH idx:movie &quot;@genre:{Drama}  @release_year:[1990 (2000]&quot; LIMIT 0 0
+</span><span id="__span-66-2"><a id="__codelineno-66-2" name="__codelineno-66-2" href="#__codelineno-66-2"></a>
+</span><span id="__span-66-3"><a id="__codelineno-66-3" name="__codelineno-66-3" href="#__codelineno-66-3"></a>1) (integer) 24
+</span></code></pre></div>
+<p>两者均返回 24 部符合条件的电影，说明索引数据一致。</p>
+<h2 id="_25">参考文档：</h2>
+<ol>
+<li>https://github.com/RediSearch/redisearch-getting-started</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["content.code.copy", "content.code.select"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,3635 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../Java%E5%92%8Cgo%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0LRU%E7%AE%97%E6%B3%95/">
+      
+      
+        <link rel="next" href="../Java%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E8%AE%BE%E8%AE%A1/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Java异常 - My Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#java" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="My Docs" class="md-header__button md-logo" aria-label="My Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            My Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Java异常
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="My Docs" class="md-nav__button md-logo" aria-label="My Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    My Docs
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    首页
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Devops
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Devops
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../devops/apisix%E5%9C%A8k8s%E4%B8%AD%E7%9A%84%E5%AE%9E%E8%B7%B5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    apisix在k8s中的实践
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../devops/devops%E5%B7%A5%E5%85%B7zadig%E5%AE%9E%E8%B7%B5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    devops工具zadig实践
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../devops/Docker%E6%9E%84%E5%BB%BA%E6%8F%90%E9%80%9F%E8%83%8C%E5%90%8E%E7%9A%84%E7%9C%9F%E7%9B%B8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker构建提速背后的真相
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../devops/k8s%E4%B8%AD%E7%9A%84nginx-ingress%E5%A6%82%E4%BD%95%E9%85%8D%E7%BD%AE%E8%B7%AF%E5%BE%84%E9%87%8D%E5%AE%9A%E5%90%91/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    k8s中的nginx-ingress如何配置路径重定向
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../devops/%E5%9C%A8k8s%E4%B8%AD%E5%AE%89%E8%A3%85%E5%B9%B6%E4%BD%BF%E7%94%A8jenkins/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    在k8s中安装并使用jenkins
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../devops/%E5%9C%A8k8s%E4%B8%AD%E5%AE%89%E8%A3%85%E5%B9%B6%E4%BD%BF%E7%94%A8nexus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    在k8s中安装并使用nexus
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../devops/%E5%A6%82%E4%BD%95%E6%8F%90%E9%AB%98docker%E5%AE%B9%E5%99%A8%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    如何提高docker容器的安全性
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Go
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Go
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../go/go%E8%AF%AD%E8%A8%80grpc%E6%A1%86%E6%9E%B6%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E5%AE%9E%E8%B7%B5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    go语言grpc框架从入门到实践
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../go/%E3%80%90golang%E3%80%91%E4%BD%BF%E7%94%A8chan%E6%94%B6%E9%9B%86%E5%A4%9A%E5%8D%8F%E7%A8%8B%E6%89%A7%E8%A1%8C%E7%9A%84%E7%BB%93%E6%9E%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    【golang】使用chan收集多协程执行的结果
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../go/%E3%80%90golang%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    【golang学习记录】环境搭建
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Image
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Image
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_1" id="__nav_4_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    收集的学习资料
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    收集的学习资料
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../image/%E6%94%B6%E9%9B%86%E7%9A%84%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/%E5%9C%A8%E7%BA%BF%E9%98%85%E8%AF%BB%E4%B9%A6%E7%B1%8D%E6%B1%87%E6%80%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    在线阅读书籍汇总
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Java
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Java
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Java%20%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Java 编程思想
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Java11%E5%92%8CJava17%E4%B9%8B%E9%97%B4%E6%9C%89%E5%93%AA%E4%BA%9B%E6%96%B0%E5%8F%98%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Java11和Java17之间有哪些新变化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../java%E4%B8%AD%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E7%BA%BF%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    java中如何实现线程间通信
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Java%E4%B8%AD%E8%8E%B7%E5%8F%96ThreadDumps%E7%9A%848%E7%A7%8D%E6%96%B9%E5%BC%8F%E6%B1%87%E6%80%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Java中获取ThreadDumps的8种方式汇总
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Java%E5%92%8Cgo%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0LRU%E7%AE%97%E6%B3%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Java和go语言实现LRU算法
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Java异常
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Java异常
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#java_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Java 异常体系结构
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#java_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Java 检查异常和非检查异常
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#java_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Java 中的异常处理
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#java_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Java 中的异常分类
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Java 中的异常分类">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#error" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        常见 Error 异常
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#runtime" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        常见 Runtime 异常
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#checked" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        常见 Checked 异常
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Java%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E8%AE%BE%E8%AE%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Java异常处理设计
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../maven%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E6%B1%87%E6%80%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    maven基础知识汇总
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Mockito%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mockito单元测试框架使用指南
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Mockito%E7%9A%84%E5%B8%B8%E8%A7%81%E6%A0%B8%E5%BF%83%E5%8A%9F%E8%83%BD%E5%8F%8A%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mockito的常见核心功能及最佳实践
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../springboot%E4%BD%BF%E7%94%A8k8s%E7%9A%84configMap%E4%BD%9C%E4%B8%BA%E5%A4%96%E9%83%A8%E9%85%8D%E7%BD%AE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    springboot使用k8s的configMap作为外部配置
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E4%BD%BF%E7%94%A8maven%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8F%92%E4%BB%B6%E5%AE%9E%E7%8E%B0devops/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    使用maven自定义插件实现devops
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%A6%82%E4%BD%95%E7%9B%91%E6%8E%A7%20Java%20%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    如何监控 Java 垃圾回收
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%A6%82%E4%BD%95%E8%B0%83%E4%BC%98%20Java%20%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    如何调优 Java 垃圾收集
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E6%98%AF%E4%BB%80%E4%B9%88%E8%AE%A9Java%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E7%9A%84CPU%E4%BD%BF%E7%94%A8%E7%8E%87%E9%A3%99%E5%8D%87/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    是什么让Java应用程序的CPU使用率飙升
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E7%AE%80%E5%8D%95%E7%90%86%E8%A7%A3%20Java%20%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    简单理解 Java 垃圾收集器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E9%98%85%E8%AF%BB%E9%98%BF%E9%87%8CJava%E5%BC%80%E5%8F%91%E6%89%8B%E5%86%8C%E8%AE%B0%E5%BD%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阅读阿里Java开发手册记录
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Other
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Other
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../other/Python%E8%84%9A%E6%9C%AC%E5%A4%84%E7%90%86Markdown%E5%9B%BE%E7%89%87%E6%9C%AC%E5%9C%B0%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python脚本处理Markdown图片本地化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../other/%E4%BC%98%E7%A7%80%E5%8D%9A%E5%AE%A2%E6%B1%87%E6%80%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    优秀博客汇总
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../other/%E4%BD%BF%E7%94%A8Awescnb%E6%9E%84%E5%BB%BA%E9%85%B7%E7%82%AB%E7%9A%84%E5%8D%9A%E5%AE%A2%E5%9B%AD%E7%9A%AE%E8%82%A4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    使用Awescnb构建酷炫的博客园皮肤
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../other/%E5%9C%A8markdown%E4%B8%AD%E4%BD%BF%E7%94%A8%E8%A1%A8%E6%83%85%E7%AC%A6%E5%8F%B7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    在markdown中使用表情符号
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../other/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Python
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python/gunicorn%E8%B6%85%E6%97%B6%E6%8A%A5%E9%94%99/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    gunicorn超时报错
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python/python%E4%B8%ADThreadPoolExecutor%E8%BF%90%E8%A1%8C%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    python中ThreadPoolExecutor运行原理解析
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python/python%E4%BD%BF%E7%94%A8%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%8F%90%E5%8F%96json%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E5%80%BC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    python使用正则表达式提取json字符串的值
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python/python%E5%AE%9E%E7%8E%B0%E6%8E%98%E9%87%91%E5%AE%9A%E6%97%B6%E7%AD%BE%E5%88%B0%E6%8A%BD%E5%A5%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    python实现掘金定时签到抽奖
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python/%E4%BD%BF%E7%94%A8python%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    使用python问题总结
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rag
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Rag
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rag/PDF%E9%A1%B5%E7%9C%89%E9%A1%B5%E8%84%9A%E8%AF%86%E5%88%AB%E4%B8%8E%E5%8E%BB%E9%99%A4%E6%96%B9%E6%A1%88/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PDF页眉页脚识别与去除方案
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rag/RAG%E6%8A%80%E6%9C%AF%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8%E6%8C%91%E6%88%98%E5%88%86%E6%9E%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RAG技术及其应用挑战分析
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rag/%E3%80%90langgraph%E3%80%91%E5%9C%A8%E6%9C%AC%E5%9C%B0%E8%BF%90%E8%A1%8CLangSmith%20Studio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    【langgraph】在本地运行LangSmith Studio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rag/%E3%80%90RAG%E3%80%91chunk%E5%88%86%E5%9D%97%E5%AE%9E%E8%B7%B5%E7%AF%87/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    【RAG】chunk分块实践篇
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rag/%E3%80%90RAG%E3%80%91chunk%E5%88%86%E5%9D%97%E7%90%86%E8%AE%BA%E7%AF%87/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    【RAG】chunk分块理论篇
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rag/%E3%80%90RAG%E3%80%91docling%E7%BB%93%E5%90%88OCR%E5%AE%9E%E7%8E%B0pdf%E8%BD%ACmarkdown/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    【RAG】docling结合OCR实现pdf转markdown
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rag/%E3%80%90RAG%E3%80%91%E4%BD%BF%E7%94%A8PyMuPDF4LLM%E8%A7%A3%E6%9E%90PDF%E7%9A%84%E5%9B%BE%E7%89%87%E5%92%8C%E8%A1%A8%E6%A0%BC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    【RAG】使用PyMuPDF4LLM解析PDF的图片和表格
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rag/%E3%80%90RAG%E3%80%91%E6%9E%84%E5%BB%BA%E5%90%91%E9%87%8F%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    【RAG】构建向量数据库索引
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rag/%E3%80%90RAG%E4%BC%98%E5%8C%96%E3%80%91%E5%B0%86pdf%E5%92%8Cdocx%E8%BD%AC%E6%8D%A2%E4%B8%BAmarkdown%E6%A0%BC%E5%BC%8F/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    【RAG优化】将pdf和docx转换为markdown格式
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rag/%E4%BD%BF%E7%94%A8Nanonets-OCR-s%E6%A8%A1%E5%9E%8B%E5%AE%9E%E7%8E%B0PDF%E6%96%87%E4%BB%B6%E8%BD%ACmarkdown/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    使用Nanonets-OCR-s模型实现PDF文件转markdown
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Redis
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Redis
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../redis/%E4%B8%80%E5%B0%8F%E6%97%B6%E6%8E%8C%E6%8F%A1RediSearch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    一小时掌握RediSearch
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Springboot
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Springboot
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../springboot/Spring%20Boot%20%E4%B8%AD%E4%BD%BF%E7%94%A8%20Validation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Spring Boot 中使用 Validation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../springboot/Spring%20Boot%E4%B8%AD%E4%BD%BF%E7%94%A8MyBatis%20Generator%E7%94%9F%E6%88%90%E5%8A%A8%E6%80%81SQL/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Spring Boot中使用MyBatis Generator生成动态SQL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../springboot/Spring%20Boot%E9%A1%B9%E7%9B%AE%E8%87%AA%E5%B7%B1%E5%B0%81%E8%A3%85%E4%B8%80%E4%B8%AA%E5%88%86%E9%A1%B5%E6%9F%A5%E8%AF%A2%E5%B7%A5%E5%85%B7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Spring Boot项目自己封装一个分页查询工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../springboot/springboot%20%E5%A4%A7%E5%9E%8B%E5%A4%8D%E6%9D%82%E9%A1%B9%E7%9B%AE%E7%9A%84%E5%8C%85%E7%BB%93%E6%9E%84%E8%AE%BE%E8%AE%A1%28DDD%29/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    springboot 大型复杂项目的包结构设计(DDD)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../springboot/springboot%E4%B8%AD%E4%BD%BF%E7%94%A8MapStruct%E6%95%99%E7%A8%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    springboot中使用MapStruct教程
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../springboot/springboot%E9%A1%B9%E7%9B%AE%E4%B8%AD%20PO%20BO%20VO%20DTO%20POJO%20DAO%E6%A6%82%E5%BF%B5%E5%8F%8A%E5%85%B6%E4%BD%9C%E7%94%A8%EF%BC%88%E9%99%84%E8%BD%AC%E6%8D%A2%E5%9B%BE%EF%BC%89/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    springboot项目中 PO BO VO DTO POJO DAO概念及其作用（附转换图）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../springboot/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E5%8D%81%E5%88%86%E9%92%9F%E5%AE%9E%E7%8E%B0springboot%20%2B%20MyBatis%20Dynamic%20SQL/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    从零开始十分钟实现springboot + MyBatis Dynamic SQL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    大模型
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    大模型
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E6%A8%A1%E5%9E%8B/langchain%E4%BD%BF%E7%94%A8token%E5%88%87%E5%88%86chunk/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    langchain使用token切分chunk
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E6%A8%A1%E5%9E%8B/LLM%E7%BB%9F%E4%B8%80%E7%BD%91%E5%85%B3%EF%BC%9ALiteLLM%20%E8%AF%A6%E7%BB%86%E4%BB%8B%E7%BB%8D/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LLM统一网关：LiteLLM 详细介绍
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E6%A8%A1%E5%9E%8B/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%B7%A5%E5%85%B7%E8%B0%83%E7%94%A8%E5%8E%9F%E7%90%86%E5%92%8C%E5%AE%9E%E8%B7%B5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    大模型工具调用原理和实践
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E6%A8%A1%E5%9E%8B/%E5%A6%82%E4%BD%95%E8%AE%A9%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%BE%93%E5%87%BA%E7%BB%93%E6%9E%84%E5%8C%96%E6%95%B0%E6%8D%AE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    如何让大模型输出结构化数据
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12" >
+        
+          
+          <label class="md-nav__link" for="__nav_12" id="__nav_12_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    工具
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_12">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    工具
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%B7%A5%E5%85%B7/%E4%BD%BF%E7%94%A8uv%E5%AE%9E%E7%8E%B0python%E9%A1%B9%E7%9B%AE%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86%E5%AE%9E%E8%B7%B5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    使用uv实现python项目依赖管理实践
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%B7%A5%E5%85%B7/%E4%BD%BF%E7%94%A8%E8%BF%87%E7%9A%84%E5%BC%80%E6%BA%90%E5%B7%A5%E5%85%B7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    使用过的开源工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_13" >
+        
+          
+          <label class="md-nav__link" for="__nav_13" id="__nav_13_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    爬虫
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_13_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_13">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    爬虫
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%88%AC%E8%99%AB/BeautifulSoup%E7%9A%84%E4%BD%BF%E7%94%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BeautifulSoup的使用
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%88%AC%E8%99%AB/selenium%E5%A6%82%E4%BD%95%E6%8B%96%E5%8A%A8%E6%BB%9A%E5%8A%A8%E6%9D%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    selenium如何拖动滚动条
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%88%AC%E8%99%AB/%E3%80%90%E7%88%AC%E8%99%AB%E3%80%91docker%E9%83%A8%E7%BD%B2python%2Bselenium%2Bfirefox-headless/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    【爬虫】docker部署python+selenium+firefox-headless
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%88%AC%E8%99%AB/%E3%80%90%E7%88%AC%E8%99%AB%E3%80%91python%2Bselenium%2Bfirefox%E4%BD%BF%E7%94%A8%E4%B8%8E%E9%83%A8%E7%BD%B2%E8%AF%A6%E8%A7%A3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    【爬虫】python+selenium+firefox使用与部署详解
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14" >
+        
+          
+          <label class="md-nav__link" for="__nav_14" id="__nav_14_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    算法
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_14_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    算法
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%AE%97%E6%B3%95/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F%E5%9B%BE%E6%96%87%E8%AE%B2%E8%A7%A3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    归并排序图文讲解
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#java_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Java 异常体系结构
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#java_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Java 检查异常和非检查异常
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#java_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Java 中的异常处理
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#java_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Java 中的异常分类
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Java 中的异常分类">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#error" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        常见 Error 异常
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#runtime" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        常见 Runtime 异常
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#checked" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        常见 Checked 异常
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="java">Java 异常分析</h1>
+<p><strong>本文是对以下内容的分析：</strong></p>
+<ul>
+<li>
+<p><strong>Java异常设计</strong></p>
+</li>
+<li>
+<p><strong>Java 异常分类</strong></p>
+</li>
+<li>
+<p><strong>Java异常可以告诉什么问题</strong></p>
+</li>
+<li>
+<p><strong>Java异常处理最佳实践</strong></p>
+</li>
+</ul>
+<p>Java Exception 是为了处理应用程序的异常行为而创建的类。在本文中，将解释如何使用 Java Exception 类以及如何在考虑现有 Java Exception 设计的情况下创建异常结构。Java 异常概念是 Java 中的重要里程碑之一，每个开发人员都<strong><em>必须</em></strong>知道它。 </p>
+<h2 id="java_1">Java 异常体系结构</h2>
+<p>基本结构如下图：</p>
+<p><img alt="image-20210915104636608" src="image/Java异常.assets/image-20210915104636608.png" /></p>
+<p><code>Throwable</code> 是所有异常的父类，它有两个子类：<code>Error</code> 和 <code>Exception</code>。</p>
+<p><strong>Error ：程序一旦出现 Error 错误，程序可能会停止运行。</strong></p>
+<p><strong>Exception：与 Error 不同，程序中出现 Exception 异常有机会从问题中恢复，并尝试保持程序运行。</strong></p>
+<h2 id="java_2">Java 检查异常和非检查异常</h2>
+<p><strong>检查异常：</strong>所有不是 <code>Runtime Exception</code> 的异常，统称为 <code>Checked Exception</code>，又被称为检查性异常。这类异常的产生不是程序本身的问题，通常由外界因素造成的。为了预防这些异常产生时，造成程序的中断或得到不正确的结果，Java 要求编写可能产生这类异常的程序代码时，一定要去做异常的处理。</p>
+<p><strong>非检查异常：</strong> Java 语言将派生于 <code>RuntimeException</code> 类或 <code>Error</code> 类的所有异常称为非检查性异常。</p>
+<p><img alt="image-20210915104205230" src="image/Java异常.assets/image-20210915104205230.png" /></p>
+<h2 id="java_3">Java 中的异常处理</h2>
+<p>有两种方法可以处理抛出的异常：</p>
+<ol>
+<li>
+<p><strong>在当前方法中通过 <code>try-catch</code> 的方式处理该异常。</strong></p>
+</li>
+<li>
+<p><strong>在方法签名的后面通过 <code>throws</code> 重新抛出该异常。</strong></p>
+</li>
+</ol>
+<p><img alt="异常处理和重新抛出代码。" src="image/Java异常.assets/15154158-1631225978492.png" /></p>
+<h2 id="java_4">Java 中的异常分类</h2>
+<p>我们可以将所有的异常分为三类：</p>
+<ul>
+<li><strong>检查性异常(checked exceptions)</strong> 是必须在在方法的 throws 子句中声明的异常。它们扩展了异常，旨在成为一种“在你面前”的异常类型。JAVA希望你能够处理它们，因为它们以某种方式依赖于程序之外的外部因素。检查的异常表示在正常系统操作期间可能发生的预期问题。 当你尝试通过网络或文件系统使用外部系统时，通常会发生这些异常。 大多数情况下，对检查性异常的正确响应应该是稍后重试，或者提示用户修改其输入。</li>
+<li><strong>非检查性异常(unchecked Exceptions)</strong> 是不需要在throws子句中声明的异常。 由于程序错误，JVM并不会强制你处理它们，因为它们大多数是在运行时生成的。 它们扩展了 RuntimeException。 最常见的例子是 NullPointerException， 未经检查的异常可能不应该重试，正确的操作通常应该是什么都不做，并让它从你的方法和执行堆栈中出来。</li>
+<li><strong>错误(errors)</strong> 是严重的运行时环境问题，肯定无法恢复。 例如 <code>OutOfMemoryError</code>，<code>LinkageError</code> 和 <code>StackOverflowError</code>，通常会让程序崩溃。</li>
+</ul>
+<p>了解异常类的类型后，我们可能需要回答以下问题：</p>
+<ul>
+<li><strong>异常情况有多糟糕以及异常的原因是什么？</strong></li>
+<li><strong>如何解决这个异常？</strong></li>
+<li><strong>我们需要重启JVM吗？</strong></li>
+<li><strong>我们需要重写代码吗？</strong></li>
+</ul>
+<p>知道异常类，我们可以预测可能出错的地方。考虑潜在的原因，我们可以假设问题的原因是什么以及如何解决它。在接下来的段落中，我们将回顾常见的异常并调查潜在的原因是什么。在我们的调查中，我们假设应用程序足够稳定并且已经完成开发和测试。</p>
+<h3 id="error">常见 Error 异常</h3>
+<p><img alt="image-20210915153410425" src="image/Java异常.assets/image-20210915153410425.png" /></p>
+<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse;width:653pt;" width="870">
+ <tbody>
+  <tr>
+   <td class="xl68" height="43" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;height:32.4pt;width:118pt;" width="18.04597701149425%" value="异常类型" text="异常类型"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">异常类型</font></font></font></font></td>
+   <td class="xl68" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;border-left:none;width:145pt;" width="22.298850574712645%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">潜在原因</font></font></td>
+   <td class="xl68" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;border-left:none;width:73pt;" width="11.264367816091953%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">原因的可能性有多大</font></font></td>
+   <td class="xl68" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;border-left:none;width:170pt;" width="25.977011494252874%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">怎么修复</font></font></td>
+   <td class="xl68" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;border-left:none;width:82pt;" width="12.528735632183908%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">需要重写代码吗？&nbsp;</font></font></td>
+   <td class="xl68" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;border-left:none;width:65pt;" width="9.885057471264368%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">需要重启JVM吗？</font></font></td>
+  </tr>
+  <tr>
+   <td class="xl69" height="42" rowspan="2" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:none;border-top:none;border-right:.5pt solid windowtext;border-bottom:.5pt solid black;border-left:.5pt solid windowtext;background:#F2F2F2;height:31.2pt;width:118pt;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">OutOfMemoryError</font></font></td>
+   <td class="xl68" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;border-top:none;border-left:none;width:145pt;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">应用程序吃掉了所有内存</font></font></td>
+   <td class="xl65" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#AFEFB7;border-top:none;border-left:none;width:73pt;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">高的</font></font></td>
+   <td class="xl68" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;border-top:none;border-left:none;width:170pt;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">增加堆内存大小</font></font></td>
+   <td class="xl66" style="padding:0px;color:black;font-size:16px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#AFEFB7;border-top:none;border-left:none;width:82pt;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">不</font></font></td>
+   <td class="xl71" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#E6B9B8;border-top:none;border-left:none;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">是的</font></font></td>
+  </tr>
+  <tr>
+   <td class="xl68" height="21" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;height:15.6pt;border-top:none;border-left:none;width:145pt;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">内存泄漏</font></font></td>
+   <td class="xl68" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;border-top:none;border-left:none;width:73pt;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">低的</font></font></td>
+   <td class="xl68" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;border-top:none;border-left:none;width:170pt;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">查找内存泄漏并修复</font></font></td>
+   <td class="xl67" style="padding:0px;color:black;font-size:16px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;border-top:none;border-left:none;width:82pt;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">是的</font></font></td>
+   <td class="xl72" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;border-top:none;border-left:none;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">是的</font></font></td>
+  </tr>
+  <tr>
+   <td class="xl68" height="42" rowspan="2" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;height:31.2pt;border-top:  none;width:118pt;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">StackOverflowError</font></font></td>
+   <td class="xl68" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;border-top:none;border-left:none;width:145pt;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">堆栈内存不足</font></font></td>
+   <td class="xl65" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#AFEFB7;border-top:none;border-left:none;width:73pt;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">高的</font></font></td>
+   <td class="xl68" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;border-top:none;border-left:none;width:170pt;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">增加堆栈内存大小</font></font></td>
+   <td class="xl66" style="padding:0px;color:black;font-size:16px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#AFEFB7;border-top:none;border-left:none;width:82pt;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">不</font></font></td>
+   <td class="xl71" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#E6B9B8;border-top:none;border-left:none;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">是的</font></font></td>
+  </tr>
+  <tr>
+   <td class="xl68" height="21" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;height:15.6pt;border-top:none;border-left:none;width:145pt;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">无限递归</font></font></td>
+   <td class="xl68" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;border-top:none;border-left:none;width:73pt;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">低的</font></font></td>
+   <td class="xl68" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;border-top:none;border-left:none;width:170pt;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">设置递归调用的限制</font></font></td>
+   <td class="xl67" style="padding:0px;color:black;font-size:16px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;border-top:none;border-left:none;width:82pt;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">是的</font></font></td>
+   <td class="xl72" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;border-top:none;border-left:none;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">是的</font></font></td>
+  </tr>
+  <tr>
+   <td class="xl69" height="76" rowspan="2" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:none;border-top:none;border-right:.5pt solid windowtext;border-bottom:.5pt solid black;border-left:.5pt solid windowtext;background:#F2F2F2;height:57.6pt;width:118pt;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">NoClassDefFoundError</font></font></td>
+   <td class="xl68" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;border-top:none;border-left:none;width:145pt;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">缺少依赖&nbsp;</font></font></td>
+   <td class="xl65" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#AFEFB7;border-top:none;border-left:none;width:73pt;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">高的</font></font></td>
+   <td class="xl68" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;border-top:none;border-left:none;width:170pt;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">添加依赖或修复依赖配置</font></font></td>
+   <td class="xl66" style="padding:0px;color:black;font-size:16px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#AFEFB7;border-top:none;border-left:none;width:82pt;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">不</font></font></td>
+   <td class="xl71" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#E6B9B8;border-top:none;border-left:none;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">是的</font></font></td>
+  </tr>
+  <tr>
+   <td class="xl68" height="38" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;height:28.8pt;border-top:none;border-left:none;width:145pt;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">初始化期间加载类失败</font></font></td>
+   <td class="xl68" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;border-top:none;border-left:none;width:73pt;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">低的</font></font></td>
+   <td class="xl68" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;border-top:none;border-left:none;width:170pt;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">更改初始化过程</font></font></td>
+   <td class="xl67" style="padding:0px;color:black;font-size:16px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;border-top:none;border-left:none;width:82pt;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">是的</font></font></td>
+   <td class="xl72" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;border-top:none;border-left:none;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">是的</font></font></td>
+  </tr>
+ </tbody>
+</table>
+
+<p>在大多数情况下，需要做的就是更改 JVM 配置或添加缺少的依赖项，仍然存在需要更改代码的情况，但它们不太可能在每种情况下更改。</p>
+<h3 id="runtime">常见 Runtime 异常</h3>
+<p><img alt="image-20210915154320891" src="image/Java异常.assets/image-20210915154320891.png" /></p>
+<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse;width:611pt;" width="813">
+ <tbody>
+  <tr>
+   <td class="xl68" height="37" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;height:27.6pt;width:100pt;" width="16.359163591635916%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">异常类型</font></font></font></font></td>
+   <td class="xl68" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;border-left:none;width:178pt;" width="29.15129151291513%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">潜在原因</font></font></td>
+   <td class="xl68" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;border-left:none;width:62pt;" width="10.08610086100861%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">原因的可能性有多大</font></font></td>
+   <td class="xl68" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;border-left:none;width:160pt;" width="26.199261992619927%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">怎么修复</font></font></td>
+   <td class="xl68" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;border-left:none;width:65pt;" width="10.578105781057811%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">需要重写代码吗？&nbsp;</font></font></td>
+   <td class="xl68" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;border-left:none;width:46pt;" width="7.626076260762607%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">需要重启吗？</font></font></td>
+  </tr>
+  <tr>
+   <td class="xl67" height="86" rowspan="2" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#AFEFB7;height:64.8pt;border-top:  none;width:100pt;" width="16.359163591635916%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">NullPointerException</font></font></td>
+   <td class="xl66" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;border-top:none;border-left:none;width:178pt;" width="29.15129151291513%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">&nbsp;预期的不可为空的对象为空</font></font></td>
+   <td class="xl67" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#AFEFB7;border-top:none;border-left:none;width:62pt;" width="10.08610086100861%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">高的</font></font></td>
+   <td class="xl66" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;border-top:none;border-left:none;width:160pt;" width="26.199261992619927%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">调用前添加验证层</font></font></td>
+   <td class="xl71" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#E6B9B8;border-top:none;border-left:none;width:65pt;" width="10.578105781057811%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">是的</font></font></td>
+   <td class="xl71" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#E6B9B8;border-top:none;border-left:none;width:46pt;" width="7.626076260762607%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">是的</font></font></td>
+  </tr>
+  <tr>
+   <td class="xl66" height="44" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;height:33.0pt;border-top:none;border-left:none;width:178pt;" width="34.85294117647059%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">某些资源不可用并返回空数据</font></font></td>
+   <td class="xl66" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;border-top:none;border-left:none;width:62pt;" width="12.058823529411764%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">中等的</font></font></td>
+   <td class="xl66" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;border-top:none;border-left:none;width:160pt;" width="31.323529411764707%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">调用前添加验证层</font></font></td>
+   <td class="xl66" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;border-top:none;border-left:none;width:65pt;" width="12.647058823529411%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">是的</font></font></td>
+   <td class="xl66" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;border-top:none;border-left:none;width:46pt;" width="9.117647058823529%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">是的</font></font></td>
+  </tr>
+  <tr>
+   <td class="xl69" height="46" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:none;border-top:none;border-right:.5pt solid windowtext;border-bottom:none;border-left:.5pt solid windowtext;background:#AFEFB7;height:34.2pt;width:100pt;" width="16.359163591635916%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">ConcurrentModificationException</font></font></td>
+   <td class="xl66" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;border-top:none;border-left:none;width:178pt;" width="29.15129151291513%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">迭代期间集合已更改</font></font></td>
+   <td class="xl67" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#AFEFB7;border-top:none;border-left:none;width:62pt;" width="10.08610086100861%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">高的</font></font></td>
+   <td class="xl65" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:none;width:160pt;" width="26.199261992619927%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">分别进行集合迭代和修改</font></font></td>
+   <td class="xl71" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#E6B9B8;border-top:none;width:65pt;" width="10.578105781057811%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">是的</font></font></td>
+   <td class="xl71" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#E6B9B8;border-top:none;border-left:none;width:46pt;" width="7.626076260762607%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">是的</font></font></td>
+  </tr>
+  <tr>
+   <td class="xl70" height="46" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:none;border-top:none;border-right:.5pt solid windowtext;border-bottom:.5pt solid windowtext;border-left:.5pt solid windowtext;background:#AFEFB7;height:34.8pt;width:100pt;" width="16.359163591635916%"><br></td>
+   <td class="xl66" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;border-top:none;border-left:none;width:178pt;" width="29.15129151291513%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">集合在迭代期间已从另一个线程更改</font></font></td>
+   <td class="xl67" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#AFEFB7;border-top:none;border-left:none;width:62pt;" width="10.08610086100861%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">高的</font></font></td>
+   <td class="xl66" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;border-left:none;width:160pt;" width="26.199261992619927%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">为集合添加同步</font></font></td>
+   <td class="xl71" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#E6B9B8;border-top:none;border-left:none;width:65pt;" width="10.578105781057811%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">是的</font></font></td>
+   <td class="xl71" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#E6B9B8;border-top:none;border-left:none;width:46pt;" width="7.626076260762607%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">是的</font></font></td>
+  </tr>
+  <tr>
+   <td class="xl67" height="38" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#AFEFB7;height:28.2pt;border-top:none;width:100pt;" width="16.359163591635916%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">IlliegalArgumentException</font></font></td>
+   <td class="xl66" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;border-top:none;border-left:none;width:178pt;" width="29.15129151291513%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">传递的参数无效</font></font></td>
+   <td class="xl67" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#AFEFB7;border-top:none;border-left:none;width:62pt;" width="10.08610086100861%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">高的</font></font></td>
+   <td class="xl66" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;border-top:none;border-left:none;width:160pt;" width="26.199261992619927%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">在传递参数之前添加验证</font></font></td>
+   <td class="xl71" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#E6B9B8;border-top:none;border-left:none;width:65pt;" width="10.578105781057811%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">是的</font></font></td>
+   <td class="xl71" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#E6B9B8;border-top:none;border-left:none;width:46pt;" width="7.626076260762607%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">是的</font></font></td>
+  </tr>
+  <tr>
+   <td class="xl67" height="46" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#AFEFB7;height:34.2pt;border-top:none;width:100pt;" width="16.359163591635916%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">NumberFormatException</font></font></td>
+   <td class="xl66" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;border-top:none;border-left:none;width:178pt;" width="29.15129151291513%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">传递的参数格式错误或符号错误</font></font></td>
+   <td class="xl67" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#AFEFB7;border-top:none;border-left:none;width:62pt;" width="10.08610086100861%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">高的</font></font></td>
+   <td class="xl66" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;border-top:none;border-left:none;width:160pt;" width="26.199261992619927%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">在传递数据之前添加格式或删除不可见符号</font></font></td>
+   <td class="xl71" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#E6B9B8;border-top:none;border-left:none;width:65pt;" width="10.578105781057811%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">是的</font></font></td>
+   <td class="xl71" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#E6B9B8;border-top:none;border-left:none;width:46pt;" width="7.626076260762607%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">是的</font></font></td>
+  </tr>
+  <tr>
+   <td class="xl67" height="38" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#AFEFB7;height:28.8pt;border-top:none;width:100pt;" width="16.359163591635916%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">ArrayIndexOutOfBoundsException</font></font></td>
+   <td class="xl66" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;border-top:none;border-left:none;width:178pt;" width="29.15129151291513%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">指令试图通过不存在的索引访问单元格</font></font></td>
+   <td class="xl67" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#AFEFB7;border-top:none;border-left:none;width:62pt;" width="10.08610086100861%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">高的</font></font></td>
+   <td class="xl66" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;border-top:none;border-left:none;width:160pt;" width="26.199261992619927%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">将访问逻辑更改为正确的逻辑</font></font></td>
+   <td class="xl71" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#E6B9B8;border-top:none;border-left:none;width:65pt;" width="10.578105781057811%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">是的</font></font></td>
+   <td class="xl71" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#E6B9B8;border-top:none;border-left:none;width:46pt;" width="7.626076260762607%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">是的</font></font></td>
+  </tr>
+  <tr>
+   <td class="xl69" height="80" rowspan="2" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:none;border-top:none;border-right:.5pt solid windowtext;border-bottom:.5pt solid black;border-left:.5pt solid windowtext;background:#AFEFB7;height:60.0pt;width:100pt;" width="16.359163591635916%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">NoSuchElementException</font></font></td>
+   <td class="xl66" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;border-top:none;border-left:none;width:178pt;" width="29.15129151291513%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">当指针已经改变位置时访问元素</font></font></td>
+   <td class="xl67" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#AFEFB7;border-top:none;border-left:none;width:62pt;" width="10.08610086100861%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">高的</font></font></td>
+   <td class="xl66" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;border-top:none;border-left:none;width:160pt;" width="26.199261992619927%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">将访问逻辑更改为正确的逻辑</font></font></td>
+   <td class="xl71" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#E6B9B8;border-top:none;border-left:none;width:65pt;" width="10.578105781057811%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">是的</font></font></td>
+   <td class="xl71" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#E6B9B8;border-top:none;border-left:none;width:46pt;" width="7.626076260762607%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">是的</font></font></td>
+  </tr>
+  <tr>
+   <td class="xl66" height="38" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;height:28.8pt;border-top:none;border-left:none;width:178pt;" width="34.85294117647059%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">集合在迭代过程中被修改</font></font></td>
+   <td class="xl67" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#AFEFB7;border-top:none;border-left:none;width:62pt;" width="12.058823529411764%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">高的</font></font></td>
+   <td class="xl66" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;border-top:none;border-left:none;width:160pt;" width="31.323529411764707%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">为集合添加同步</font></font></td>
+   <td class="xl71" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#E6B9B8;border-top:none;border-left:none;width:65pt;" width="12.647058823529411%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">是的</font></font></td>
+   <td class="xl71" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#E6B9B8;border-top:none;border-left:none;width:46pt;" width="9.117647058823529%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">是的</font></font></td>
+  </tr>
+ </tbody>
+</table>
+
+<p>Checked 和 Error 异常错误不会导致任何代码更改，但是在大多数情况下，运行时异常突出了代码中的真正问题，如果不重写代码就无法修复这些问题。</p>
+<h3 id="checked">常见 Checked 异常</h3>
+<p><img alt="image-20210915155008329" src="image/Java异常.assets/image-20210915155008329.png" /></p>
+<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse;width:649pt;" width="865">
+ <tbody>
+  <tr>
+   <td class="xl67" height="38" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;height:28.8pt;width:118pt;" width="18.15028901734104%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">异常类型
+    </font></font></font></font></td>
+   <td class="xl67" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;border-left:none;width:145pt;" width="22.427745664739884%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">潜在原因</font></font></td>
+   <td class="xl67" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;border-left:none;width:73pt;" width="11.329479768786127%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">原因的可能性有多大</font></font></td>
+   <td class="xl67" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;border-left:none;width:170pt;" width="26.127167630057805%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">怎么修复</font></font></td>
+   <td class="xl67" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;border-left:none;width:78pt;" width="12.023121387283236%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">需要重写代码吗？&nbsp;</font></font></td>
+   <td class="xl67" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;border-left:none;width:65pt;" width="9.942196531791907%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">需要重启吗？</font></font></td>
+  </tr>
+  <tr>
+   <td class="xl70" height="40" rowspan="2" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:none;border-top:none;border-right:.5pt solid windowtext;border-bottom:.5pt solid black;border-left:.5pt solid windowtext;background:#F2F2F2;height:30.0pt;width:118pt;" width="18.15028901734104%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">FileNotFoundException</font></font></td>
+   <td class="xl67" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;border-top:none;border-left:none;width:145pt;" width="22.427745664739884%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">该文件不存在</font></font></td>
+   <td class="xl65" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#AFEFB7;border-top:none;border-left:none;width:73pt;" width="11.329479768786127%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">高的</font></font></td>
+   <td class="xl67" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;border-top:none;border-left:none;width:170pt;" width="26.127167630057805%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">创建文件</font></font></td>
+   <td class="xl66" style="padding:0px;color:black;font-size:16px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#AFEFB7;border-top:none;border-left:none;width:78pt;" width="12.023121387283236%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">不</font></font></td>
+   <td class="xl66" style="padding:0px;color:black;font-size:16px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#AFEFB7;border-top:none;border-left:none;width:65pt;" width="9.942196531791907%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">不</font></font></td>
+  </tr>
+  <tr>
+   <td class="xl67" height="19" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;height:14.4pt;border-top:none;border-left:none;width:145pt;" width="27.401129943502823%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">应用程序调用错误的路径</font></font></td>
+   <td class="xl67" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;border-top:none;border-left:none;width:73pt;" width="13.841807909604519%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">低的</font></font></td>
+   <td class="xl67" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;border-top:none;border-left:none;width:170pt;" width="31.92090395480226%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">修复错误的路径生成</font></font></td>
+   <td class="xl67" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;border-top:none;border-left:none;width:78pt;" width="14.689265536723164%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">是的</font></font></td>
+   <td class="xl67" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;border-top:none;border-left:none;width:65pt;" width="12.146892655367232%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">是的</font></font></td>
+  </tr>
+  <tr>
+   <td class="xl67" height="21" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;height:15.6pt;border-top:none;width:118pt;" width="18.15028901734104%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">IOException</font></font></td>
+   <td class="xl67" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;border-top:none;border-left:none;width:145pt;" width="22.427745664739884%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">访问资源无效</font></font></td>
+   <td class="xl65" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#AFEFB7;border-top:none;border-left:none;width:73pt;" width="11.329479768786127%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">高的</font></font></td>
+   <td class="xl67" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;border-top:none;border-left:none;width:170pt;" width="26.127167630057805%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">让资源再次可用</font></font></td>
+   <td class="xl66" style="padding:0px;color:black;font-size:16px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#AFEFB7;border-top:none;border-left:none;width:78pt;" width="12.023121387283236%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">不</font></font></td>
+   <td class="xl66" style="padding:0px;color:black;font-size:16px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#AFEFB7;border-top:none;border-left:none;width:65pt;" width="9.942196531791907%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">不</font></font></td>
+  </tr>
+  <tr>
+   <td class="xl67" height="44" rowspan="2" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;height:33.0pt;border-top:  none;width:118pt;" width="18.15028901734104%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">ClassNotFoundException</font></font></td>
+   <td class="xl67" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;border-top:none;border-left:none;width:145pt;" width="22.427745664739884%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">该类未添加依赖项</font></font></td>
+   <td class="xl65" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#AFEFB7;border-top:none;border-left:none;width:73pt;" width="11.329479768786127%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">高的</font></font></td>
+   <td class="xl67" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;border-top:none;border-left:none;width:170pt;" width="26.127167630057805%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">添加缺少的依赖项</font></font></td>
+   <td class="xl69" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:none;border-top:none;border-right:.5pt solid windowtext;border-bottom:.5pt solid windowtext;border-left:none;background:#AFEFB7;width:78pt;" width="12.023121387283236%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">不</font></font></td>
+   <td class="xl73" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#E6B9B8;border-top:none;border-left:none;width:65pt;" width="9.942196531791907%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">是的</font></font></td>
+  </tr>
+  <tr>
+   <td class="xl67" height="25" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;height:18.6pt;border-top:none;border-left:none;width:145pt;" width="27.401129943502823%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">实现调用了错误的类&nbsp;</font></font></td>
+   <td class="xl67" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;border-top:none;border-left:none;width:73pt;" width="13.841807909604519%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">中等的</font></font></td>
+   <td class="xl67" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;border-top:none;border-left:none;width:170pt;" width="31.92090395480226%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">更改类调用</font></font></td>
+   <td class="xl67" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;border-top:none;border-left:none;width:78pt;" width="14.689265536723164%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">是的</font></font></td>
+   <td class="xl67" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;border-top:none;border-left:none;width:65pt;" width="12.146892655367232%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">是的</font></font></td>
+  </tr>
+  <tr>
+   <td class="xl70" height="63" rowspan="3" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:none;border-top:none;border-right:.5pt solid windowtext;border-bottom:.5pt solid black;border-left:.5pt solid windowtext;background:#F2F2F2;height:46.8pt;width:118pt;" width="18.15028901734104%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">SqlException</font></font></td>
+   <td class="xl67" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;border-top:none;border-left:none;width:145pt;" width="22.427745664739884%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">架构与查询不匹配</font></font></td>
+   <td class="xl65" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#AFEFB7;border-top:none;border-left:none;width:73pt;" width="11.329479768786127%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">高的</font></font></td>
+   <td class="xl67" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;border-top:none;border-left:none;width:170pt;" width="26.127167630057805%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">将缺失的脚本应用到数据库</font></font></td>
+   <td class="xl66" style="padding:0px;color:black;font-size:16px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#AFEFB7;border-top:none;border-left:none;width:78pt;" width="12.023121387283236%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">不</font></font></td>
+   <td class="xl65" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#AFEFB7;border-top:none;border-left:none;width:65pt;" width="9.942196531791907%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">不</font></font></td>
+  </tr>
+  <tr>
+   <td class="xl67" height="21" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;height:15.6pt;border-top:none;border-left:none;width:145pt;" width="27.401129943502823%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">查询错误</font></font></td>
+   <td class="xl67" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;border-top:none;border-left:none;width:73pt;" width="13.841807909604519%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">低的</font></font></td>
+   <td class="xl67" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;border-top:none;border-left:none;width:170pt;" width="31.92090395480226%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">更改查询</font></font></td>
+   <td class="xl68" style="padding:0px;color:black;font-size:16px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;border-top:none;border-left:none;width:78pt;" width="14.689265536723164%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">是的</font></font></td>
+   <td class="xl67" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;border-top:none;border-left:none;width:65pt;" width="12.146892655367232%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">是的</font></font></td>
+  </tr>
+  <tr>
+   <td class="xl67" height="21" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;height:15.6pt;border-top:none;border-left:none;width:145pt;" width="27.401129943502823%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">拒绝连接</font></font></td>
+   <td class="xl65" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#AFEFB7;border-top:none;border-left:none;width:73pt;" width="13.841807909604519%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">高的</font></font></td>
+   <td class="xl67" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;border-top:none;border-left:none;width:170pt;" width="31.92090395480226%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">打开数据库，更改端口</font></font></td>
+   <td class="xl66" style="padding:0px;color:black;font-size:16px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#AFEFB7;border-top:none;border-left:none;width:78pt;" width="14.689265536723164%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">不</font></font></td>
+   <td class="xl66" style="padding:0px;color:black;font-size:16px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#AFEFB7;border-top:none;border-left:none;width:65pt;" width="12.146892655367232%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">不</font></font></td>
+  </tr>
+  <tr>
+   <td class="xl67" height="120" rowspan="2" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;height:90.0pt;border-top:none;width:118pt;" width="18.15028901734104%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">InterruptedException</font></font></td>
+   <td class="xl67" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;border-top:none;border-left:none;width:145pt;" width="22.427745664739884%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">依赖线程通知中断（锁释放，另一个线程完成操作）</font></font></td>
+   <td class="xl65" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#AFEFB7;border-top:none;border-left:none;width:73pt;" width="11.329479768786127%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">高的</font></font></td>
+   <td class="xl67" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;border-top:none;border-left:none;width:170pt;" width="26.127167630057805%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">没有必要修复它；</font><font style="vertical-align: inherit;">这是一种通知相关线程中事件的方法</font></font></td>
+   <td class="xl66" style="padding:0px;color:black;font-size:16px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#AFEFB7;border-top:none;border-left:none;width:78pt;" width="12.023121387283236%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">不</font></font></td>
+   <td class="xl65" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#AFEFB7;border-top:none;border-left:none;width:65pt;" width="9.942196531791907%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">不</font></font></td>
+  </tr>
+  <tr>
+   <td class="xl67" height="44" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;height:33.0pt;border-top:none;border-left:none;width:145pt;" width="27.401129943502823%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">另一个线程中断并使用中断通知相关</font></font></td>
+   <td class="xl67" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;border-top:none;border-left:none;width:73pt;" width="13.841807909604519%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">中等的</font></font></td>
+   <td class="xl67" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;border-top:none;border-left:none;width:170pt;" width="31.92090395480226%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">修复另一个线程中出现的问题（可以是任何东西）</font></font></td>
+   <td class="xl67" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;border-top:none;border-left:none;width:78pt;" width="14.689265536723164%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">是的</font></font></td>
+   <td class="xl67" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;border-top:none;border-left:none;width:65pt;" width="12.146892655367232%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">是的</font></font></td>
+  </tr>
+  <tr>
+   <td class="xl67" height="50" rowspan="2" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;height:37.8pt;border-top:  none;width:118pt;" width="18.15028901734104%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">SocketException</font></font></td>
+   <td class="xl67" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;border-top:none;border-left:none;width:145pt;" width="22.427745664739884%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">端口被占用&nbsp;</font></font></td>
+   <td class="xl65" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#AFEFB7;border-top:none;border-left:none;width:73pt;" width="11.329479768786127%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">高的</font></font></td>
+   <td class="xl67" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;border-top:none;border-left:none;width:170pt;" width="26.127167630057805%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">打开/释放端口</font></font></td>
+   <td class="xl66" style="padding:0px;color:black;font-size:16px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#AFEFB7;border-top:none;border-left:none;width:78pt;" width="12.023121387283236%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">不</font></font></td>
+   <td class="xl66" style="padding:0px;color:black;font-size:16px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#AFEFB7;border-top:none;border-left:none;width:65pt;" width="9.942196531791907%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">不</font></font></td>
+  </tr>
+  <tr>
+   <td class="xl67" height="27" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;height:20.4pt;border-top:none;border-left:none;width:145pt;" width="27.401129943502823%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">服务器断开连接</font></font></td>
+   <td class="xl65" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#AFEFB7;border-top:none;border-left:none;width:73pt;" width="13.841807909604519%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">高的</font></font></td>
+   <td class="xl67" style="padding:0px;color:black;font-size:15px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#F2F2F2;border-top:none;border-left:none;width:170pt;" width="31.92090395480226%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">检查网络连接 &nbsp;</font></font></td>
+   <td class="xl66" style="padding:0px;color:black;font-size:16px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#AFEFB7;border-top:none;border-left:none;width:78pt;" width="14.689265536723164%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">不</font></font></td>
+   <td class="xl66" style="padding:0px;color:black;font-size:16px;font-weight:400;font-style:normal;text-decoration:none;font-family:Calibri, sans-serif;text-align:center;vertical-align:middle;border:.5pt solid windowtext;background:#AFEFB7;border-top:none;border-left:none;width:65pt;" width="12.146892655367232%"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">不</font></font></td>
+  </tr>
+ </tbody>
+</table>
+
+<p>如果我们查看最可能的原因，我们会发现其中的<em>大多数</em> 不仅不需要任何代码更改，甚至不需要重新启动应用程序。</p>
+<h1 id="java_5">Java 异常处理最佳实践</h1>
+<h2 id="1">1. 不要忽略捕获的异常</h2>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">Copycatch</span><span class="w"> </span><span class="p">(</span><span class="n">NoSuchMethodException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">   </span><span class="k">return</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>虽然捕获了异常但是却没有做任何处理，除非你确信这个异常可以忽略，不然不应该这样做，这样会导致外面无法知晓该方法发生了错误，无法定位错误原因。</p>
+<h2 id="2">2. 在你的方法里抛出具体的检查性异常</h2>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">Copypublic</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">foo</span><span class="p">()</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">//错误方式</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>一定要避免出现上面的代码示例，它破坏了检查性异常的目的。 声明你的方法可能抛出的具体检查性异常，如果有太多这样的检查性异常，你应该把它们包装在你自己的异常中，并在异常消息中添加信息。 如果可能的话，你也可以考虑代码重构。</p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">Copypublic</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">foo</span><span class="p">()</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">SpecificException1</span><span class="p">,</span><span class="w"> </span><span class="n">SpecificException2</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">//正确方式</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="p">}</span>
+</span></code></pre></div>
+<h2 id="3-exception">3. 捕获具体的子类而不是捕获 Exception 类</h2>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">Copytry</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">   </span><span class="n">someMethod</span><span class="p">();</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">Exception</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">//错误方式</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">   </span><span class="n">LOGGER</span><span class="p">.</span><span class="na">error</span><span class="p">(</span><span class="s">&quot;method has failed&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">);</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>捕获 <code>Exception</code> 的问题是，如果稍后调用的方法为其方法声明添加了新的检查性异常，则开发人员的意图是应该处理具体的新异常，但是你的代码只是捕获  <code>Exception</code> （或 <code>Throwable</code>），那么永远不会知道这个新的异常，并且你的程序可能会在运行时的任何时候中断。</p>
+<h2 id="3-throwable">3. 永远不要捕获 Throwable 类</h2>
+<p>这是一个更严重的问题，因为 <code>Error</code> 也是 <code>Throwable</code> 的子类，<code>Error</code> 是 JVM 本身无法处理的不可逆转的错误，对于某些 JVM 的实现，JVM 可能实际上甚至不会在 Error 上调用 catch 子句。</p>
+<h2 id="4">4. 始终正确包装自定义异常中的异常，以便堆栈跟踪不会丢失</h2>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">Copycatch</span><span class="w"> </span><span class="p">(</span><span class="n">NoSuchMethodException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">   </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">MyServiceException</span><span class="p">(</span><span class="s">&quot;Some information: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="na">getMessage</span><span class="p">());</span><span class="w">  </span><span class="c1">//错误方式</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>这破坏了原始异常的堆栈跟踪，并且始终是错误的，正确的做法是：</p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">Copycatch</span><span class="w"> </span><span class="p">(</span><span class="n">NoSuchMethodException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">   </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">MyServiceException</span><span class="p">(</span><span class="s">&quot;Some information: &quot;</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">);</span><span class="w">  </span><span class="c1">//正确方式</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="p">}</span>
+</span></code></pre></div>
+<h2 id="5">5. 要么记录异常要么抛出异常，但不要一起执行</h2>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">Copycatch</span><span class="w"> </span><span class="p">(</span><span class="n">NoSuchMethodException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">  </span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">    </span><span class="c1">//错误方式 </span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">   </span><span class="n">LOGGER</span><span class="p">.</span><span class="na">error</span><span class="p">(</span><span class="s">&quot;Some information&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">);</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">   </span><span class="k">throw</span><span class="w"> </span><span class="n">e</span><span class="p">;</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>正如上面的代码中，记录和抛出异常会在日志文件中产生多条日志消息，代码中存在单个问题，并且对尝试分析日志的同事很不友好。</p>
+<h2 id="6-finally">6. finally 块中永远不要抛出任何异常</h2>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">Copytry</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span><span class="n">someMethod</span><span class="p">();</span><span class="w">  </span><span class="c1">//Throws exceptionOne</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="p">}</span><span class="w"> </span><span class="k">finally</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">  </span><span class="n">cleanUp</span><span class="p">();</span><span class="w">    </span><span class="c1">//如果finally还抛出异常，那么exceptionOne将永远丢失</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>只要 <code>cleanUp()</code> 永远不会抛出任何异常，上面的代码没有问题，但是如果 <code>someMethod()</code> 抛出一个异常，并且在 <code>finally</code> 块中，<code>cleanUp()</code> 也抛出另一个异常，那么程序只会把第二个异常抛出来，原来的第一个异常（正确的原因）将永远丢失。如果在 <code>finally</code> 块中调用的代码可能会引发异常，请确保要么处理它，要么将其记录下来，永远不要让它从 finally 块中抛出来。</p>
+<h2 id="7">7. 始终只捕获实际可处理的异常</h2>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">Copycatch</span><span class="w"> </span><span class="p">(</span><span class="n">NoSuchMethodException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">   </span><span class="k">throw</span><span class="w"> </span><span class="n">e</span><span class="p">;</span><span class="w"> </span><span class="c1">//避免这种情况，因为它没有任何帮助</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>这是最重要的概念，不要为了捕获异常而捕获，只有在想要处理异常时才捕获异常，或者希望在该异常中提供其他上下文信息。如果你不能在 catch 块中处理它，那么最好的建议就是不要只为了重新抛出它而捕获它。</p>
+<h2 id="8-printstacktrace">8. 不要使用 printStackTrace() 语句或类似的方法</h2>
+<p>完成代码后，切勿忽略 <code>printStackTrace()</code>，最终别人可能会得到这些堆栈，并且对于如何处理它完全没有任何帮助，因为它不会附加任何上下文信息。</p>
+<h2 id="9-finally">9. 对于不打算处理的异常，直接使用 finally</h2>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">Copytry</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">  </span><span class="n">someMethod</span><span class="p">();</span><span class="w">  </span><span class="c1">//Method 2</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="p">}</span><span class="w"> </span><span class="k">finally</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">  </span><span class="n">cleanUp</span><span class="p">();</span><span class="w">    </span><span class="c1">//do cleanup here</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>这是一个很好的做法，如果在你的方法中你正在访问 Method 2，而 Method 2 抛出一些你不想在 Method 1 中处理的异常，但是仍然希望在发生异常时进行一些清理，然后在 finally 块中进行清理，不要使用 catch 块。</p>
+<h2 id="10-throw-catch">10. 记住早 throw 晚 catch 原则</h2>
+<p>这可能是关于异常处理最著名的原则，简单说，应该尽快抛出(throw)异常，并尽可能晚地捕获(catch)它。应该等到有足够的信息来妥善处理它。</p>
+<p>这个原则隐含地说，你将更有可能把它放在低级方法中，在那里你将检查单个值是否为空或不适合。而且你会让异常堆栈跟踪上升好几个级别，直到达到足够的抽象级别才能处理问题。</p>
+<h2 id="11">11. 在异常处理后清理资源</h2>
+<p>如果你正在使用数据库连接或网络连接等资源，请确保关闭它们。如果你正在调用的 API 仅使用非检查性异常，则仍应使用 try-finally 块来清理资源。 在 try 模块里面访问资源，在 finally 里面最后关闭资源。即使在访问资源时发生任何异常，资源也会优雅地关闭。</p>
+<h2 id="12">12. 只抛出和方法相关的异常</h2>
+<p>相关性对于应用程序排查问题非常重要。一种尝试读取文件的方法，如果抛出 <code>NullPointerException</code>，那么它不会给用户任何相关的信息。相反，如果这种异常被包裹在自定义异常中，则会更好，<code>NoSuchFileFoundException</code> 则对该方法的用户更有用。</p>
+<h2 id="13">13. 切勿在程序中使用异常来进行流程控制</h2>
+<p>不要在项目中出现使用异常来处理应用程序逻辑，永远不要这样做，它会使代码很难阅读和理解。</p>
+<h2 id="14">14. 尽早验证用户输入以在请求处理的早期捕获异常</h2>
+<p>始终要在非常早的阶段验证用户输入，甚至在达到 <code>controller</code> 之前，它将帮助你把核心应用程序逻辑中的异常处理代码量降到最低。如果用户输入出现错误，还可以保证与应用程序一致。</p>
+<p>例如：如果在用户注册应用程序中，遵循以下逻辑：</p>
+<ol>
+<li>验证用户</li>
+<li>插入用户</li>
+<li>验证地址</li>
+<li>插入地址</li>
+<li>如果出问题回滚一切</li>
+</ol>
+<p>这是不正确的做法，它会使数据库在各种情况下处于不一致的状态，应该首先验证所有内容，然后将用户数据置于 <code>dao</code> 层并进行数据库更新。正确的做法是：</p>
+<ol>
+<li>验证用户</li>
+<li>验证地址</li>
+<li>插入用户</li>
+<li>插入地址</li>
+<li>如果问题回滚一切</li>
+</ol>
+<h2 id="15">15. 一个异常只能包含在一个日志中</h2>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="n">CopyLOGGER</span><span class="p">.</span><span class="na">debug</span><span class="p">(</span><span class="s">&quot;Using cache sector A&quot;</span><span class="p">);</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="n">LOGGER</span><span class="p">.</span><span class="na">debug</span><span class="p">(</span><span class="s">&quot;Using retry sector B&quot;</span><span class="p">);</span>
+</span></code></pre></div>
+<p>不要像上面这样做，对多个 <code>LOGGER.debug()</code> 调用使用多行日志消息可能在你的测试用例中看起来不错，但是当它在具有 100 个并行运行的线程的应用程序服务器的日志文件中显示时，所有信息都输出到相同的日志文件，即使它们在实际代码中为前后行，但是在日志文件中这两个日志消息可能会间隔 100 多行。应该这样做：</p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="n">CopyLOGGER</span><span class="p">.</span><span class="na">debug</span><span class="p">(</span><span class="s">&quot;Using cache sector A, using retry sector B&quot;</span><span class="p">);</span>
+</span></code></pre></div>
+<h2 id="16">16. 将所有相关信息尽可能地传递给异常</h2>
+<p>有用的异常消息和堆栈跟踪非常重要，如果你的日志不能定位异常位置，那要日志有什么用呢？</p>
+<h2 id="17">17. 终止掉被中断的线程</h2>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="n">Copywhile</span><span class="w"> </span><span class="p">(</span><span class="kc">true</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">    </span><span class="n">Thread</span><span class="p">.</span><span class="na">sleep</span><span class="p">(</span><span class="mi">100000</span><span class="p">);</span>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">InterruptedException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span><span class="w"> </span><span class="c1">//别这样做</span>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="w">  </span><span class="n">doSomethingCool</span><span class="p">();</span>
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><code>InterruptedException</code> 异常提示应该停止程序正在做的事情，比如事务超时或线程池被关闭等。</p>
+<p>应该尽最大努力完成正在做的事情，并完成当前执行的线程，而不是忽略 <code>InterruptedException</code>。修改后的程序如下：</p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="n">Copywhile</span><span class="w"> </span><span class="p">(</span><span class="kc">true</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">  </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="w">    </span><span class="n">Thread</span><span class="p">.</span><span class="na">sleep</span><span class="p">(</span><span class="mi">100000</span><span class="p">);</span>
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">InterruptedException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="w">    </span><span class="k">break</span><span class="p">;</span>
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="p">}</span>
+</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="n">doSomethingCool</span><span class="p">();</span>
+</span></code></pre></div>
+<h2 id="18-try-catch">18. 对于重复的 try-catch，使用模板方法</h2>
+<p>在代码中有许多类似的 catch 块是无用的，只会增加代码的重复性，针对这样的问题可以使用模板方法。</p>
+<p>例如，在尝试关闭数据库连接时的异常处理。</p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="n">Copyclass</span><span class="w"> </span><span class="n">DBUtil</span><span class="p">{</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">closeConnection</span><span class="p">(</span><span class="n">Connection</span><span class="w"> </span><span class="n">conn</span><span class="p">){</span>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="w">        </span><span class="k">try</span><span class="p">{</span>
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="w">            </span><span class="n">conn</span><span class="p">.</span><span class="na">close</span><span class="p">();</span>
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="p">(</span><span class="n">Exception</span><span class="w"> </span><span class="n">ex</span><span class="p">){</span>
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="w">            </span><span class="c1">//Log Exception - Cannot close connection</span>
+</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-14-8"><a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-14-9"><a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>这类的方法将在应用程序很多地方使用，不要把这块代码放的到处都是，而是定义上面的方法，然后像下面这样使用它：</p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="n">Copypublic</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">dataAccessCode</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">    </span><span class="n">Connection</span><span class="w"> </span><span class="n">conn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="w">    </span><span class="k">try</span><span class="p">{</span>
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="w">        </span><span class="n">conn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getConnection</span><span class="p">();</span>
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="w">        </span><span class="p">....</span>
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">finally</span><span class="p">{</span>
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="w">        </span><span class="n">DBUtil</span><span class="p">.</span><span class="na">closeConnection</span><span class="p">(</span><span class="n">conn</span><span class="p">);</span>
+</span><span id="__span-15-8"><a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-15-9"><a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a><span class="p">}</span>
+</span></code></pre></div>
+<h2 id="19-javadoc">19. 使用 JavaDoc 中记录应用程序中的所有异常</h2>
+<p>把用 JavaDoc 记录运行时可能抛出的所有异常作为一种习惯，其中也尽量包括用户应该遵循的操作，以防这些异常发生。</p>
+<h2 id="20-try-with-resource">20. 使用 try-with-resource 自动地关闭资源</h2>
+<p>1、当一个外部资源的句柄对象实现了 <code>AutoCloseable</code> 接口，JDK7中便可以利用 try-with-resource 语法更优雅的关闭资源，消除板式代码。</p>
+<p>2、使用 try-with-resource 时，如果对外部资源的处理和对外部资源的关闭均遭遇了异常，“关闭异常”将被抑制，“处理异常”将被抛出，但“关闭异常”并没有丢失，而是存放在“处理异常”的被抑制的异常列表中。</p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">FileInputStream</span><span class="w"> </span><span class="n">inputStream</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">FileInputStream</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">File</span><span class="p">(</span><span class="s">&quot;test&quot;</span><span class="p">)))</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">inputStream</span><span class="p">.</span><span class="na">read</span><span class="p">());</span>
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">IOException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="w">        </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">RuntimeException</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="na">getMessage</span><span class="p">(),</span><span class="w"> </span><span class="n">e</span><span class="p">);</span>
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>将外部资源的句柄对象的创建放在try关键字后面的括号中</strong>，当这个try-catch代码块执行完毕后，Java会确保外部资源的close方法被调用。</p>
+<h1 id="_1">总结</h1>
+<p>这篇文章首先介绍了什么是异常，以及异常的三种分类，然后通过 20 个最佳实践来讨论如何处理异常，希望能在以后异常处理的时候有所改进及感悟。</p>
+<p>参考文档：</p>
+<p>https://dzone.com/articles/java-exceptions-1</p>
+<p>http://www.yinwang.org/blog-cn/2015/11/21/programming-philosophy</p>
+<p>https://www.cnblogs.com/wupeixuan/p/11746117.html</p>
+<p>https://howtodoinjava.com/best-practices/java-exception-handling-best-practices/</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["content.code.copy", "content.code.select"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
