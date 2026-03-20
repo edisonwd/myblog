@@ -1,0 +1,5222 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../../%E5%A4%A7%E6%A8%A1%E5%9E%8B/%E5%A6%82%E4%BD%95%E8%AE%A9%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%BE%93%E5%87%BA%E7%BB%93%E6%9E%84%E5%8C%96%E6%95%B0%E6%8D%AE/">
+      
+      
+        <link rel="next" href="../%E4%BD%BF%E7%94%A8%E8%BF%87%E7%9A%84%E5%BC%80%E6%BA%90%E5%B7%A5%E5%85%B7/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>使用uv实现python项目依赖管理实践 - My Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#uv" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="My Docs" class="md-header__button md-logo" aria-label="My Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            My Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              使用uv实现python项目依赖管理实践
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="My Docs" class="md-nav__button md-logo" aria-label="My Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    My Docs
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    首页
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Devops
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Devops
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../devops/apisix%E5%9C%A8k8s%E4%B8%AD%E7%9A%84%E5%AE%9E%E8%B7%B5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    apisix在k8s中的实践
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../devops/devops%E5%B7%A5%E5%85%B7zadig%E5%AE%9E%E8%B7%B5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    devops工具zadig实践
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../devops/Docker%E6%9E%84%E5%BB%BA%E6%8F%90%E9%80%9F%E8%83%8C%E5%90%8E%E7%9A%84%E7%9C%9F%E7%9B%B8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker构建提速背后的真相
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../devops/k8s%E4%B8%AD%E7%9A%84nginx-ingress%E5%A6%82%E4%BD%95%E9%85%8D%E7%BD%AE%E8%B7%AF%E5%BE%84%E9%87%8D%E5%AE%9A%E5%90%91/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    k8s中的nginx-ingress如何配置路径重定向
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../devops/%E5%9C%A8k8s%E4%B8%AD%E5%AE%89%E8%A3%85%E5%B9%B6%E4%BD%BF%E7%94%A8jenkins/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    在k8s中安装并使用jenkins
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../devops/%E5%9C%A8k8s%E4%B8%AD%E5%AE%89%E8%A3%85%E5%B9%B6%E4%BD%BF%E7%94%A8nexus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    在k8s中安装并使用nexus
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../devops/%E5%A6%82%E4%BD%95%E6%8F%90%E9%AB%98docker%E5%AE%B9%E5%99%A8%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    如何提高docker容器的安全性
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Go
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Go
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../go/go%E8%AF%AD%E8%A8%80grpc%E6%A1%86%E6%9E%B6%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E5%AE%9E%E8%B7%B5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    go语言grpc框架从入门到实践
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../go/%E3%80%90golang%E3%80%91%E4%BD%BF%E7%94%A8chan%E6%94%B6%E9%9B%86%E5%A4%9A%E5%8D%8F%E7%A8%8B%E6%89%A7%E8%A1%8C%E7%9A%84%E7%BB%93%E6%9E%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    【golang】使用chan收集多协程执行的结果
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../go/%E3%80%90golang%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    【golang学习记录】环境搭建
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Image
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Image
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_1" id="__nav_4_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    收集的学习资料
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    收集的学习资料
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../image/%E6%94%B6%E9%9B%86%E7%9A%84%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/%E5%9C%A8%E7%BA%BF%E9%98%85%E8%AF%BB%E4%B9%A6%E7%B1%8D%E6%B1%87%E6%80%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    在线阅读书籍汇总
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Java
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Java
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../java/Java%20%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Java 编程思想
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../java/Java11%E5%92%8CJava17%E4%B9%8B%E9%97%B4%E6%9C%89%E5%93%AA%E4%BA%9B%E6%96%B0%E5%8F%98%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Java11和Java17之间有哪些新变化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../java/java%E4%B8%AD%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E7%BA%BF%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    java中如何实现线程间通信
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../java/Java%E4%B8%AD%E8%8E%B7%E5%8F%96ThreadDumps%E7%9A%848%E7%A7%8D%E6%96%B9%E5%BC%8F%E6%B1%87%E6%80%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Java中获取ThreadDumps的8种方式汇总
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../java/Java%E5%92%8Cgo%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0LRU%E7%AE%97%E6%B3%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Java和go语言实现LRU算法
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../java/Java%E5%BC%82%E5%B8%B8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Java异常
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../java/Java%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E8%AE%BE%E8%AE%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Java异常处理设计
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../java/maven%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E6%B1%87%E6%80%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    maven基础知识汇总
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../java/Mockito%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mockito单元测试框架使用指南
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../java/Mockito%E7%9A%84%E5%B8%B8%E8%A7%81%E6%A0%B8%E5%BF%83%E5%8A%9F%E8%83%BD%E5%8F%8A%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mockito的常见核心功能及最佳实践
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../java/springboot%E4%BD%BF%E7%94%A8k8s%E7%9A%84configMap%E4%BD%9C%E4%B8%BA%E5%A4%96%E9%83%A8%E9%85%8D%E7%BD%AE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    springboot使用k8s的configMap作为外部配置
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../java/%E4%BD%BF%E7%94%A8maven%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8F%92%E4%BB%B6%E5%AE%9E%E7%8E%B0devops/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    使用maven自定义插件实现devops
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../java/%E5%A6%82%E4%BD%95%E7%9B%91%E6%8E%A7%20Java%20%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    如何监控 Java 垃圾回收
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../java/%E5%A6%82%E4%BD%95%E8%B0%83%E4%BC%98%20Java%20%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    如何调优 Java 垃圾收集
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../java/%E6%98%AF%E4%BB%80%E4%B9%88%E8%AE%A9Java%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E7%9A%84CPU%E4%BD%BF%E7%94%A8%E7%8E%87%E9%A3%99%E5%8D%87/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    是什么让Java应用程序的CPU使用率飙升
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../java/%E7%AE%80%E5%8D%95%E7%90%86%E8%A7%A3%20Java%20%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    简单理解 Java 垃圾收集器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../java/%E9%98%85%E8%AF%BB%E9%98%BF%E9%87%8CJava%E5%BC%80%E5%8F%91%E6%89%8B%E5%86%8C%E8%AE%B0%E5%BD%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    阅读阿里Java开发手册记录
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Other
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Other
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../other/Python%E8%84%9A%E6%9C%AC%E5%A4%84%E7%90%86Markdown%E5%9B%BE%E7%89%87%E6%9C%AC%E5%9C%B0%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python脚本处理Markdown图片本地化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../other/%E4%BC%98%E7%A7%80%E5%8D%9A%E5%AE%A2%E6%B1%87%E6%80%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    优秀博客汇总
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../other/%E4%BD%BF%E7%94%A8Awescnb%E6%9E%84%E5%BB%BA%E9%85%B7%E7%82%AB%E7%9A%84%E5%8D%9A%E5%AE%A2%E5%9B%AD%E7%9A%AE%E8%82%A4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    使用Awescnb构建酷炫的博客园皮肤
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../other/%E5%9C%A8markdown%E4%B8%AD%E4%BD%BF%E7%94%A8%E8%A1%A8%E6%83%85%E7%AC%A6%E5%8F%B7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    在markdown中使用表情符号
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../other/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Python
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python/gunicorn%E8%B6%85%E6%97%B6%E6%8A%A5%E9%94%99/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    gunicorn超时报错
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python/python%E4%B8%ADThreadPoolExecutor%E8%BF%90%E8%A1%8C%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    python中ThreadPoolExecutor运行原理解析
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python/python%E4%BD%BF%E7%94%A8%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%8F%90%E5%8F%96json%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E5%80%BC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    python使用正则表达式提取json字符串的值
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python/python%E5%AE%9E%E7%8E%B0%E6%8E%98%E9%87%91%E5%AE%9A%E6%97%B6%E7%AD%BE%E5%88%B0%E6%8A%BD%E5%A5%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    python实现掘金定时签到抽奖
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python/%E4%BD%BF%E7%94%A8python%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    使用python问题总结
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rag
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Rag
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rag/PDF%E9%A1%B5%E7%9C%89%E9%A1%B5%E8%84%9A%E8%AF%86%E5%88%AB%E4%B8%8E%E5%8E%BB%E9%99%A4%E6%96%B9%E6%A1%88/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PDF页眉页脚识别与去除方案
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rag/RAG%E6%8A%80%E6%9C%AF%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8%E6%8C%91%E6%88%98%E5%88%86%E6%9E%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RAG技术及其应用挑战分析
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rag/%E3%80%90langgraph%E3%80%91%E5%9C%A8%E6%9C%AC%E5%9C%B0%E8%BF%90%E8%A1%8CLangSmith%20Studio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    【langgraph】在本地运行LangSmith Studio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rag/%E3%80%90RAG%E3%80%91chunk%E5%88%86%E5%9D%97%E5%AE%9E%E8%B7%B5%E7%AF%87/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    【RAG】chunk分块实践篇
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rag/%E3%80%90RAG%E3%80%91chunk%E5%88%86%E5%9D%97%E7%90%86%E8%AE%BA%E7%AF%87/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    【RAG】chunk分块理论篇
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rag/%E3%80%90RAG%E3%80%91docling%E7%BB%93%E5%90%88OCR%E5%AE%9E%E7%8E%B0pdf%E8%BD%ACmarkdown/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    【RAG】docling结合OCR实现pdf转markdown
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rag/%E3%80%90RAG%E3%80%91%E4%BD%BF%E7%94%A8PyMuPDF4LLM%E8%A7%A3%E6%9E%90PDF%E7%9A%84%E5%9B%BE%E7%89%87%E5%92%8C%E8%A1%A8%E6%A0%BC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    【RAG】使用PyMuPDF4LLM解析PDF的图片和表格
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rag/%E3%80%90RAG%E3%80%91%E6%9E%84%E5%BB%BA%E5%90%91%E9%87%8F%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    【RAG】构建向量数据库索引
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rag/%E3%80%90RAG%E4%BC%98%E5%8C%96%E3%80%91%E5%B0%86pdf%E5%92%8Cdocx%E8%BD%AC%E6%8D%A2%E4%B8%BAmarkdown%E6%A0%BC%E5%BC%8F/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    【RAG优化】将pdf和docx转换为markdown格式
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rag/%E4%BD%BF%E7%94%A8Nanonets-OCR-s%E6%A8%A1%E5%9E%8B%E5%AE%9E%E7%8E%B0PDF%E6%96%87%E4%BB%B6%E8%BD%ACmarkdown/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    使用Nanonets-OCR-s模型实现PDF文件转markdown
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Redis
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Redis
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../redis/%E4%B8%80%E5%B0%8F%E6%97%B6%E6%8E%8C%E6%8F%A1RediSearch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    一小时掌握RediSearch
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Springboot
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Springboot
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../springboot/Spring%20Boot%20%E4%B8%AD%E4%BD%BF%E7%94%A8%20Validation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Spring Boot 中使用 Validation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../springboot/Spring%20Boot%E4%B8%AD%E4%BD%BF%E7%94%A8MyBatis%20Generator%E7%94%9F%E6%88%90%E5%8A%A8%E6%80%81SQL/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Spring Boot中使用MyBatis Generator生成动态SQL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../springboot/Spring%20Boot%E9%A1%B9%E7%9B%AE%E8%87%AA%E5%B7%B1%E5%B0%81%E8%A3%85%E4%B8%80%E4%B8%AA%E5%88%86%E9%A1%B5%E6%9F%A5%E8%AF%A2%E5%B7%A5%E5%85%B7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Spring Boot项目自己封装一个分页查询工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../springboot/springboot%20%E5%A4%A7%E5%9E%8B%E5%A4%8D%E6%9D%82%E9%A1%B9%E7%9B%AE%E7%9A%84%E5%8C%85%E7%BB%93%E6%9E%84%E8%AE%BE%E8%AE%A1%28DDD%29/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    springboot 大型复杂项目的包结构设计(DDD)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../springboot/springboot%E4%B8%AD%E4%BD%BF%E7%94%A8MapStruct%E6%95%99%E7%A8%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    springboot中使用MapStruct教程
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../springboot/springboot%E9%A1%B9%E7%9B%AE%E4%B8%AD%20PO%20BO%20VO%20DTO%20POJO%20DAO%E6%A6%82%E5%BF%B5%E5%8F%8A%E5%85%B6%E4%BD%9C%E7%94%A8%EF%BC%88%E9%99%84%E8%BD%AC%E6%8D%A2%E5%9B%BE%EF%BC%89/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    springboot项目中 PO BO VO DTO POJO DAO概念及其作用（附转换图）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../springboot/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E5%8D%81%E5%88%86%E9%92%9F%E5%AE%9E%E7%8E%B0springboot%20%2B%20MyBatis%20Dynamic%20SQL/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    从零开始十分钟实现springboot + MyBatis Dynamic SQL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    大模型
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    大模型
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E6%A8%A1%E5%9E%8B/langchain%E4%BD%BF%E7%94%A8token%E5%88%87%E5%88%86chunk/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    langchain使用token切分chunk
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E6%A8%A1%E5%9E%8B/LLM%E7%BB%9F%E4%B8%80%E7%BD%91%E5%85%B3%EF%BC%9ALiteLLM%20%E8%AF%A6%E7%BB%86%E4%BB%8B%E7%BB%8D/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LLM统一网关：LiteLLM 详细介绍
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E6%A8%A1%E5%9E%8B/%E3%80%90claude%20code%E3%80%91%E5%9C%A8mac%E4%B8%AD%E5%AE%89%E8%A3%85%E5%B9%B6%E4%BD%BF%E7%94%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    【claude code】在mac中安装并使用
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E6%A8%A1%E5%9E%8B/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%B7%A5%E5%85%B7%E8%B0%83%E7%94%A8%E5%8E%9F%E7%90%86%E5%92%8C%E5%AE%9E%E8%B7%B5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    大模型工具调用原理和实践
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%A4%A7%E6%A8%A1%E5%9E%8B/%E5%A6%82%E4%BD%95%E8%AE%A9%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%BE%93%E5%87%BA%E7%BB%93%E6%9E%84%E5%8C%96%E6%95%B0%E6%8D%AE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    如何让大模型输出结构化数据
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_12" id="__nav_12_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    工具
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_12_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_12">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    工具
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    使用uv实现python项目依赖管理实践
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    使用uv实现python项目依赖管理实践
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#uv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        UV 的基本使用
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="UV 的基本使用">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#uv_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        安装 uv
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#uv_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        使用 uv 初始化项目
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#uv_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        使用 uv 创建虚拟环境
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        永久设置包下载源
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        添加依赖
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="添加依赖">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#-optional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        --optional 的使用
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        移除依赖
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        同步依赖
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        更新依赖
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="更新依赖">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        更新单个包
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        升级所有包
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        查看依赖
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#uvlock" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        uv.lock文件分析
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="uv.lock文件分析">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#uvlock_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        uv.lock 是跨平台的锁文件吗？
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#uvlock_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        uv.lock 是否真正实现跨平台安装？
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#caveats" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⚠️ 两大限制条件（Caveats）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="⚠️ 两大限制条件（Caveats）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-wheelsdist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 某些包只有二进制分发（wheel），没有源码分发（sdist）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 即使有源码包，也不保证能在所有平台成功编译
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conda" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔁 与 Conda 的对比分析
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        总结
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#uv-wheel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        uv 如何选择 Wheel 包
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="uv 如何选择 Wheel 包">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#wheel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        wheel 包文件名完整结构分解
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="wheel 包文件名完整结构分解">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        详细解释各标签
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#uv_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        uv 是如何找到并选择这个包的？
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="uv 是如何找到并选择这个包的？">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        步骤 1️⃣：确定当前环境元数据
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-pypi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        步骤 2️⃣：从索引源获取可用候选包（默认 PyPI）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3pep-425" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        步骤 3️⃣：应用兼容性过滤（PEP 425）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        步骤 4️⃣：版本解析与依赖冲突解决
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        步骤 5️⃣：下载并安装
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wheel_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📦 补充：Wheel 文件内部结构简析
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        其他补充
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="其他补充">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        如何查看当前系统支持的平台标签？
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#platform-tags" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        常见 Platform Tags 对照表
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#glibc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        查看系统的 glibc 版本
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#glibc-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        glibc 与 Python 开发的关系
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#uv_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        总结：uv 如何工作？
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        下载依赖失败分析思路
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="下载依赖失败分析思路">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        问题描述
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        原因分析
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="原因分析">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-uv-wheel-fallback-sdist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1️⃣ uv 优先选择二进制 wheel，但 fallback 到源码包（sdist）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fallback" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        导致 fallback 的常见原因包括：
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2️⃣ 缺少本地编译所需的工具链
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-uv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3️⃣ uv 不自动安装系统级依赖
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✅ 解决方法
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="✅ 解决方法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#wheel_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✅ 方法一：【首选】避免编译 —— 使用预编译 wheel
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✅ 方法二：【次选】安装缺失的编译工具链
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✅ 方法三：使用容器镜像预置环境
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✅ 方法四：临时跳过特定包（调试用）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wheel_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        如何诊断是否将使用 wheel？
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        总结表格
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✅ 最佳实践建议
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        参考文档
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E4%BD%BF%E7%94%A8%E8%BF%87%E7%9A%84%E5%BC%80%E6%BA%90%E5%B7%A5%E5%85%B7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    使用过的开源工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_13" >
+        
+          
+          <label class="md-nav__link" for="__nav_13" id="__nav_13_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    爬虫
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_13_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_13">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    爬虫
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%88%AC%E8%99%AB/BeautifulSoup%E7%9A%84%E4%BD%BF%E7%94%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BeautifulSoup的使用
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%88%AC%E8%99%AB/selenium%E5%A6%82%E4%BD%95%E6%8B%96%E5%8A%A8%E6%BB%9A%E5%8A%A8%E6%9D%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    selenium如何拖动滚动条
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%88%AC%E8%99%AB/%E3%80%90%E7%88%AC%E8%99%AB%E3%80%91docker%E9%83%A8%E7%BD%B2python%2Bselenium%2Bfirefox-headless/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    【爬虫】docker部署python+selenium+firefox-headless
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%88%AC%E8%99%AB/%E3%80%90%E7%88%AC%E8%99%AB%E3%80%91python%2Bselenium%2Bfirefox%E4%BD%BF%E7%94%A8%E4%B8%8E%E9%83%A8%E7%BD%B2%E8%AF%A6%E8%A7%A3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    【爬虫】python+selenium+firefox使用与部署详解
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14" >
+        
+          
+          <label class="md-nav__link" for="__nav_14" id="__nav_14_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    算法
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_14_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    算法
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%AE%97%E6%B3%95/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F%E5%9B%BE%E6%96%87%E8%AE%B2%E8%A7%A3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    归并排序图文讲解
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#uv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        UV 的基本使用
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="UV 的基本使用">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#uv_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        安装 uv
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#uv_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        使用 uv 初始化项目
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#uv_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        使用 uv 创建虚拟环境
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        永久设置包下载源
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        添加依赖
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="添加依赖">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#-optional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        --optional 的使用
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        移除依赖
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        同步依赖
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        更新依赖
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="更新依赖">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        更新单个包
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        升级所有包
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        查看依赖
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#uvlock" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        uv.lock文件分析
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="uv.lock文件分析">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#uvlock_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        uv.lock 是跨平台的锁文件吗？
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#uvlock_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        uv.lock 是否真正实现跨平台安装？
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#caveats" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⚠️ 两大限制条件（Caveats）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="⚠️ 两大限制条件（Caveats）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-wheelsdist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 某些包只有二进制分发（wheel），没有源码分发（sdist）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 即使有源码包，也不保证能在所有平台成功编译
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conda" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔁 与 Conda 的对比分析
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        总结
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#uv-wheel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        uv 如何选择 Wheel 包
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="uv 如何选择 Wheel 包">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#wheel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        wheel 包文件名完整结构分解
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="wheel 包文件名完整结构分解">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        详细解释各标签
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#uv_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        uv 是如何找到并选择这个包的？
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="uv 是如何找到并选择这个包的？">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        步骤 1️⃣：确定当前环境元数据
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-pypi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        步骤 2️⃣：从索引源获取可用候选包（默认 PyPI）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3pep-425" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        步骤 3️⃣：应用兼容性过滤（PEP 425）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        步骤 4️⃣：版本解析与依赖冲突解决
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        步骤 5️⃣：下载并安装
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wheel_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📦 补充：Wheel 文件内部结构简析
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        其他补充
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="其他补充">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        如何查看当前系统支持的平台标签？
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#platform-tags" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        常见 Platform Tags 对照表
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#glibc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        查看系统的 glibc 版本
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#glibc-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        glibc 与 Python 开发的关系
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#uv_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        总结：uv 如何工作？
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        下载依赖失败分析思路
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="下载依赖失败分析思路">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        问题描述
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        原因分析
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="原因分析">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-uv-wheel-fallback-sdist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1️⃣ uv 优先选择二进制 wheel，但 fallback 到源码包（sdist）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fallback" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        导致 fallback 的常见原因包括：
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2️⃣ 缺少本地编译所需的工具链
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-uv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3️⃣ uv 不自动安装系统级依赖
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✅ 解决方法
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="✅ 解决方法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#wheel_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✅ 方法一：【首选】避免编译 —— 使用预编译 wheel
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✅ 方法二：【次选】安装缺失的编译工具链
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✅ 方法三：使用容器镜像预置环境
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✅ 方法四：临时跳过特定包（调试用）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wheel_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        如何诊断是否将使用 wheel？
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        总结表格
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✅ 最佳实践建议
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        参考文档
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>使用uv实现python项目依赖管理实践</h1>
+
+<h2 id="uv">UV 的基本使用</h2>
+<h3 id="uv_1">安装 uv</h3>
+<p>使用命令行安装 uv
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>curl<span class="w"> </span>-LsSf<span class="w"> </span>https://astral.sh/uv/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>sh
+</span></code></pre></div>
+使用 pip 安装 uv
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>pip<span class="w"> </span>install<span class="w"> </span>uv
+</span></code></pre></div></p>
+<h3 id="uv_2">使用 uv 初始化项目</h3>
+<p>进入项目目录，执行以下命令初始化项目：
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>uv<span class="w"> </span>init<span class="w"> </span>
+</span></code></pre></div>
+初始化项目后，会自动创建 <code>pyproject.toml</code> 文件。</p>
+<p><strong>pyproject.toml 是 Python 项目的配置文件，用于定义项目元数据、依赖关系和构建工具等信息。</strong></p>
+<blockquote>
+<p>关于 pyproject.toml 的详细配置可以参考官方文档：<a href="https://packaging.python.org/en/latest/specifications/pyproject-toml/">https://packaging.python.org/en/latest/specifications/pyproject-toml/</a>
+关于 pyproject.toml 中 uv 的配置可以参考官方文档：<a href="https://docs.astral.sh/uv/reference/settings/">https://docs.astral.sh/uv/reference/settings/</a></p>
+</blockquote>
+<h3 id="uv_3">使用 uv 创建虚拟环境</h3>
+<p>uv 创建虚拟环境，默认会在当前目录下创建一个 <code>.venv</code> 目录。
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>uv<span class="w"> </span>venv<span class="w"> </span>.venv<span class="w"> </span>--python<span class="w"> </span><span class="m">3</span>.12
+</span></code></pre></div>
+不指定 <code>--python</code> 版本，默认使用当前系统的 python 版本。</p>
+<p>其他常用命令：
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># 激活虚拟环境</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="nb">source</span><span class="w"> </span>.venv/bin/activate
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="c1"># 退出虚拟环境</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>deactivate
+</span></code></pre></div></p>
+<h3 id="_1">永久设置包下载源</h3>
+<p>在mac或者Linux系统中可以通过设置环境变量<code>UV_DEFAULT_INDEX</code>来永久设置包下载源。</p>
+<p><div class="language-shell highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;export UV_DEFAULT_INDEX=https://mirrors.aliyun.com/pypi/simple&#39;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.bash_profile
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="nb">source</span><span class="w"> </span>~/.bash_profile
+</span></code></pre></div>
+<strong>临时设置 pypi 下载源，在命令行执行：</strong>
+在 Windows 系统中</p>
+<p><div class="language-shell highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nb">set</span><span class="w"> </span><span class="nv">UV_DEFAULT_INDEX</span><span class="o">=</span>https://mirrors.aliyun.com/pypi/simple
+</span></code></pre></div>
+在mac或者Linux系统中</p>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">UV_DEFAULT_INDEX</span><span class="o">=</span>https://mirrors.aliyun.com/pypi/simple
+</span></code></pre></div>
+<h3 id="_2">添加依赖</h3>
+<p>使用 uv 将 <code>requirements.txt</code> 中的依赖添加到 pyproject.toml 中
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>uv<span class="w"> </span>add<span class="w"> </span>--requirements<span class="w"> </span>requirements.txt
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="c1"># 或者</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>uv<span class="w"> </span>add<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+</span></code></pre></div>
+添加新的包, 如果没有指定版本，自动推断适当的版本约束（最新稳定版），如果指定了版本，会添加指定版本的包到 pyproject.toml 中</p>
+<p>使用 <code>uv add</code> 手动添加指定的依赖到 <code>pyproject.toml</code> 中
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1"># 添加包到 pyproject.toml</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>uv<span class="w"> </span>add<span class="w"> </span>&lt;package&gt;<span class="w"> </span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="c1"># 添加开发依赖</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>uv<span class="w"> </span>add<span class="w"> </span>--dev<span class="w"> </span>pytest<span class="w"> </span>black<span class="w"> </span>mypy
+</span></code></pre></div></p>
+<p>当我们使用 <code>uv add &lt;package&gt;</code> 时，它会：</p>
+<ol>
+<li>将指定的包及其版本约束添加到项目的依赖配置文件（pyproject.toml）中。</li>
+<li>解析依赖关系，当遇到冲突时，智能回溯到可行解，最后找到满足所有依赖关系的最佳版本组合，更新锁文件（uv.lock）以记录确切的版本。</li>
+<li>安装新添加的包及其依赖到当前环境中（除非指定<code>--no-sync</code>不安装）。</li>
+</ol>
+<blockquote>
+<p>注意事项</p>
+<ul>
+<li>如果添加的包与现有依赖冲突，uv add 会尝试解决冲突，如果无法解决，会报错并提示冲突信息。</li>
+<li>解析依赖关系时会根据当前平台、Python 版本、依赖约束等条件，求解出一个满足所有版本约束的、最新的、兼容的依赖组合
+</li>
+</ul>
+</blockquote>
+<p>uv add 的其他可选参数说明：
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>Options:
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>  -r, --requirements &lt;REQUIREMENTS&gt;              添加给定文件中列出的包
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>  -c, --constraints &lt;CONSTRAINTS&gt;                使用给定的 requirements 文件约束版本 [env: UV_CONSTRAINT=]
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>  -m, --marker &lt;MARKER&gt;                          为所有添加的包应用此标记
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>      --dev                                      将需求添加到开发依赖组 [env: UV_DEV=]
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>      --optional &lt;OPTIONAL&gt;                      将需求添加到指定扩展的包的可选依赖项
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>      --group &lt;GROUP&gt;                            将需求添加到指定的依赖组
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>      --editable                                 将需求添加为可编辑
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>      --raw                                      将依赖项作为提供的依赖项添加
+</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>      --bounds &lt;BOUNDS&gt;                          添加依赖时使用的版本规范器类型 [possible values: lower, major, minor, exact]
+</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>      --rev &lt;REV&gt;                                添加 Git 依赖项时要使用的提交
+</span><span id="__span-10-12"><a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>      --tag &lt;TAG&gt;                                添加 Git 依赖项时要使用的标签
+</span><span id="__span-10-13"><a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a>      --branch &lt;BRANCH&gt;                          添加 Git 依赖项时要使用的分支
+</span><span id="__span-10-14"><a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a>      --lfs                                      添加 Git 依赖项
+</span><span id="__span-10-15"><a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a>      --extra &lt;EXTRA&gt;                            为依赖项启用的额外功能
+</span><span id="__span-10-16"><a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a>      --no-sync                                  避免同步虚拟环境 [env: UV_NO_SYNC=]
+</span><span id="__span-10-17"><a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a>      --locked                                   断言 uv.lock 将保持不变 [env: UV_LOCKED=]
+</span><span id="__span-10-18"><a id="__codelineno-10-18" name="__codelineno-10-18" href="#__codelineno-10-18"></a>      --frozen                                   添加依赖项而不重新锁定项目 [env: UV_FROZEN=]
+</span><span id="__span-10-19"><a id="__codelineno-10-19" name="__codelineno-10-19" href="#__codelineno-10-19"></a>      --active                                   优先使用活动虚拟环境而不是项目的虚拟环境
+</span><span id="__span-10-20"><a id="__codelineno-10-20" name="__codelineno-10-20" href="#__codelineno-10-20"></a>      --package &lt;PACKAGE&gt;                        将依赖项添加到工作区中的特定包
+</span><span id="__span-10-21"><a id="__codelineno-10-21" name="__codelineno-10-21" href="#__codelineno-10-21"></a>      --script &lt;SCRIPT&gt;                          将依赖项添加到指定的 Python 脚本，而不是项目
+</span><span id="__span-10-22"><a id="__codelineno-10-22" name="__codelineno-10-22" href="#__codelineno-10-22"></a>      --workspace                                将依赖项添加为工作区成员
+</span><span id="__span-10-23"><a id="__codelineno-10-23" name="__codelineno-10-23" href="#__codelineno-10-23"></a>      --no-workspace                             不要将依赖项添加为工作区成员
+</span><span id="__span-10-24"><a id="__codelineno-10-24" name="__codelineno-10-24" href="#__codelineno-10-24"></a>      --no-install-project                       不安装当前项目
+</span><span id="__span-10-25"><a id="__codelineno-10-25" name="__codelineno-10-25" href="#__codelineno-10-25"></a>      --no-install-workspace                     不安装任何工作区成员，包括当前项目
+</span><span id="__span-10-26"><a id="__codelineno-10-26" name="__codelineno-10-26" href="#__codelineno-10-26"></a>      --no-install-local                         不安装本地路径依赖项
+</span><span id="__span-10-27"><a id="__codelineno-10-27" name="__codelineno-10-27" href="#__codelineno-10-27"></a>      --no-install-package &lt;NO_INSTALL_PACKAGE&gt;  不安装给定的包
+</span></code></pre></div></p>
+<h4 id="-optional"><code>--optional</code> 的使用</h4>
+<p>接下来详细介绍一下 <code>--optional</code> 的使用场景和使用示例</p>
+<p><code>--optional</code> 用于将依赖项添加到指定扩展的包的可选依赖项。可选依赖项是指在安装包时可以选择安装的依赖项，而不是必须安装的依赖项。</p>
+<p>使用场景：
+| 场景                    | 描述                                                            |
+| ----------------------- | --------------------------------------------------------------- |
+| 🧩 功能模块化          | 将非必需的功能（如导出 PDF、发送邮件、AI 推理等）拆分为可选依赖 |
+| 🚀 减少基础安装体积    | 用户可以只安装核心功能，避免不必要的依赖下载                    |
+| 🛠️ 开发/测试专用依赖 | 某些工具仅用于测试或文档构建，不应默认安装                      |
+| 📦 插件系统支持        | 支持插件式架构，每个插件对应一个 optional group                 |</p>
+<p>示例 1：添加数据分析可选依赖</p>
+<p>你的项目是一个轻量级数据处理库，默认只依赖 <code>click</code> 和 <code>typing</code>，但如果用户想要做数据分析，可以安装 <code>[analysis]</code> 扩展。</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>uv<span class="w"> </span>add<span class="w"> </span>pandas<span class="w"> </span>numpy<span class="w"> </span>scikit-learn<span class="w"> </span>--optional<span class="w"> </span>analysis
+</span></code></pre></div>
+<p>生成的 <code>pyproject.toml</code> 片段：</p>
+<div class="language-toml highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="k">[project.optional-dependencies]</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="n">analysis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">  </span><span class="s2">&quot;pandas&quot;</span><span class="p">,</span>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">  </span><span class="s2">&quot;numpy&quot;</span><span class="p">,</span>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="w">  </span><span class="s2">&quot;scikit-learn&quot;</span>
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="p">]</span>
+</span></code></pre></div>
+<p>用户安装命令：
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>.<span class="o">[</span>analysis<span class="o">]</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="c1"># 或发布后</span>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>mydatapackage<span class="o">[</span>analysis<span class="o">]</span>
+</span></code></pre></div></p>
+<p>示例 2：组合多个 optional 组</p>
+<p>比如你要添加一个调试工具 <code>debugpy</code>，它既属于开发用途，也属于调试用途：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>uv<span class="w"> </span>add<span class="w"> </span>debugpy<span class="w"> </span>--optional<span class="w"> </span><span class="s2">&quot;dev,debug&quot;</span>
+</span></code></pre></div>
+<p>输出：
+<div class="language-toml highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="k">[project.optional-dependencies]</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="n">dev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;debugpy&quot;</span><span class="p">]</span>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="n">debug</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;debugpy&quot;</span><span class="p">]</span>
+</span></code></pre></div></p>
+<p>这样用户可以用 <code>. [dev]</code> 或 <code>. [debug]</code> 单独启用。</p>
+<hr />
+<p>示例 3：配合 <code>extras</code> 在其他项目中引用</p>
+<p>假设你发布的包叫 <code>mylib</code>，并在 <code>pyproject.toml</code> 中定义了：</p>
+<div class="language-toml highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="k">[project.optional-dependencies]</span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="n">aws</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;boto3&quot;</span><span class="p">]</span>
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="n">gcp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;google-cloud-storage&quot;</span><span class="p">]</span>
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="n">azure</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;azure-storage-blob&quot;</span><span class="p">]</span>
+</span></code></pre></div>
+<p>其他项目就可以选择性安装：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>uv<span class="w"> </span>add<span class="w"> </span>mylib<span class="o">[</span>aws<span class="o">]</span><span class="w">        </span><span class="c1"># 只接入 AWS 支持</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>uv<span class="w"> </span>add<span class="w"> </span>mylib<span class="o">[</span>gcp,aws<span class="o">]</span><span class="w">    </span><span class="c1"># 同时使用 GCP 和 AWS</span>
+</span></code></pre></div>
+<p>这在构建 SDK 或平台型工具时特别有用。</p>
+<h3 id="_3">移除依赖</h3>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="c1">#  移除不需要的包</span>
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>uv<span class="w"> </span>remove<span class="w"> </span>&lt;unused-package&gt;
+</span></code></pre></div>
+<p>当我们使用 <code>uv remove &lt;package&gt;</code> 时，它会：</p>
+<ol>
+<li>从项目配置文件（pyproject.toml）中移除指定的包。</li>
+<li>更新锁文件<code>uv.lock</code>（<code>uv remove</code> 会自动调用 <code>uv sync</code> 来同步环境）以反映移除后的依赖状态，确保环境与配置文件一致，。</li>
+<li>然后，它会更新虚拟环境，即卸载（uninstall）已移除的包。</li>
+</ol>
+<p>总之，<code>uv remove</code> 是一个完整的移除操作，它会同时更新配置文件、锁文件，并从环境中物理卸载包文件，确保环境的干净和一致性。</p>
+<blockquote>
+<p>需要注意的是，uv remove 只能移除在项目配置文件<code>pyproject.toml</code>中声明的直接依赖。如果某个包是作为其他包的依赖被安装的（即传递性依赖），那么当没有其他直接依赖需要它时，它也会被移除。如果有其他依赖需要它，那么它将不会从虚拟环境中卸载。
+</p>
+</blockquote>
+<h3 id="_4">同步依赖</h3>
+<p><code>uv sync</code> 是 <code>uv</code> 包管理工具中用于同步项目依赖的命令，它的核心原理是根据锁文件（如 uv.lock）或依赖配置文件（如 pyproject.toml 或 requirements.txt）来安装或卸载包，使得当前Python环境与项目所声明的依赖完全一致。
+<strong>同步 uv.lock 中指定的精确版本,  如果 uv.lock 不存在，则会自动创建。如果项目有开发依赖，也会安装, 如果之前安装了一些测试包，但依赖声明中没有，它们会被卸载</strong></p>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="c1"># 同步 uv.lock 中指定的精确版本,  如果 uv.lock 不存在，则会自动创建</span>
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>uv<span class="w"> </span>sync<span class="w">  </span><span class="c1"># 如果项目有开发依赖，也会安装, 如果之前安装了一些测试包，但依赖声明中没有，它们会被卸载</span>
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="c1"># 只安装生产依赖（跳过开发依赖）</span>
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>uv<span class="w"> </span>sync<span class="w"> </span>--no-dev
+</span></code></pre></div>
+<p><code>uv sync</code> 总是安装 <code>uv.lock</code> 中的精确版本，确保所有环境（开发、CI/CD、生产）使用相同的依赖版本。</p>
+<blockquote>
+<p>⚠️注意，<code>uv sync</code> 会自动调用 <code>uv lock</code> 来同步锁文件, 因此不需要手动执行 <code>uv lock</code>
+</p>
+</blockquote>
+<h3 id="_5">更新依赖</h3>
+<h4 id="_6">更新单个包</h4>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="c1"># 更新指定依赖到最新版本, 如果没有指定版本，自动推断适当的版本约束（最新稳定版）</span>
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="c1"># 方法1：使用 uv add 升级并安装</span>
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>uv<span class="w"> </span>add<span class="w"> </span>requests<span class="w"> </span>--upgrade
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="c1"># 升级过程：</span>
+</span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a><span class="c1"># 1. 查询 PyPI 获取最新版本（如 2.32.0）</span>
+</span><span id="__span-20-6"><a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a><span class="c1"># 2. 检查是否满足约束（2.32.0 &gt;= 2.28 ✓）</span>
+</span><span id="__span-20-7"><a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a><span class="c1"># 3. 更新配置：requests&gt;=2.32.0</span>
+</span><span id="__span-20-8"><a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a><span class="c1"># 4. 更新锁文件到 2.32.0</span>
+</span><span id="__span-20-9"><a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a>
+</span><span id="__span-20-10"><a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a>
+</span><span id="__span-20-11"><a id="__codelineno-20-11" name="__codelineno-20-11" href="#__codelineno-20-11"></a><span class="c1"># 方法2：先更新锁文件，再同步环境</span>
+</span><span id="__span-20-12"><a id="__codelineno-20-12" name="__codelineno-20-12" href="#__codelineno-20-12"></a>uv<span class="w"> </span>lock<span class="w"> </span>--upgrade-package<span class="w"> </span>requests
+</span><span id="__span-20-13"><a id="__codelineno-20-13" name="__codelineno-20-13" href="#__codelineno-20-13"></a>uv<span class="w"> </span>sync
+</span><span id="__span-20-14"><a id="__codelineno-20-14" name="__codelineno-20-14" href="#__codelineno-20-14"></a>
+</span><span id="__span-20-15"><a id="__codelineno-20-15" name="__codelineno-20-15" href="#__codelineno-20-15"></a>
+</span><span id="__span-20-16"><a id="__codelineno-20-16" name="__codelineno-20-16" href="#__codelineno-20-16"></a><span class="c1"># 强制重新安装所有包</span>
+</span><span id="__span-20-17"><a id="__codelineno-20-17" name="__codelineno-20-17" href="#__codelineno-20-17"></a>uv<span class="w"> </span>sync<span class="w"> </span>--reinstall
+</span></code></pre></div>
+<h4 id="_7">升级所有包</h4>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="c1"># 升级所有依赖到最新版本</span>
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>uv<span class="w"> </span>lock<span class="w"> </span>--upgrade
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>uv<span class="w"> </span>sync<span class="w"> </span>--upgrade<span class="w">           </span><span class="c1"># 升级所有</span>
+</span></code></pre></div>
+<h3 id="_8">查看依赖</h3>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="c1"># 查看当前依赖树</span>
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>uv<span class="w"> </span>tree
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>
+</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="c1"># 查看当前依赖列表</span>
+</span><span id="__span-22-5"><a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>uv<span class="w"> </span>pip<span class="w"> </span>list
+</span></code></pre></div>
+<blockquote>
+<p>注意：uv sync 命令默认会安装锁文件中记录的版本。如果你想升级并更新锁文件，通常的做法是先更新锁文件（使用 uv lock --upgrade 或 uv add 升级特定包），然后再运行 uv sync 来安装更新后的版本。</p>
+<p><strong>始终提交 uv.lock 到版本控制</strong>
+<strong>原因： 确保所有开发者、CI/CD 环境和生产部署使用完全相同的依赖版本。  避免“在我机器上能跑”的问题。</strong></p>
+</blockquote>
+<h2 id="uvlock">uv.lock文件分析</h2>
+<h3 id="uvlock_1">uv.lock 是跨平台的锁文件吗？</h3>
+<p>官方文档指出 <code>uv.lock</code> 是一个<strong>通用（universal）或跨平台的锁文件</strong>，<strong>它会记录在不同 Python 环境标记（如操作系统、CPU 架构、Python 版本等）下可能被安装的所有依赖包。</strong></p>
+<p>相比之下，<strong>Conda 的 </strong><code>spec-file.txt</code> 虽然也能锁定精确版本，但它是<strong>平台相关的</strong>，通常会在文件顶部注明生成它的平台，例如：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a># platform: osx-64
+</span></code></pre></div>
+<p>这意味着这个文件只在该平台上验证过，在其他平台（如 Windows 或 Linux）上可能无法正常工作，因为某些包可能不存在或缺少依赖。</p>
+<hr />
+<h3 id="uvlock_2">uv.lock 是否真正实现跨平台安装？</h3>
+<blockquote>
+<p><code>uv.lock</code><strong>的设计目标是支持跨平台使用，但它并不能 100% 保证在所有平台上都能成功安装。</strong>
+</p>
+</blockquote>
+<p>虽然 <code>uv.lock</code> 在<strong>锁文件层面是跨平台的</strong>，但实际安装是否成功仍受限于现实中的两个关键因素：</p>
+<h3 id="caveats">⚠️ 两大限制条件（Caveats）</h3>
+<h4 id="1-wheelsdist">1. <strong>某些包只有二进制分发（wheel），没有源码分发（sdist）</strong></h4>
+<ul>
+<li>有些项目（如 PyTorch、TensorFlow）<strong>只发布 wheel 文件</strong>，不提供源码包（即 <code>.tar.gz</code> 格式的 sdist）。</li>
+<li>如果你在 macOS 上生成了 <code>uv.lock</code>，然后尝试在某个小众平台（比如 <code>aarch64</code> 或旧版 Python）上安装，而该平台<strong>没有对应的 wheel 包</strong>，那么 <strong>uv 无法构建安装</strong>，会报错。</li>
+</ul>
+<p>🔧 举例：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>uv<span class="w"> </span>sync
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a><span class="c1"># 报错：Could not find a version of torch that supports this platform</span>
+</span></code></pre></div>
+<p>👉 这不是 <code>uv</code> 的问题，而是上游包维护者未提供对应平台的支持。</p>
+<h4 id="2">2. <strong>即使有源码包，也不保证能在所有平台成功编译</strong></h4>
+<ul>
+<li>当没有合适的 wheel 时，uv 会尝试从源码（sdist）构建包。</li>
+<li>但源码构建需要：<ul>
+<li>正确的编译器（如 gcc、MSVC）</li>
+<li>系统库依赖（如 OpenSSL、libffi）</li>
+<li>Rust 工具链（对于用 Rust 编写的包，如 <code>polars</code>, <code>tokenizers</code>）</li>
+</ul>
+</li>
+<li>若目标系统缺少这些条件，<strong>安装仍会失败</strong>。</li>
+</ul>
+<p>🔧 举例：<br />
+<code>cryptography</code> 包依赖 OpenSSL 头文件。如果你的 Linux 容器里没装开发库，即使有源码也无法安装。</p>
+<blockquote>
+<p>📌 总结：<strong>锁文件是跨平台的，但安装能力取决于包生态和系统环境。</strong>
+</p>
+</blockquote>
+<h3 id="conda">🔁 与 Conda 的对比分析</h3>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th style="text-align: left;">Conda <code>spec.txt</code></th>
+<th><code>uv.lock</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>是否跨平台</td>
+<td style="text-align: left;">❌ 否，绑定特定平台（如 osx-64）</td>
+<td>✅ 是，支持多平台统一锁定</td>
+</tr>
+<tr>
+<td>是否包含环境标记逻辑</td>
+<td style="text-align: left;">❌ 不支持复杂的条件依赖</td>
+<td>✅ 完整支持 Python marker（如 sys_platform, python_version）</td>
+</tr>
+<tr>
+<td>是否能用于不同 OS 安装</td>
+<td style="text-align: left;">❌ 几乎不可行</td>
+<td>✅ 可行，只要包可用</td>
+</tr>
+<tr>
+<td>是否可回退到源码编译</td>
+<td style="text-align: left;">❌ 不支持（全靠预编译包）</td>
+<td>✅ 支持（若有 sdist）</td>
+</tr>
+<tr>
+<td>实际移植性</td>
+<td style="text-align: left;">较低</td>
+<td>显著更高</td>
+</tr>
+</tbody>
+</table>
+<p>👉 所以：<br />
+✅ <code>uv.lock</code><strong>比 Conda 的 </strong><code>spec-file.txt</code><strong> 更具可移植性和灵活性</strong>，是现代 Python 工程中实现跨平台依赖管理的一大进步。</p>
+<h3 id="_9">总结</h3>
+<table>
+<thead>
+<tr>
+<th>问题</th>
+<th>回答</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>uv.lock</code> 是跨平台的吗？</td>
+<td>✅ 是的，它是目前 Python 生态中最先进的<strong>通用锁文件格式</strong>。</td>
+</tr>
+<tr>
+<td>能否像 Conda 一样保证安装？</td>
+<td>❌ 不能“绝对保证”，但比 Conda 的 <code>spec.txt</code> <strong>适应性更强、移植性更好</strong>。</td>
+</tr>
+<tr>
+<td>跨平台限制是否存在？</td>
+<td>⚠️ 存在，主要来自：① 缺少 wheel；② 源码编译失败。这不是 <code>uv</code> 的问题，而是整个 Python 包生态的现实约束。</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>结论</strong>：<br />
+<code>uv.lock</code> 是迈向真正跨平台 Python 依赖管理的重要一步。虽然不能突破物理世界的限制（比如没有 ARM 版本的 PyTorch），但它<strong>最大限度地提升了可移植性与一致性</strong>，是现代 Python 项目的推荐选择。
+</p>
+</blockquote>
+<h2 id="uv-wheel">uv 如何选择 Wheel 包</h2>
+<p>uv 会根据当前运行环境自动判断可用的平台标签（platform tags），并按优先级选择最合适的 wheel。</p>
+<p>在满足兼容性的前提下，uv 的默认行为是：</p>
+<blockquote>
+<p>按索引中发布的顺序或兼容性排序选择，通常会优先使用更具体、更新的标签（如 manylinux_2_17 &gt; manylinux2014）
+</p>
+</blockquote>
+<p>比如 wheel 包文件名如下：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>pyarrow-20.0.0-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+</span></code></pre></div>
+<p>这是一个典型的 <strong>多平台兼容的 Python wheel 文件</strong>，其命名遵循 <a href="https://peps.python.org/pep-0427/">PEP 427</a> 和 <a href="https://peps.python.org/pep-0600/">PEP 600</a> 的规范。我们来逐段解析这个文件名中每个由中划线 <code>-</code> 分隔的部分含义。</p>
+<h3 id="wheel">wheel 包文件名完整结构分解</h3>
+<p>我们可以将其拆解为以下几个部分（按顺序）：</p>
+<table>
+<thead>
+<tr>
+<th>部分</th>
+<th>含义</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pyarrow</code></td>
+<td><strong>项目名称（Project Name）</strong></td>
+<td>Python 包的名称，标准化后为小写、用连字符替换下划线等。</td>
+</tr>
+<tr>
+<td><code>20.0.0</code></td>
+<td><strong>版本号（Version）</strong></td>
+<td>该包发布的具体版本，遵循 PEP 440 版本规范。</td>
+</tr>
+<tr>
+<td><code>cp39</code></td>
+<td><strong>Python ABI 标签（Python Tag）</strong></td>
+<td>表示此包适用于 CPython 3.9。<code>cp</code> = CPython，<code>39</code> = Python 3.9。</td>
+</tr>
+<tr>
+<td><code>cp39</code></td>
+<td><strong>ABI 标签（ABI Tag）</strong></td>
+<td>表示与 Python 解释器的 ABI 兼容性。对于纯 Python 包可能是 <code>none</code>，这里是原生扩展模块，所以是 <code>cp39</code>。</td>
+</tr>
+<tr>
+<td><code>manylinux_2_17_x86_64.manylinux2014_x86_64</code></td>
+<td><strong>平台标签（Platform Tag）</strong></td>
+<td>指定操作系统和架构兼容性。这里表示支持多种“manylinux”标准的 Linux x86_64 系统。</td>
+</tr>
+</tbody>
+</table>
+<p>最终结构：
+<div class="language-text highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>{name}-{version}(-{python_tag})?(-{abi_tag})?(-{platform_tag})?.whl
+</span></code></pre></div></p>
+<h4 id="_10">详细解释各标签</h4>
+<ol>
+<li><strong>Project Name</strong>: <code>pyarrow</code></li>
+<li>包名，不区分大小写（但通常使用小写存储）</li>
+<li>
+<p>在 PyPI 上注册的名字，用于查找和依赖解析</p>
+</li>
+<li>
+<p><strong>Version</strong>: <code>20.0.0</code></p>
+</li>
+<li>版本号，决定安装哪个发布版本</li>
+<li>
+<p><code>uv</code> 会结合 <code>pyproject.toml</code> 中的版本约束（如 <code>^20.0.0</code> 或 <code>&gt;=19</code>）进行筛选</p>
+</li>
+<li>
+<p><strong>Python Tag</strong>: <code>cp39</code></p>
+</li>
+<li>表示这个 wheel 只能在 <strong>CPython 3.9</strong> 上运行</li>
+<li>其他可能值：</li>
+<li><code>cp310</code>, <code>cp311</code>, <code>cp312</code>：对应不同 CPython 版本</li>
+<li><code>pp39</code>：PyPy 3.9</li>
+<li>
+<p><code>py3</code>：通用 Python 3（无 ABI 扩展）</p>
+</li>
+<li>
+<p><strong>ABI Tag</strong>: <code>cp39</code></p>
+</li>
+<li>表示该二进制与 CPython 3.9 的 ABI 兼容</li>
+<li>对于包含 <code>.so</code> 或 <code>.pyd</code> 原生扩展的包必须匹配</li>
+<li>
+<p>如果是纯 Python 包，则为 <code>none</code></p>
+</li>
+<li>
+<p><strong>Platform Tag</strong>: <code>manylinux_2_17_x86_64.manylinux2014_x86_64</code></p>
+</li>
+<li>这是一个复合标签，表示它兼容多个 Linux 发行版的标准：</li>
+<li><code>manylinux_2_17_x86_64</code>：基于 glibc ≥ 2.17 的 x86_64 架构系统</li>
+<li><code>manylinux2014_x86_64</code>：旧命名方式，等价于 above</li>
+<li>支持大多数现代 Linux 发行版（如 CentOS 7+, Ubuntu 16.04+, Debian 9+）</li>
+<li>其他常见平台标签：</li>
+<li><code>win_amd64</code>：Windows 64位</li>
+<li><code>macosx_10_9_x86_64</code>：Intel Mac OS X</li>
+<li><code>macosx_11_0_arm64</code>：Apple Silicon (M1/M2)</li>
+</ol>
+<blockquote>
+<p>💡 注意：这个 wheel 实际上有两个平台标签，是因为它被标记为同时满足两个兼容标准（向后兼容），提高可安装性。</p>
+</blockquote>
+<h3 id="uv_4">uv 是如何找到并选择这个包的？</h3>
+<p>当我们在终端执行：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>uv<span class="w"> </span>add<span class="w"> </span>pyarrow
+</span></code></pre></div>
+<p><code>uv</code> 会经历以下流程来找到最合适的 <code>.whl</code> 文件（比如上面那个）：</p>
+<h4 id="1">步骤 1️⃣：确定当前环境元数据</h4>
+<p><code>uv</code> 自动检测：
+- 当前使用的 Python 版本（例如：CPython 3.9）
+- 操作系统和 CPU 架构（例如：Linux x86_64）
+- 是否支持压缩格式（zip/universal wheels）</p>
+<p>得到目标兼容标签，例如：
+<div class="language-text highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>Target Compatibility:
+</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>  Python: cp39
+</span><span id="__span-28-3"><a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a>  ABI: cp39
+</span><span id="__span-28-4"><a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a>  Platform: manylinux_2_17_x86_64
+</span></code></pre></div></p>
+<h4 id="2-pypi">步骤 2️⃣：从索引源获取可用候选包（默认 PyPI）</h4>
+<p><code>uv</code> 查询 PyPI API 获取 <code>pyarrow</code> 的所有发布文件，包括：
+- 多个版本（20.0.0, 19.0.0, ...）
+- 每个版本下的多个构建产物（wheel 和 source dist）</p>
+<p>例如返回类似信息：</p>
+<table>
+<thead>
+<tr>
+<th>Filename</th>
+<th>Size</th>
+<th>Upload Time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pyarrow-20.0.0-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl</td>
+<td>25 MB</td>
+<td>2024-03-01</td>
+</tr>
+<tr>
+<td>pyarrow-20.0.0-cp310-...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr>
+<td>pyarrow-20.0.0.tar.gz</td>
+<td>10 MB</td>
+<td>...</td>
+</tr>
+</tbody>
+</table>
+<h4 id="3pep-425">步骤 3️⃣：应用兼容性过滤（PEP 425）</h4>
+<p><code>uv</code> 使用 <a href="https://peps.python.org/pep-0425/"><strong>PEP 425</strong></a> 定义的算法，基于当前环境生成一组 <strong>支持的标签组合（supported tags）</strong>，然后从高优先级到低优先级尝试匹配。</p>
+<p>例如，在 CPython 3.9 + Linux x86_64 上，<code>uv</code> 的匹配顺序可能如下（简化）：</p>
+<ol>
+<li><code>cp39-cp39-manylinux_2_17_x86_64</code></li>
+<li><code>cp39-cp39-linux_x86_64</code></li>
+<li><code>py3-none-manylinux_2_17_x86_64</code></li>
+<li>...</li>
+</ol>
+<p>它会在 <code>pyarrow</code> 的发布列表中寻找第一个能匹配这些标签的 <code>.whl</code>。</p>
+<p>因此，<code>pyarrow-20.0.0-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl</code> 能完美匹配第一条，被选中！</p>
+<h4 id="4">步骤 4️⃣：版本解析与依赖冲突解决</h4>
+<ul>
+<li><code>uv</code> 不仅要找兼容的 wheel，还要确保其版本符合项目中的约束（如 <code>pyarrow&gt;=19</code>）</li>
+<li>并递归检查它的依赖项是否也能满足（比如 <code>numpy</code> 版本要求）</li>
+<li>利用内部 SAT 求解器快速回溯，找出最优组合</li>
+</ul>
+<h4 id="5">步骤 5️⃣：下载并安装</h4>
+<p>一旦确定了要安装的包及其版本：
+1. 从 PyPI 下载 <code>.whl</code> 文件（或缓存命中则跳过）
+2. 解压 <code>.whl</code> 到虚拟环境的 <code>site-packages/</code>
+3. 记录到 <code>uv.lock</code> 锁文件中，保证可复现</p>
+<h3 id="wheel_1">📦 补充：Wheel 文件内部结构简析</h3>
+<p>一个典型的 <code>.whl</code> 是一个 ZIP 包，内容大致如下：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>pyarrow-20.0.0.dist-info/
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>├── METADATA         # 包描述、依赖项、作者等（关键！）
+</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>├── WHEEL            # 记录此 wheel 的 PEP 425 标签
+</span><span id="__span-29-4"><a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a>├── RECORD           # 文件哈希清单，用于验证完整性
+</span><span id="__span-29-5"><a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a>└── top_level.txt    # 包含顶级导入模块名
+</span><span id="__span-29-6"><a id="__codelineno-29-6" name="__codelineno-29-6" href="#__codelineno-29-6"></a>pyarrow/
+</span><span id="__span-29-7"><a id="__codelineno-29-7" name="__codelineno-29-7" href="#__codelineno-29-7"></a>├── __init__.py
+</span><span id="__span-29-8"><a id="__codelineno-29-8" name="__codelineno-29-8" href="#__codelineno-29-8"></a>├── libarrow.so      # 原生共享库（C++ 编译）
+</span><span id="__span-29-9"><a id="__codelineno-29-9" name="__codelineno-29-9" href="#__codelineno-29-9"></a>└── ...
+</span></code></pre></div>
+<p>其中 <code>METADATA</code> 文件里还会声明依赖关系，例如：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>Name: pyarrow
+</span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>Version: 20.0.0
+</span><span id="__span-30-3"><a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>Requires-Dist: numpy&gt;=1.16.6
+</span><span id="__span-30-4"><a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a>...
+</span></code></pre></div>
+<p><code>uv</code> 在解析时也会读取这些元数据来进行完整的依赖图构建。</p>
+<h2 id="_11">其他补充</h2>
+<h3 id="_12">如何查看当前系统支持的平台标签？</h3>
+<p>在 Python 中运行：</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">packaging.tags</span>
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a><span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">packaging</span><span class="o">.</span><span class="n">tags</span><span class="o">.</span><span class="n">sys_tags</span><span class="p">()))</span>
+</span></code></pre></div>
+<p>输出类似：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>[&lt;Tag &#39;cp39&#39; &#39;cp39&#39; &#39;manylinux_2_17_x86_64&#39;&gt;,
+</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a> &lt;Tag &#39;cp39&#39; &#39;cp39&#39; &#39;manylinux2014_x86_64&#39;&gt;,
+</span><span id="__span-32-3"><a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a> &lt;Tag &#39;cp39&#39; &#39;cp39&#39; &#39;linux_x86_64&#39;&gt;, ...]
+</span></code></pre></div>
+<p>这就是 <code>uv</code> 或 <code>pip</code> 用来匹配 wheel 的依据。</p>
+<h3 id="platform-tags">常见 Platform Tags 对照表</h3>
+<table>
+<thead>
+<tr>
+<th>标签</th>
+<th>适用系统</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>manylinux_2_17_x86_64</code></td>
+<td>Ubuntu 18.04+, Debian 10+, RHEL/CentOS 8+</td>
+</tr>
+<tr>
+<td><code>manylinux2014_x86_64</code></td>
+<td>CentOS 7+, RHEL 7+（glibc ≥ 2.17）</td>
+</tr>
+<tr>
+<td><code>manylinux_2_5_x86_64</code></td>
+<td>更老系统（已弃用）</td>
+</tr>
+<tr>
+<td><code>musllinux_1_1_x86_64</code></td>
+<td>Alpine Linux</td>
+</tr>
+<tr>
+<td><code>win_amd64</code></td>
+<td>Windows 64位</td>
+</tr>
+<tr>
+<td><code>macosx_10_9_x86_64</code></td>
+<td>macOS Intel</td>
+</tr>
+<tr>
+<td><code>macosx_11_0_arm64</code></td>
+<td>macOS Apple Silicon (M1/M2)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="glibc">查看系统的 glibc 版本</h3>
+<p>glibc 是 Linux 上所有程序运行的“地基”，所有用户空间的程序几乎都依赖 glibc 来访问内核功能，它让程序能调用操作系统的能力。Python 虽然是高级语言，但其底层依赖的 C 扩展和解释器本身仍然严重依赖 glibc 的版本。</p>
+<p>命令行查看版本</p>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>$<span class="w"> </span>ldd<span class="w"> </span>--version
+</span><span id="__span-33-2"><a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a>ldd<span class="w"> </span><span class="o">(</span>GNU<span class="w"> </span>libc<span class="o">)</span><span class="w"> </span><span class="m">2</span>.17
+</span></code></pre></div>
+<h3 id="glibc-python">glibc 与 Python 开发的关系</h3>
+<p>很多 Python 包（如 pyarrow, numpy, pandas, torch）发布的是 <strong>编译好的 wheel 文件</strong>，它们内部包含了 C/C++ 编写的扩展模块。这些模块在构建时链接了某个版本的 glibc，因此如果你的系统 glibc 版本太旧，就无法运行这些新编译的程序！</p>
+<p>例如：</p>
+<ul>
+<li>manylinux_2_17 要求 glibc ≥ 2.17</li>
+<li>manylinux_2_28 要求 glibc ≥ 2.28（只能在较新的 Ubuntu 20.04+ 上运行）</li>
+</ul>
+<p><strong>所以你会发现：某些 .whl 文件会特别标注 manylinux_2_17，就是为了说明它至少需要 glibc 2.17 才能运行。</strong></p>
+<h2 id="uv_5">总结：uv 如何工作？</h2>
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th><code>uv</code> 的行为</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>🧭 环境探测</td>
+<td>获取 Python 版本、平台、ABI 信息</td>
+</tr>
+<tr>
+<td>🔍 匹配策略</td>
+<td>按 PEP 425 标签优先级匹配最佳 wheel</td>
+</tr>
+<tr>
+<td>📥 下载优化</td>
+<td>支持并发、断点续传、本地缓存（比 pip 快很多）</td>
+</tr>
+<tr>
+<td>⚙️ 依赖解析</td>
+<td>使用高性能求解器处理复杂依赖树</td>
+</tr>
+<tr>
+<td>📦 安装锁定</td>
+<td>写入 <code>uv.lock</code> 实现可重复构建</td>
+</tr>
+</tbody>
+</table>
+<p><strong>总结一句话</strong></p>
+<p><code>uv</code> 通过分析 Wheel 文件名中的 <strong>项目名、版本、Python 版本、ABI 和平台标签</strong>，结合当前运行环境的特性，依据 <strong>PEP 425 兼容性规则</strong>，自动选择最合适、性能最优且兼容的二进制包进行安装，整个过程高效、安全、可重现。</p>
+<p>📌 提示：你可以用以下命令查看 <code>uv</code> 实际考虑了哪些候选包：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>uv<span class="w"> </span>add<span class="w"> </span>pyarrow<span class="w"> </span>-v
+</span><span id="__span-34-2"><a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a><span class="c1"># 加上 -v 查看详细日志，甚至能看到 tried tags 和 skipped wheels</span>
+</span></code></pre></div>
+<p>这有助于调试为什么某个包没被安装，或为何选择了 source distribution 而非 wheel。</p>
+<h2 id="_13">下载依赖失败分析思路</h2>
+<h3 id="_14">问题描述</h3>
+<p>在使用 <code>uv add &lt;package&gt;</code> 或构建项目依赖时，出现如下典型错误：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>error: Failed to build package `pyarrow` (from source)
+</span><span id="__span-35-2"><a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a>Caused by:
+</span><span id="__span-35-3"><a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a>  Could not find CMake, or C++ compiler (like gcc)
+</span><span id="__span-35-4"><a id="__codelineno-35-4" name="__codelineno-35-4" href="#__codelineno-35-4"></a>...
+</span><span id="__span-35-5"><a id="__codelineno-35-5" name="__codelineno-35-5" href="#__codelineno-35-5"></a>Building wheel for pyarrow (setup.py) ... error
+</span><span id="__span-35-6"><a id="__codelineno-35-6" name="__codelineno-35-6" href="#__codelineno-35-6"></a>  ERROR: subprocess-exited-with-error
+</span><span id="__span-35-7"><a id="__codelineno-35-7" name="__codelineno-35-7" href="#__codelineno-35-7"></a>  × Getting requirements to build wheel did not run successfully.
+</span><span id="__span-35-8"><a id="__codelineno-35-8" name="__codelineno-35-8" href="#__codelineno-35-8"></a>  │ exit code: 1
+</span><span id="__span-35-9"><a id="__codelineno-35-9" name="__codelineno-35-9" href="#__codelineno-35-9"></a>  ╰─&gt; [stderr clipped, enable with --trace]
+</span><span id="__span-35-10"><a id="__codelineno-35-10" name="__codelineno-35-10" href="#__codelineno-35-10"></a>      -- Building using CMake version: 3.28.3
+</span><span id="__span-35-11"><a id="__codelineno-35-11" name="__codelineno-35-11" href="#__codelineno-35-11"></a>      -- The C compiler identification is unknown
+</span><span id="__span-35-12"><a id="__codelineno-35-12" name="__codelineno-35-12" href="#__codelineno-35-12"></a>      -- The CXX compiler identification is unknown
+</span><span id="__span-35-13"><a id="__codelineno-35-13" name="__codelineno-35-13" href="#__codelineno-35-13"></a>      CMake Error at CMakeLists.txt:5 (project):
+</span><span id="__span-35-14"><a id="__codelineno-35-14" name="__codelineno-35-14" href="#__codelineno-35-14"></a>        No CMAKE_C_COMPILER could be found.
+</span></code></pre></div>
+<p>同时观察到：<br />
+- 下载的是 <code>.tar.gz</code> 源码包（source distribution），而非 <code>.whl</code> 二进制包<br />
+- 构建过程尝试编译 C/C++ 扩展模块失败<br />
+- 错误集中在缺少 <code>cmake</code>, <code>gcc</code>, <code>g++</code>, <code>make</code> 等工具  </p>
+<p>这通常发生在 <strong>Linux 环境未安装开发工具链</strong> 或 <strong>目标平台无预编译 wheel 可用</strong> 的场景中。</p>
+<hr />
+<h3 id="_15">原因分析</h3>
+<h4 id="1-uv-wheel-fallback-sdist">1️⃣ <code>uv</code> 优先选择二进制 wheel，但 fallback 到源码包（sdist）</h4>
+<p>根据前文对 Wheel 文件名结构的解析，我们知道：</p>
+<blockquote>
+<p>✅ <code>uv</code> 在安装依赖时会优先寻找与当前环境完全匹配的 <strong>二进制 wheel（<code>.whl</code>）</strong></p>
+<p>❌ 如果没有合适的 wheel，则退而求其次下载 <strong>源码包（<code>.tar.gz</code> 或 <code>.zip</code>）</strong> 并尝试本地编译</p>
+</blockquote>
+<h4 id="fallback">导致 fallback 的常见原因包括：</h4>
+<table>
+<thead>
+<tr>
+<th>原因</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>⚠️ 当前 Python 版本不在支持范围内</td>
+<td>如项目使用 <code>CPython 3.13</code>，但该包只发布到 <code>cp312</code></td>
+</tr>
+<tr>
+<td>⚠️ 平台不兼容</td>
+<td>如 Alpine Linux 使用 <code>musl</code> 而非 <code>glibc</code>，不满足 <code>manylinux</code> 标准</td>
+</tr>
+<tr>
+<td>⚠️ 架构不匹配</td>
+<td>如在 ARM64 上运行却只有 x86_64 的 wheel</td>
+</tr>
+<tr>
+<td>⚠️ 目标包尚未为当前版本构建 wheel</td>
+<td>尤其是新发布的 Python 版本或小众平台</td>
+</tr>
+</tbody>
+</table>
+<p>👉 例如：
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a><span class="c1"># 你在 PyPy 环境下安装 pyarrow？</span>
+</span><span id="__span-36-2"><a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a>uv<span class="w"> </span>add<span class="w"> </span>pyarrow
+</span><span id="__span-36-3"><a id="__codelineno-36-3" name="__codelineno-36-3" href="#__codelineno-36-3"></a><span class="c1"># → 只有 cp39/cp310 的 wheel，没有 pp39 的，只能编译源码！</span>
+</span></code></pre></div></p>
+<h4 id="2_1">2️⃣ 缺少本地编译所需的工具链</h4>
+<p>即使决定从源码构建，也需要以下组件才能成功编译：</p>
+<table>
+<thead>
+<tr>
+<th>工具</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>gcc</code> / <code>g++</code></td>
+<td>C/C++ 编译器（用于编译 <code>.c</code>, <code>.cpp</code> 文件）</td>
+</tr>
+<tr>
+<td><code>make</code></td>
+<td>构建自动化工具</td>
+</tr>
+<tr>
+<td><code>cmake</code></td>
+<td>跨平台构建系统生成器（很多科学计算包如 <code>pyarrow</code>, <code>torch</code> 都用它）</td>
+</tr>
+<tr>
+<td><code>pkg-config</code></td>
+<td>查找库头文件和链接路径</td>
+</tr>
+<tr>
+<td><code>python3-dev</code> 或 <code>python3-devel</code></td>
+<td>提供 Python.h 等头文件</td>
+</tr>
+<tr>
+<td><code>git</code>（有时需要）</td>
+<td>某些包在构建时拉取子模块</td>
+</tr>
+</tbody>
+</table>
+<p>❌ 若这些工具未安装，即使有源码也无法完成构建。</p>
+<hr />
+<h4 id="3-uv">3️⃣ uv 不自动安装系统级依赖</h4>
+<blockquote>
+<p>💡 <code>uv</code> 是一个 <strong>Python 包管理器</strong>，不是系统包管理器。</p>
+<p>它能处理 Python 层面的依赖（如 pip 能做的），但无法帮你安装 <code>gcc</code> 这类操作系统级别的工具。</p>
+</blockquote>
+<p>因此当遇到需要编译的情况时，必须由用户确保底层构建环境已就绪。</p>
+<hr />
+<h3 id="_16">✅ 解决方法</h3>
+<p>根据不同场景，提供以下几种解决方案，按推荐顺序排列：</p>
+<hr />
+<h4 id="wheel_2">✅ 方法一：【首选】避免编译 —— 使用预编译 wheel</h4>
+<p><strong>目标：让 <code>uv</code> 找到并使用 <code>.whl</code> 文件，跳过编译步骤</strong>
+<strong>措施：</strong>
+1. <strong>确认你的环境是否被官方 wheel 支持</strong></p>
+<p>查看 PyPI 页面：https://pypi.org/project/pyarrow/#files<br />
+   检查是否有对应你环境的 wheel，例如：
+   - Python 版本：<code>cp39</code>, <code>cp310</code>, ...
+   - 平台：<code>manylinux</code>, <code>win_amd64</code>, <code>macosx_arm64</code></p>
+<ol>
+<li>
+<p><strong>使用标准 Linux 发行版 + CPython 官方版本</strong></p>
+</li>
+<li>
+<p>推荐 Ubuntu/Debian/CentOS/Rocky Linux</p>
+</li>
+<li>使用 <code>python.org</code> 或 <code>pyenv</code> 安装的 Python，不要自己编译</li>
+<li>
+<p>避免使用 Alpine Linux（除非有 musllinux wheel）</p>
+</li>
+<li>
+<p><strong>升级 <code>uv</code> 到最新版</strong></p>
+</li>
+</ol>
+<p>新版本支持更多平台标签识别和缓存优化：
+   <div class="language-bash highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>pip<span class="w"> </span>install<span class="w"> </span>-U<span class="w"> </span>uv
+</span></code></pre></div></p>
+<ol>
+<li><strong>启用 index mirror 加快发现速度（可选）</strong></li>
+</ol>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>uv<span class="w"> </span>add<span class="w"> </span>pyarrow<span class="w"> </span>--index-url<span class="w"> </span>https://pypi.tuna.tsinghua.edu.cn/simple
+</span></code></pre></div>
+<hr />
+<h4 id="_17">✅ 方法二：【次选】安装缺失的编译工具链</h4>
+<p>如果确实无法避免编译（如内部私有包、实验性版本等），则需手动安装系统依赖。</p>
+<p>Linux（Ubuntu/Debian）
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>update
+</span><span id="__span-39-2"><a id="__codelineno-39-2" name="__codelineno-39-2" href="#__codelineno-39-2"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-39-3"><a id="__codelineno-39-3" name="__codelineno-39-3" href="#__codelineno-39-3"></a><span class="w">    </span>build-essential<span class="w"> </span><span class="se">\ </span><span class="w">         </span><span class="c1"># 包含 gcc, g++, make</span>
+</span><span id="__span-39-4"><a id="__codelineno-39-4" name="__codelineno-39-4" href="#__codelineno-39-4"></a><span class="w">    </span>cmake<span class="w"> </span><span class="se">\ </span><span class="w">                   </span><span class="c1"># CMake 构建系统</span>
+</span><span id="__span-39-5"><a id="__codelineno-39-5" name="__codelineno-39-5" href="#__codelineno-39-5"></a><span class="w">    </span>pkg-config<span class="w"> </span><span class="se">\ </span><span class="w">              </span><span class="c1"># 库配置工具</span>
+</span><span id="__span-39-6"><a id="__codelineno-39-6" name="__codelineno-39-6" href="#__codelineno-39-6"></a><span class="w">    </span>python3-dev<span class="w">                </span><span class="c1"># Python 头文件</span>
+</span></code></pre></div></p>
+<p>Linux（CentOS/RHEL/Fedora）
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a><span class="c1"># CentOS/RHEL</span>
+</span><span id="__span-40-2"><a id="__codelineno-40-2" name="__codelineno-40-2" href="#__codelineno-40-2"></a>sudo<span class="w"> </span>yum<span class="w"> </span>groupinstall<span class="w"> </span><span class="s2">&quot;Development Tools&quot;</span>
+</span><span id="__span-40-3"><a id="__codelineno-40-3" name="__codelineno-40-3" href="#__codelineno-40-3"></a>sudo<span class="w"> </span>yum<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>cmake<span class="w"> </span>python3-devel
+</span><span id="__span-40-4"><a id="__codelineno-40-4" name="__codelineno-40-4" href="#__codelineno-40-4"></a>
+</span><span id="__span-40-5"><a id="__codelineno-40-5" name="__codelineno-40-5" href="#__codelineno-40-5"></a><span class="c1"># 或使用 dnf（Fedora）</span>
+</span><span id="__span-40-6"><a id="__codelineno-40-6" name="__codelineno-40-6" href="#__codelineno-40-6"></a>sudo<span class="w"> </span>dnf<span class="w"> </span>groupinstall<span class="w"> </span><span class="s2">&quot;Development Tools&quot;</span>
+</span><span id="__span-40-7"><a id="__codelineno-40-7" name="__codelineno-40-7" href="#__codelineno-40-7"></a>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>cmake<span class="w"> </span>python3-devel
+</span></code></pre></div></p>
+<p>Alpine Linux（慎用！）
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>apk<span class="w"> </span>add<span class="w"> </span>--no-cache<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-41-2"><a id="__codelineno-41-2" name="__codelineno-41-2" href="#__codelineno-41-2"></a><span class="w">    </span>build-base<span class="w"> </span><span class="se">\ </span><span class="w">        </span><span class="c1"># 相当于 build-essential</span>
+</span><span id="__span-41-3"><a id="__codelineno-41-3" name="__codelineno-41-3" href="#__codelineno-41-3"></a><span class="w">    </span>cmake<span class="w"> </span><span class="se">\ </span><span class="w">             </span><span class="c1"># 注意 Alpine 的 CMake 可能较旧</span>
+</span><span id="__span-41-4"><a id="__codelineno-41-4" name="__codelineno-41-4" href="#__codelineno-41-4"></a><span class="w">    </span>python3-dev<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-41-5"><a id="__codelineno-41-5" name="__codelineno-41-5" href="#__codelineno-41-5"></a><span class="w">    </span>pkgconfig
+</span></code></pre></div></p>
+<blockquote>
+<p>⚠️ 注意：Alpine 使用 <code>musl libc</code>，大多数 PyPI wheel 是基于 <code>glibc</code> 构建的，所以几乎总会触发源码编译，性能差且易出错。生产环境建议避免。</p>
+</blockquote>
+<h4 id="_18">✅ 方法三：使用容器镜像预置环境</h4>
+<p>对于 CI/CD 或部署场景，推荐使用已配置好的基础镜像：</p>
+<p>示例 Dockerfile（推荐）</p>
+<div class="language-Dockerfile highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a><span class="c"># 使用官方 Python 镜像（基于 Debian）</span>
+</span><span id="__span-42-2"><a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a><span class="k">FROM</span><span class="w"> </span><span class="s">python:3.9-slim</span>
+</span><span id="__span-42-3"><a id="__codelineno-42-3" name="__codelineno-42-3" href="#__codelineno-42-3"></a>
+</span><span id="__span-42-4"><a id="__codelineno-42-4" name="__codelineno-42-4" href="#__codelineno-42-4"></a><span class="c"># 安装编译工具链</span>
+</span><span id="__span-42-5"><a id="__codelineno-42-5" name="__codelineno-42-5" href="#__codelineno-42-5"></a><span class="k">RUN</span><span class="w"> </span>apt<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>--no-install-recommends<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-42-6"><a id="__codelineno-42-6" name="__codelineno-42-6" href="#__codelineno-42-6"></a><span class="w">    </span>build-essential<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-42-7"><a id="__codelineno-42-7" name="__codelineno-42-7" href="#__codelineno-42-7"></a><span class="w">    </span>cmake<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-42-8"><a id="__codelineno-42-8" name="__codelineno-42-8" href="#__codelineno-42-8"></a><span class="w">    </span><span class="o">&amp;&amp;</span><span class="w"> </span>rm<span class="w"> </span>-rf<span class="w"> </span>/var/lib/apt/lists/*
+</span><span id="__span-42-9"><a id="__codelineno-42-9" name="__codelineno-42-9" href="#__codelineno-42-9"></a>
+</span><span id="__span-42-10"><a id="__codelineno-42-10" name="__codelineno-42-10" href="#__codelineno-42-10"></a><span class="c"># 安装 uv</span>
+</span><span id="__span-42-11"><a id="__codelineno-42-11" name="__codelineno-42-11" href="#__codelineno-42-11"></a><span class="k">RUN</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>uv
+</span><span id="__span-42-12"><a id="__codelineno-42-12" name="__codelineno-42-12" href="#__codelineno-42-12"></a>
+</span><span id="__span-42-13"><a id="__codelineno-42-13" name="__codelineno-42-13" href="#__codelineno-42-13"></a><span class="c"># 设置工作目录</span>
+</span><span id="__span-42-14"><a id="__codelineno-42-14" name="__codelineno-42-14" href="#__codelineno-42-14"></a><span class="k">WORKDIR</span><span class="w"> </span><span class="s">/app</span>
+</span><span id="__span-42-15"><a id="__codelineno-42-15" name="__codelineno-42-15" href="#__codelineno-42-15"></a>
+</span><span id="__span-42-16"><a id="__codelineno-42-16" name="__codelineno-42-16" href="#__codelineno-42-16"></a><span class="c"># 添加依赖文件</span>
+</span><span id="__span-42-17"><a id="__codelineno-42-17" name="__codelineno-42-17" href="#__codelineno-42-17"></a><span class="k">COPY</span><span class="w"> </span>pyproject.toml<span class="w"> </span>.
+</span><span id="__span-42-18"><a id="__codelineno-42-18" name="__codelineno-42-18" href="#__codelineno-42-18"></a>
+</span><span id="__span-42-19"><a id="__codelineno-42-19" name="__codelineno-42-19" href="#__codelineno-42-19"></a><span class="c"># 先锁定依赖（利用 wheel）</span>
+</span><span id="__span-42-20"><a id="__codelineno-42-20" name="__codelineno-42-20" href="#__codelineno-42-20"></a><span class="k">RUN</span><span class="w"> </span>uv<span class="w"> </span>lock
+</span><span id="__span-42-21"><a id="__codelineno-42-21" name="__codelineno-42-21" href="#__codelineno-42-21"></a>
+</span><span id="__span-42-22"><a id="__codelineno-42-22" name="__codelineno-42-22" href="#__codelineno-42-22"></a><span class="c"># 安装依赖</span>
+</span><span id="__span-42-23"><a id="__codelineno-42-23" name="__codelineno-42-23" href="#__codelineno-42-23"></a><span class="k">RUN</span><span class="w"> </span>uv<span class="w"> </span>sync
+</span><span id="__span-42-24"><a id="__codelineno-42-24" name="__codelineno-42-24" href="#__codelineno-42-24"></a>
+</span><span id="__span-42-25"><a id="__codelineno-42-25" name="__codelineno-42-25" href="#__codelineno-42-25"></a><span class="k">COPY</span><span class="w"> </span>.<span class="w"> </span>.
+</span><span id="__span-42-26"><a id="__codelineno-42-26" name="__codelineno-42-26" href="#__codelineno-42-26"></a><span class="k">CMD</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;uv&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;run&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;python&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;main.py&quot;</span><span class="p">]</span>
+</span></code></pre></div>
+<p>✅ 优势：
+- 基于 Debian，兼容 <code>manylinux</code> wheel
+- 工具链齐全，fallback 也能编译
+- 构建速度快、结果可复现</p>
+<h4 id="_19">✅ 方法四：临时跳过特定包（调试用）</h4>
+<p>如果你只是想验证其他部分是否正常，可以暂时排除难缠的包：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>uv<span class="w"> </span>add<span class="w"> </span>requests<span class="w"> </span>django<span class="w"> </span>--no-install-package<span class="w"> </span>pyarrow
+</span></code></pre></div>
+<p>或者使用 <code>--frozen</code> 避免重新解析：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>uv<span class="w"> </span>add<span class="w"> </span>some-pure-python-pkg<span class="w"> </span>--frozen
+</span></code></pre></div>
+<hr />
+<h3 id="wheel_3">如何诊断是否将使用 wheel？</h3>
+<p>你可以通过开启详细日志来查看 <code>uv</code> 的决策过程：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-45-1"><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>uv<span class="w"> </span>add<span class="w"> </span>pyarrow<span class="w"> </span>-v
+</span></code></pre></div>
+<p>输出中会显示类似内容：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-46-1"><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a>Found 5 compatible wheels for pyarrow:
+</span><span id="__span-46-2"><a id="__codelineno-46-2" name="__codelineno-46-2" href="#__codelineno-46-2"></a>  pyarrow-20.0.0-cp39-cp39-manylinux_2_17_x86_64.whl
+</span><span id="__span-46-3"><a id="__codelineno-46-3" name="__codelineno-46-3" href="#__codelineno-46-3"></a>  pyarrow-20.0.0-cp39-cp39-manylinux2014_x86_64.whl
+</span><span id="__span-46-4"><a id="__codelineno-46-4" name="__codelineno-46-4" href="#__codelineno-46-4"></a>...
+</span><span id="__span-46-5"><a id="__codelineno-46-5" name="__codelineno-46-5" href="#__codelineno-46-5"></a>Using: pyarrow-20.0.0-cp39-cp39-manylinux_2_17_x86_64.whl
+</span></code></pre></div>
+<p>如果有：
+<div class="language-text highlight"><pre><span></span><code><span id="__span-47-1"><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>No compatible wheels found. Falling back to source distribution.
+</span><span id="__span-47-2"><a id="__codelineno-47-2" name="__codelineno-47-2" href="#__codelineno-47-2"></a>Downloading source archive from https://.../pyarrow-20.0.0.tar.gz
+</span></code></pre></div></p>
+<p>那就明确告诉你：<strong>没有找到合适 wheel，即将编译源码！</strong></p>
+<h3 id="_20">总结表格</h3>
+<table>
+<thead>
+<tr>
+<th>问题类型</th>
+<th>判断依据</th>
+<th>解决方案</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>缺少编译工具</td>
+<td>报错含 <code>gcc</code>, <code>cmake</code>, <code>unknown compiler</code></td>
+<td>安装 <code>build-essential</code>, <code>cmake</code>, <code>python3-dev</code></td>
+</tr>
+<tr>
+<td>使用了非主流平台</td>
+<td>Alpine、ARM64、musl libc</td>
+<td>改用标准 Linux 发行版或等待官方 wheel</td>
+</tr>
+<tr>
+<td>Python 版本太新或太旧</td>
+<td>如 Python 3.13 或 PyPy</td>
+<td>等待维护者发布 wheel 或降级 Python</td>
+</tr>
+<tr>
+<td>私有包无 wheel</td>
+<td>内部包只上传 sdist</td>
+<td>提前构建 wheel 并上传至私有索引</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_21">✅ 最佳实践建议</h3>
+<ol>
+<li>✅ <strong>尽可能使用标准环境</strong>：CPython + 主流 Linux + 官方 Python 版本</li>
+<li>✅ <strong>优先使用 <code>uv</code> 而不是 <code>pip</code></strong>：更快的依赖解析和更好的 wheel 匹配能力</li>
+<li>✅ <strong>定期更新 <code>uv</code> 和依赖锁文件</strong>：新版本支持更多平台标签</li>
+<li>✅ <strong>在 CI 中预装构建工具</strong>，以防万一</li>
+<li>✅ <strong>考虑发布自己的 wheel</strong>：对于频繁使用的内部包</li>
+</ol>
+<p>📌 <strong>一句话总结：</strong></p>
+<blockquote>
+<p>当 <code>uv</code> 因找不到兼容的 <code>.whl</code> 而转为编译 <code>.tar.gz</code> 源码包时，若系统缺少 <code>gcc</code>、<code>cmake</code> 等工具链，就会报错。根本解决之道是 <strong>确保环境与 wheel 兼容</strong>，其次才是补装编译工具。</p>
+</blockquote>
+<h2 id="_22">参考文档</h2>
+<ol>
+<li><a href="https://github.com/astral-sh/uv/issues/12162">https://github.com/astral-sh/uv/issues/12162</a></li>
+<li><a href="https://jakubk.cz/posts/uv_lock/">https://jakubk.cz/posts/uv_lock/</a></li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["content.code.copy", "content.code.select"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
